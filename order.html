@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>桐陰祭 注文システム A</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .menu-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .menu-item {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 200px;
+    }
+
+    .menu-item img {
+      max-width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .controls input {
+      width: 40px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    #confirm {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #confirm:hover {
+      background-color: #218838;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>桐陰祭 注文システム A</h1>
+
+  <div class="menu-container">
+    <div class="menu-item">
+      <img src="20250529_170912.webp" alt="メニュー1">
+      <p>メニュー1 - 200円</p>
+      <div>
+        個数:
+        <button onclick="changeQty(0, -1)">－</button>
+        <input type="text" id="qty1" value="0" readonly>
+        <button onclick="changeQty(0, 1)">＋</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <img src="20250529_170914.webp" alt="メニュー2">
+      <p>メニュー2 - 300円</p>
+      <div>
+        個数:
+        <button onclick="changeQty(1, -1)">－</button>
+        <input type="text" id="qty2" value="0" readonly>
+        <button onclick="changeQty(1, 1)">＋</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <button id="confirm" onclick="submitOrder()">確定する</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <script>
+    const quantities = [0, 0];
+
+    function changeQty(index, delta) {
+      quantities[index] = Math.max(0, quantities[index] + delta);
+      document.getElementById(`qty${index+1}`).value = quantities[index];
+    }
+
+    function submitOrder() {
+      const order = {
+        menu1: quantities[0],
+        menu2: quantities[1]
+      };
+
+      // ↓ここでAPI送信する例（本番はfetchでXにPOST）
+      console.log("注文を送信:", order);
+
+      document.getElementById("status").textContent = `注文を受け付けました。整理番号: #${Math.floor(Math.random() * 900 + 100)}`;
+      
+      // 注文リセット
+      quantities[0] = 0;
+      quantities[1] = 0;
+      document.getElementById("qty1").value = 0;
+      document.getElementById("qty2").value = 0;
+    }
+  </script>
+
+</body>
+</html>
