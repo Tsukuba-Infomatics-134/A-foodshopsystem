@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>桐陰祭 注文システム</title>
+  <style>
+    /* 背景全体の設定 */
+    body {
+      background-image: url('https://www.photolibrary.jp/mhd1/img753/450-20200124182302.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', 'ヒラギノ角ゴ ProN', sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      margin: 0;
+      padding: 20px 0;
+      font-size: 2em;
+      letter-spacing: 2px;
+    }
+
+    video {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+      border: 3px solid #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 30px;
+    }
+
+    .menu-item {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 20px;
+      width: 260px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .menu-item p {
+      margin: 15px 0 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .menu-item button {
+      padding: 5px 12px;
+      font-size: 18px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .menu-item button:hover {
+      background-color: #0056b3;
+    }
+
+    .menu-item input[type="text"] {
+      width: 40px;
+      text-align: center;
+      font-size: 18px;
+      margin: 0 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+    }
+
+    #confirm {
+      margin: 30px auto;
+      padding: 12px 40px;
+      font-size: 20px;
+      background-color: #28a745;
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #confirm:hover {
+      background-color: #218838;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      margin: 20px;
+      padding: 15px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- タイトル -->
+  <h1>桐陰祭 注文システム A</h1>
+
+  <video src="sample.mp4" controls></video>
+
+  <!-- メニューエリア -->
+  <div class="menu-container">
+
+    <!-- メニュー1 -->
+    <div class="menu-item">
+      <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" alt="メニュー1">
+      <p>メニュー1 - 200円</p>
+      <div>
+        個数:
+        <button onclick="changeQty(0, -1)">－</button>
+        <input type="text" id="qty1" value="0" readonly>
+        <button onclick="changeQty(0, 1)">＋</button>
+      </div>
+    </div>
+
+    <!-- メニュー2 -->
+    <div class="menu-item">
+      <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" alt="メニュー2">
+      <p>メニュー2 - 300円</p>
+      <div>
+        個数:
+        <button onclick="changeQty(1, -1)">－</button>
+        <input type="text" id="qty2" value="0" readonly>
+        <button onclick="changeQty(1, 1)">＋</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 注文確定ボタン -->
+  <div style="text-align:center;">
+    <button id="confirm" onclick="submitOrder()">確定する</button>
+  </div>
+
+  <!-- ステータス（注文確定メッセージ） -->
+  <div class="status" id="status"></div>
+
+  <!-- JavaScript -->
+  <script>
+    const quantities = [0, 0];
+
+    function changeQty(index, delta) {
+      quantities[index] = Math.max(0, quantities[index] + delta);
+      document.getElementById(`qty${index+1}`).value = quantities[index];
+    }
+
+    function submitOrder() {
+      const order = {
+        menu1: quantities[0],
+        menu2: quantities[1]
+      };
+      console.log("注文を送信:", order);
+      document.getElementById("status").textContent = `注文を受け付けました。整理番号: #${Math.floor(Math.random() * 900 + 100)}`;
+      quantities[0] = 0;
+      quantities[1] = 0;
+      document.getElementById("qty1").value = 0;
+      document.getElementById("qty2").value = 0;
+    }
+  </script>
+</body>
+</html>
