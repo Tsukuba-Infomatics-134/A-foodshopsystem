@@ -13,7 +13,6 @@
       color: #333;
       margin: 0;
       padding: 0;
-      transition: background-color 0.5s ease;
     }
 
     h1 {
@@ -38,20 +37,19 @@
     }
 
     .menu-item {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s forwards;
-      animation-delay: 0.3s;
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
       padding: 20px;
       width: 260px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
     }
 
     .menu-item:nth-child(2) {
-      animation-delay: 0.6s;
+      animation-delay: 0.3s;
     }
 
     .menu-item img {
@@ -70,7 +68,7 @@
     .menu-item button {
       padding: 5px 12px;
       font-size: 18px;
-      margin: 0 5px;
+      margin: 5px 3px;
       border: none;
       border-radius: 5px;
       background-color: #007bff;
@@ -148,7 +146,6 @@
       50%  { transform: scale(1.3); }
       100% { transform: scale(1); }
     }
-
   </style>
 </head>
 <body>
@@ -163,6 +160,7 @@
         <button onclick="changeQty(0, -1)">－</button>
         <input type="text" id="qty1" value="0" readonly>
         <button onclick="changeQty(0, 1)">＋</button>
+        <br><button onclick="showInfo(0)">説明</button>
       </div>
     </div>
 
@@ -174,36 +172,70 @@
         <button onclick="changeQty(1, -1)">－</button>
         <input type="text" id="qty2" value="0" readonly>
         <button onclick="changeQty(1, 1)">＋</button>
+        <br><button onclick="showInfo(1)">説明</button>
       </div>
     </div>
   </div>
 
-  <button id="confirm" onclick="submitOrder()">確定する</button>
+  <button id="confirm" onclick="confirmOrder()">確定する</button>
   <div class="status" id="status"></div>
 
   <script>
     const quantities = [0, 0];
+    const explanations = [
+      "メニュー1は最新型ゲーム機のグッズです。数に限りがあります！",
+      "メニュー2は超人気アニメの限定ポスターです。お早めに！"
+    ];
 
+    // 説明ボタンの処理
+    function showInfo(index) {
+      alert(explanations[index]);
+    }
+
+    // 個数変更＋ローカル保存
     function changeQty(index, delta) {
       quantities[index] = Math.max(0, quantities[index] + delta);
-      const input = document.getElementById(`qty${index+1}`);
+      const input = document.getElementById(`qty${index + 1}`);
       input.value = quantities[index];
       input.style.animation = 'none';
-      void input.offsetWidth; // 再描画させる
+      void input.offsetWidth;
       input.style.animation = 'pop 0.3s ease';
+      saveToStorage();
+    }
+
+    // ローカルストレージ保存
+    function saveToStorage() {
+      localStorage.setItem('orderQuantities', JSON.stringify(quantities));
+    }
+
+    // ローカルストレージ読み込み
+    function loadFromStorage() {
+      const saved = JSON.parse(localStorage.getItem('orderQuantities'));
+      if (saved && Array.isArray(saved)) {
+        saved.forEach((qty, i) => {
+          quantities[i] = qty;
+          document.getElementById(`qty${i + 1}`).value = qty;
+        });
+      }
+    }
+
+    // モーダル確認 → 本注文へ
+    function confirmOrder() {
+      const total = quantities.reduce((sum, q, i) => sum + q * (i === 0 ? 200 : 300), 0);
+      if (total === 0) {
+        alert("1つ以上選択してください。");
+        return;
+      }
+      if (confirm(`合計金額 ${total}円 で確定しますか？`)) {
+        submitOrder();
+      }
     }
 
     function submitOrder() {
-      const order = {
-        menu1: quantities[0],
-        menu2: quantities[1]
-      };
-
       const statusDiv = document.getElementById("status");
       statusDiv.style.opacity = "1";
       statusDiv.textContent = "注文送信中...";
 
-      // 背景点滅演出
       document.body.style.backgroundColor = "rgba(255,255,255,0.6)";
       setTimeout(() => {
         document.body.style.backgroundColor = "";
@@ -216,13 +248,15 @@
         quantities[1] = 0;
         document.getElementById("qty1").value = 0;
         document.getElementById("qty2").value = 0;
-
-        // 一定時間後にステータスメッセージを消す
+        localStorage.removeItem('orderQuantities');
         setTimeout(() => {
           statusDiv.style.opacity = "0";
         }, 4000);
       }, 1000);
     }
+
+    // 初期ロード
+    window.onload = loadFromStorage;
   </script>
 </body>
 </html>
