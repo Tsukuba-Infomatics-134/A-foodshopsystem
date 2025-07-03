@@ -378,7 +378,7 @@
 
       const order1 = quantities[0];
       const order2 = quantities[1];
-      if (order == "") {
+      if (order1+order2 == "") {
           alert("注文する数を入力してください");
           return;
       }
@@ -386,7 +386,7 @@
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              "authorization": token
+              "authorization": auth_key
           },
           body: JSON.stringify({
               "order_items": {"item_1": order1, "item_2": order2},
@@ -394,30 +394,34 @@
           })
       }).then(async response => {
           if (response.status === 200) {
-            const orderNum = response["order_id"];
-            /*statusDiv.textContent = `注文を受け付けました。整理番号: #${orderNum}`;*/
-
-            // モーダルに整理番号セットして表示
-            const modalBody = document.getElementById("modalBody");
-            modalBody.textContent = `整理番号: #${orderNum}`;
-
-            // Bootstrapモーダルを表示
-            const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
-            orderModal.show();
-            
-
-            // 注文リセット
-            quantities.fill(0);
-            document.getElementById("qty1").value = 0;
-            document.getElementById("qty2").value = 0;
-            document.querySelectorAll('.triangle-left').forEach(btn => btn.classList.add('disabled'));
-            localStorage.removeItem("orderQuantities");
-            statusDiv.style.opacity = "0";
+            return response.json();
           } else {
             console.error('Error:', response.text());
             alert("注文中にエラーが発生しました。");
+            return null;
           }
-      }).catch(error => {
+      }).then((res_json) => {
+        const orderNum = res_json["order_id"];
+        /*statusDiv.textContent = `注文を受け付けました。整理番号: #${orderNum}`;*/
+
+        // モーダルに整理番号セットして表示
+        const modalBody = document.getElementById("modalBody");
+        modalBody.textContent = `整理番号: #${orderNum}`;
+
+        // Bootstrapモーダルを表示
+        const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+        orderModal.show();
+        
+
+        // 注文リセット
+        quantities.fill(0);
+        document.getElementById("qty1").value = 0;
+        document.getElementById("qty2").value = 0;
+        document.querySelectorAll('.triangle-left').forEach(btn => btn.classList.add('disabled'));
+        localStorage.removeItem("orderQuantities");
+        statusDiv.style.opacity = "0";
+      })
+      .catch(error => {
           console.error('Error:', error);
           alert("注文中にエラーが発生しました。");
       });
@@ -480,6 +484,9 @@
           isLogin = true;
           auth_key = data["token"];
           classnum = data["user"];
+
+          //ぉぉおぉっぉお
+
           document.querySelector('h1').innerHTML += ` ${classnum}組`;
           document.getElementById('login').style.display = 'none';
           document.getElementById('main').style.display = 'block';
