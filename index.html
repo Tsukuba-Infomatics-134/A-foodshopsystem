@@ -483,8 +483,8 @@
           auth_key = data["token"];
           classnum = data["user"];
 
-          document.getElementsByClassName('description-text1')[0].innerHTML = explanations(classnum,0);
-          document.getElementsByClassName('description-text2')[0].innerHTML = explanations(classnum,1);
+          document.getElementsByClassName('description-text1')[0].innerHTML = explanations[classnum][0];
+          document.getElementsByClassName('description-text2')[0].innerHTML = explanations[classnum][1];
 
           document.querySelector('h1').innerHTML += ` ${classnum}組`;
           document.getElementById('login').style.display = 'none';
