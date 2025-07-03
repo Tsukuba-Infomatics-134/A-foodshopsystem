@@ -228,7 +228,7 @@
                 <button class="triangle-right" type="button" onclick="changeQty(0, 1)" aria-label="増やす"></button>
               </span>
             </p>
-            <p class="description-text">explanations(0,0)</p>
+            <p class="description-text1"></p>
           </div>
         </div>
       </div>
@@ -246,7 +246,7 @@
                 <button class="triangle-right" type="button" onclick="changeQty(1, 1)" aria-label="増やす"></button>
               </span>
             </p>
-            <p class="description-text">explanations(0,1)</p>
+            <p class="description-text2"></p>
           </div>
         </div>
       </div>
@@ -483,7 +483,8 @@
           auth_key = data["token"];
           classnum = data["user"];
 
-          //ぉぉおぉっぉお
+          document.getElementsByClassName('description-text1')[0].innerHTML = explanations(classnum,0);
+          document.getElementsByClassName('description-text2')[0].innerHTML = explanations(classnum,0);
 
           document.querySelector('h1').innerHTML += ` ${classnum}組`;
           document.getElementById('login').style.display = 'none';
