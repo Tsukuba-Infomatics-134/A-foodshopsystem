@@ -107,7 +107,7 @@
     }
 
     body {
-      background-image: url("https://www.photolibrary.jp/mhd1/img753/450-20200124182302.jpg");
+      background-image: url("https://pbs.twimg.com/media/F4dZzlfboAAm7lm.jpg");
       background-size: cover;
       background-attachment: fixed;
       font-family: "Segoe UI", "ヒラギノ角ゴ ProN", sans-serif;
@@ -206,20 +206,20 @@
 </head>
 <body>
   <div id="login">
-        <p>パスワードを入力してください。</p>
+        <p style="color: white;">パスワードを入力してください。</p>
         <input type="password" id="pass" placeholder="パスワードを入力">
         <button onclick="login()">ログイン</button>
   </div>
   <div id="main" style="display:none;">
-  <h1>桐陰祭 注文システム A</h1>
+  <h1>桐陰祭 注文システム</h1>
 
   <div class="container-fluid">
     <div class="row justify-content-center g-4 align-items-stretch">
       <div class="col-md-4 d-flex">
         <div class="card text-center w-100">
-          <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" class="card-img-top" alt="メニュー1" />
+          <img src= "https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" class="card-img-top-1" alt="メニュー1" />
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title">メニュー1 - 200円</h5>
+            <h5 class="card-title"></h5>
             <p>
               個数:
               <span class="qty-control">
@@ -235,9 +235,9 @@
 
       <div class="col-md-4 d-flex">
         <div class="card text-center w-100">
-          <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" class="card-img-top" alt="メニュー2" />
+          <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" class="card-img-top-2" alt="メニュー2" />
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title">メニュー2 - 300円</h5>
+            <h5 class="card-title"></h5>
             <p>
               個数:
               <span class="qty-control">
@@ -307,21 +307,32 @@
     ];
 
     const pictures = [
-      ["",""]
-      ["",""]
-      ["",""]
-      ["",""]
-      ["",""]
+      ["",""],
+      ["",""],
+      ["",""],
+      ["",""],
+      ["",""],
       ["",""]
     ];
 
     const prices = [
-      ["",""]
-      ["",""]
-      ["",""]
-      ["",""]
-      ["",""]
-      ["",""]
+      ["",""],
+      ["ベビーカステラ(プレーン) - 100円","ベビーカステラ(抹茶) - 100円"],
+      ["お好み焼き(プレーン) - 100円","お好み焼き(チーズ入り) - 100円"],
+      ["団子(プレーン) - 100円","男子(プレーン) - 100円"],
+      ["かき氷(プレーン) - 100円","かき氷(マンゴー) - 100円"],
+      ["じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(コンソメ) - 100円","じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(バター醤油) - 100円"],
+      ["たこ焼き(ノーマル) - 100円","たこ焼き(明太子入り くコ:彡) - 100円"]
+    ];
+
+    const backgroundImages = [
+    "",
+    "url('https://illust.download/wp-content/uploads/2017/11/background134.jpg')",
+    "url('https://illust.download/wp-content/uploads/2017/11/background137.jpg')",
+    "url('https://illust.download/wp-content/uploads/2017/11/background135.jpg')",
+    "url('https://illust.download/wp-content/uploads/2017/11/background138.jpg')",
+    "url('https://illust.download/wp-content/uploads/2017/11/background136.jpg')",
+    "url('https://illust.download/wp-content/uploads/2017/11/background133.jpg')",
     ];
 
     var classnum = 0;
@@ -505,6 +516,12 @@
 
           document.getElementsByClassName('description-text1')[0].innerHTML = explanations[classnum][0];
           document.getElementsByClassName('description-text2')[0].innerHTML = explanations[classnum][1];
+          document.body.style.backgroundImage = backgroundImages[classnum];
+          document.getElementsByClassName('card-img-top-1')[0].innerHTML = pictures[classnum][0];
+          document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
+          document.getElementsByClassName('card-title')[0].innerHTML = prices[classnum][0];
+          document.getElementsByClassName('card-title')[1].innerHTML = prices[classnum][1];
+          // 変えたところ
 
           document.querySelector('h1').innerHTML += ` ${classnum}組`;
           document.getElementById('login').style.display = 'none';
