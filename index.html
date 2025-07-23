@@ -418,8 +418,7 @@
               "authorization": auth_key
           },
           body: JSON.stringify({
-              "order_items": {"item_1": order1, "item_2": order2},
-              "payment": "au"
+              "order_items": {"item_1": order1, "item_2": order2}
           })
       }).then(async response => {
           if (response.status === 200) {
