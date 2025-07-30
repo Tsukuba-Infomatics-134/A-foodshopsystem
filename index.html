@@ -303,7 +303,13 @@
     const quantities = [0, 0];
 
     const explanations = [
-      ["管理者用でやんす","管理者用やで"],["ただのベビカス","少し違うベビカス"],["ただのお好み焼き","少し黄色いお好み焼き"],["ぷれ","抹茶"],["ぷれ","異常"],["普通","コンソメ"],["通常","突然変異"]
+      ["管理者用でやんす","管理者用やで"],
+      ["ただのベビカス","少し違うベビカス"],
+      ["ただのお好み焼き","少し黄色いお好み焼き"],
+      ["ぷれ","抹茶"],
+      ["ぷれ","異常"],
+      ["普通","コンソメ"],
+      ["通常","突然変異"]
     ];
 
     const pictures = [
@@ -315,15 +321,25 @@
       ["",""]
     ];
 
-    const prices = [
+    const titles = [
       ["",""],
-      ["ベビーカステラ(プレーン) - 100円","ベビーカステラ(抹茶) - 100円"],
-      ["お好み焼き(プレーン) - 100円","お好み焼き(チーズ入り) - 100円"],
-      ["団子(プレーン) - 100円","男子(プレーン) - 100円"],
-      ["かき氷(プレーン) - 100円","かき氷(マンゴー) - 100円"],
-      ["じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(コンソメ) - 100円","じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(バター醤油) - 100円"],
-      ["たこ焼き(ノーマル) - 100円","たこ焼き(明太子入り くコ:彡) - 100円"]
+      ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
+      ["お好み焼き(プレーン)", "お好み焼き(チーズ入り)"],
+      ["団子(プレーン)", "男子(プレーン)"],
+      ["かき氷(プレーン)", "かき氷(マンゴー)"],
+      ["じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(コンソメ)", "じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(バター醤油)"],
+      ["たこ焼き(ノーマル)", "たこ焼き(明太子入り くコ:彡)"]
     ];
+
+    const prices = [
+      [0, 0],
+      [100, 100],
+      [100, 100],
+      [100, 100],
+      [100, 100],
+      [100, 100],
+      [100, 100],
+    ]
 
     const backgroundImages = [
     "",
@@ -518,26 +534,20 @@
           document.body.style.backgroundImage = backgroundImages[classnum];
           document.getElementsByClassName('card-img-top-1')[0].innerHTML = pictures[classnum][0];
           document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
-          document.getElementsByClassName('card-title')[0].innerHTML = prices[classnum][0];
-          document.getElementsByClassName('card-title')[1].innerHTML = prices[classnum][1];
+          document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]} - ${prices[classnum][0]}`;
+          document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]} - ${prices[classnum][1]}`;
           // 変えたところ
 
           document.querySelector('h1').innerHTML += ` ${classnum}組`;
           document.getElementById('login').style.display = 'none';
           document.getElementById('main').style.display = 'block';
-          // document.getElementById("pass").value = "";
-          // document.getElementById("status").innerHTML = data["user"];
-          // document.getElementById("log").innerHTML = "";
-          // document.getElementById("type_").innerHTML = data["type"];
           const checkInterval = () => {
               check().then(async ret => {
                   console.log("checked", ret)
                   if (ret != null && ret.length > 0) {
-                      //ここに更新時の挙動を書く                        
+                      //ここに更新時の挙動を書く
                   }
                   if (isLogin) {
-                    //Aはcheckを送らない。
-                      // setTimeout(() => {checkInterval()}, 10)
                   }
               })
           }
@@ -557,21 +567,9 @@
                   console.error('Error:', response.text());
               }
           }).then(ret => {
-            // console.log("logall", ret);
               if (ret == null) {
                   return;
               }
-              // callingCodes = [];
-              // waitingCodes = [];
-              // for (const key in ret) {
-              //   console.log(key, ret[key].status);
-              //   if (ret[key].status === "呼び出し中") {
-              //     callingCodes.push(parseInt(key));
-              //   } else if (ret[key].status === "呼び出し待ち") {
-              //     waitingCodes.push(parseInt(key));
-              //   }
-              // }
-
           })
       })
       .catch(error => {
