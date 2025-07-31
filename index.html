@@ -395,8 +395,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      const quantities = [0, 0];
-
+      const apiurl = "https://api.yaakiyu.f5.si/";
       const explanations = [
         ["管理者用でやんす", "管理者用やで"],
         ["ただのベビカス", "少し違うベビカス"],
@@ -406,7 +405,6 @@
         ["普通", "コンソメ"],
         ["通常", "突然変異"],
       ];
-
       const pictures = [
         ["", ""],
         ["", ""],
@@ -415,7 +413,6 @@
         ["", ""],
         ["", ""],
       ];
-
       const titles = [
         ["",""],
         ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
@@ -425,7 +422,6 @@
         ["じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(コンソメ)", "じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(バター醤油)"],
         ["たこ焼き(ノーマル)", "たこ焼き(明太子入り くコ:彡)"]
       ];
-
       const prices = [
         [0, 0],
         [100, 100],
@@ -435,7 +431,6 @@
         [100, 100],
         [100, 100],
       ]
-
       const backgroundImages = [
         "",
         "url('https://illust.download/wp-content/uploads/2017/11/background134.jpg')",
@@ -446,7 +441,10 @@
         "url('https://illust.download/wp-content/uploads/2017/11/background133.jpg')",
       ];
 
+      const quantities = [0, 0];
       var classnum = 0;
+      let auth_key = null;
+      let isLogin = false;
 
       // 初期化時にボタン状態更新
       window.onload = () => {
@@ -485,10 +483,7 @@
       }
 
       function showConfirmModal() {
-        const total = quantities.reduce(
-          (sum, q, i) => sum + q * (i === 0 ? 200 : 300),
-          0
-        );
+        const total = quantities[0] * prices[classnum][0] + quantities[1] * prices[classnum][1];
         if (total === 0) {
           alert("1つ以上選択してください。");
           return;
@@ -582,10 +577,6 @@
         setTimeout(() => {}, 1000);
       }
 
-      const apiurl = "https://api.yaakiyu.f5.si/";
-      let auth_key = null;
-      let isLogin = false;
-
       function check() {
         return fetch(apiurl + "check", {
           method: "GET",
@@ -646,48 +637,43 @@
             document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
             document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]} - ${prices[classnum][0]}`;
             document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]} - ${prices[classnum][1]}`;
-            // 変えたところ
-
             document.querySelector('h1').innerHTML += ` ${classnum}組`;
             document.getElementById('login').style.display = 'none';
             document.getElementById('main').style.display = 'block';
-            const checkInterval = () => {
-                check().then(async ret => {
-                    console.log("checked", ret)
-                    if (ret != null && ret.length > 0) {
-                        //ここに更新時の挙動を書く
-                    }
-                    if (isLogin) {
-                    }
-                })
-            }
-            checkInterval();
-            console.log("checkInterval start");
+            // const checkInterval = () => {
+            //     check().then(async ret => {
+            //         console.log("checked", ret)
+            //         if (ret != null && ret.length > 0) {
+            //             //ここに更新時の挙動を書く
+            //         }
+            //         if (isLogin) {
+            //         }
+            //     })
+            // }
+            // checkInterval();
+            // console.log("checkInterval start");
 
-            fetch(apiurl + "log_all", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: auth_key,
-              },
-            })
-              .then((response) => {
-                if (response.status === 200) {
-                  return response.json();
-                } else {
-                  console.error("Error:", response.text());
-                }
-              })
-              .then((ret) => {
-                // console.log("logall", ret);
-                if (ret == null) {
-                  return;
-              }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("ログイン中にエラーが発生しました。");
-          });
+            // fetch(apiurl + "log_all", {
+            //   method: "GET",
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //     authorization: auth_key,
+            //   },
+            // }).then((response) => {
+            //     if (response.status === 200) {
+            //       return response.json();
+            //     } else {
+            //       console.error("Error:", response.text());
+            //     }
+            // }).then((ret) => {
+            //   // console.log("logall", ret);
+            //   if (ret == null) {
+            //     return;
+            //   }
+            // }).catch((error) => {
+            //   console.error("Error:", error);
+            //   alert("ログイン中にエラーが発生しました。");
+            // });
       });
     }
     </script>
