@@ -416,25 +416,25 @@
         ["", ""],
       ];
 
-    const titles = [
-      ["",""],
-      ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
-      ["お好み焼き(プレーン)", "お好み焼き(チーズ入り)"],
-      ["団子(プレーン)", "男子(プレーン)"],
-      ["かき氷(プレーン)", "かき氷(マンゴー)"],
-      ["じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(コンソメ)", "じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(バター醤油)"],
-      ["たこ焼き(ノーマル)", "たこ焼き(明太子入り くコ:彡)"]
-    ];
+      const titles = [
+        ["",""],
+        ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
+        ["お好み焼き(プレーン)", "お好み焼き(チーズ入り)"],
+        ["団子(プレーン)", "男子(プレーン)"],
+        ["かき氷(プレーン)", "かき氷(マンゴー)"],
+        ["じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(コンソメ)", "じゃが☆じゃが☆ぽてΔぽてΔデリシャス♪ぽていとっ！(バター醤油)"],
+        ["たこ焼き(ノーマル)", "たこ焼き(明太子入り くコ:彡)"]
+      ];
 
-    const prices = [
-      [0, 0],
-      [100, 100],
-      [100, 100],
-      [100, 100],
-      [100, 100],
-      [100, 100],
-      [100, 100],
-    ]
+      const prices = [
+        [0, 0],
+        [100, 100],
+        [100, 100],
+        [100, 100],
+        [100, 100],
+        [100, 100],
+        [100, 100],
+      ]
 
       const backgroundImages = [
         "",
@@ -639,30 +639,30 @@
             auth_key = data["token"];
             classnum = data["user"];
 
-          document.getElementsByClassName('description-text1')[0].innerHTML = explanations[classnum][0];
-          document.getElementsByClassName('description-text2')[0].innerHTML = explanations[classnum][1];
-          document.body.style.backgroundImage = backgroundImages[classnum];
-          document.getElementsByClassName('card-img-top-1')[0].innerHTML = pictures[classnum][0];
-          document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
-          document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]} - ${prices[classnum][0]}`;
-          document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]} - ${prices[classnum][1]}`;
-          // 変えたところ
+            document.getElementsByClassName('description-text1')[0].innerHTML = explanations[classnum][0];
+            document.getElementsByClassName('description-text2')[0].innerHTML = explanations[classnum][1];
+            document.body.style.backgroundImage = backgroundImages[classnum];
+            document.getElementsByClassName('card-img-top-1')[0].innerHTML = pictures[classnum][0];
+            document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
+            document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]} - ${prices[classnum][0]}`;
+            document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]} - ${prices[classnum][1]}`;
+            // 変えたところ
 
-          document.querySelector('h1').innerHTML += ` ${classnum}組`;
-          document.getElementById('login').style.display = 'none';
-          document.getElementById('main').style.display = 'block';
-          const checkInterval = () => {
-              check().then(async ret => {
-                  console.log("checked", ret)
-                  if (ret != null && ret.length > 0) {
-                      //ここに更新時の挙動を書く
-                  }
-                  if (isLogin) {
-                  }
-              })
-          }
-          checkInterval();
-          console.log("checkInterval start");
+            document.querySelector('h1').innerHTML += ` ${classnum}組`;
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('main').style.display = 'block';
+            const checkInterval = () => {
+                check().then(async ret => {
+                    console.log("checked", ret)
+                    if (ret != null && ret.length > 0) {
+                        //ここに更新時の挙動を書く
+                    }
+                    if (isLogin) {
+                    }
+                })
+            }
+            checkInterval();
+            console.log("checkInterval start");
 
             fetch(apiurl + "log_all", {
               method: "GET",
@@ -688,7 +688,8 @@
             console.error("Error:", error);
             alert("ログイン中にエラーが発生しました。");
           });
-      }
+      });
+    }
     </script>
   </body>
 </html>
