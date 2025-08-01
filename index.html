@@ -412,6 +412,7 @@
         ["", ""],
         ["", ""],
         ["", ""],
+        ["", ""],
       ];
       const titles = [
         ["",""],
@@ -449,23 +450,38 @@
       // 初期化時にボタン状態更新
       window.onload = () => {
         loadFromStorage();
-        quantities.forEach((_, i) => updateButtonState(i));
       };
+
+
+      // 合計金額を計算する関数
+      function calcTotal() {
+        return quantities.reduce((sum, qty, i) => sum + qty * prices[classnum][i], 0);
+      }
+
+      // 個数表示・ボタン状態をまとめて更新
+      function updateQtyUI() {
+        quantities.forEach((qty, i) => {
+          document.getElementById(`qty${i + 1}`).value = qty;
+        });
+        updateButtonStates();
+      }
+
+      // 左ボタンの状態を一括更新
+      function updateButtonStates() {
+        const leftBtns = document.querySelectorAll(".triangle-left");
+        quantities.forEach((qty, i) => {
+          if (qty <= 0) {
+            leftBtns[i].classList.add("disabled");
+          } else {
+            leftBtns[i].classList.remove("disabled");
+          }
+        });
+      }
 
       function changeQty(index, delta) {
         quantities[index] = Math.max(0, quantities[index] + delta);
-        document.getElementById(`qty${index + 1}`).value = quantities[index];
-        updateButtonState(index);
+        updateQtyUI();
         saveToStorage();
-      }
-
-      function updateButtonState(index) {
-        const leftBtns = document.querySelectorAll(".triangle-left");
-        if (quantities[index] <= 0) {
-          leftBtns[index].classList.add("disabled");
-        } else {
-          leftBtns[index].classList.remove("disabled");
-        }
       }
 
       function saveToStorage() {
@@ -477,13 +493,15 @@
         if (saved && Array.isArray(saved)) {
           saved.forEach((qty, i) => {
             quantities[i] = qty;
-            document.getElementById(`qty${i + 1}`).value = qty;
           });
+          updateQtyUI();
+        } else {
+          updateQtyUI();
         }
       }
 
       function showConfirmModal() {
-        const total = quantities[0] * prices[classnum][0] + quantities[1] * prices[classnum][1];
+        const total = calcTotal();
         if (total === 0) {
           alert("1つ以上選択してください。");
           return;
@@ -509,6 +527,7 @@
         confirmModal.hide();
       }
 
+
       function submitOrder() {
         const statusDiv = document.getElementById("status");
         statusDiv.style.opacity = "1";
@@ -520,8 +539,7 @@
 
         const order1 = quantities[0];
         const order2 = quantities[1];
-        console.log("注文内容:", "item_1:", order1, "item_2:", order2);
-        if (order1 + order2 == "") {
+        if (order1 + order2 === 0) {
           alert("注文する数を入力してください");
           return;
         }
@@ -546,26 +564,18 @@
             }
           })
           .then((res_json) => {
+            if (!res_json) return;
             const orderNum = res_json["order_id"];
-            /*statusDiv.textContent = `注文を受け付けました。整理番号: #${orderNum}`;*/
-
             // モーダルに整理番号セットして表示
-            const modalBody = document.getElementById("modalBody");
-            modalBody.textContent = `整理番号: #${orderNum}`;
-
+            document.getElementById("modalBody").textContent = `整理番号: #${orderNum}`;
             // Bootstrapモーダルを表示
             const orderModal = new bootstrap.Modal(
               document.getElementById("orderModal")
             );
             orderModal.show();
-
             // 注文リセット
             quantities.fill(0);
-            document.getElementById("qty1").value = 0;
-            document.getElementById("qty2").value = 0;
-            document
-              .querySelectorAll(".triangle-left")
-              .forEach((btn) => btn.classList.add("disabled"));
+            updateQtyUI();
             localStorage.removeItem("orderQuantities");
             statusDiv.style.opacity = "0";
           })
@@ -573,8 +583,6 @@
             console.error("Error:", error);
             alert("注文中にエラーが発生しました。");
           });
-
-        setTimeout(() => {}, 1000);
       }
 
       function check() {
