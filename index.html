@@ -10,7 +10,7 @@
     />
     <style>
       .confirm-button {
-        background-color: #28a745;
+        background-color: hwb(0 4% 13%);
         color: white;
         font-size: 80px;
         padding: 50px 400px;
@@ -20,6 +20,31 @@
         font-weight: bold;
         transition: background-color 0.2s ease;
         display: inline-block;
+      }
+
+      .recomfirm-button {
+        background-color: rgb(231, 12, 12);
+        color: white;
+        font-size: 40px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+        display: inline-block;
+      }
+      .recansel-button {
+        background-color: blue;
+        color: white;
+        font-size: 40px;
+        padding: 10px 60px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+        display: inline-block
       }
 
       .triangle-left,
@@ -336,27 +361,27 @@
               ></button>
             </div>
             <div class="modal-body">
-              <p>
+              <h10>
                 <strong>メニュー1:</strong> <span id="confirmQty1"></span>個
-              </p>
-              <p>
+              </h10>
+              <h10>
                 <strong>メニュー2:</strong> <span id="confirmQty2"></span>個
-              </p>
-              <p>
+              </h10>
+              <h10>
                 <strong>合計金額:</strong> <span id="confirmTotal"></span>円
-              </p>
+              </h10>
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                class="recansel-button"
                 data-bs-dismiss="modal"
               >
                 戻る
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                class="recomfirm-button"
                 onclick="confirmOrder()"
               >
                 注文確定
@@ -391,7 +416,7 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn btn-primary"
+                class="recomfirm-button"
                 data-bs-dismiss="modal"
               >
                 閉じる
@@ -696,5 +721,6 @@
     </script>
   </body>
 </html>
+
 
 
