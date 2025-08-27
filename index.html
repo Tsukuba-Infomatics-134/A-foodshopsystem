@@ -643,8 +643,8 @@
             document.body.style.backgroundImage = backgroundImages[classnum];
             document.getElementsByClassName('card-img-top-1')[0].innerHTML = pictures[classnum][0];
             document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
-            document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]} - ${prices[classnum][0]}`;
-            document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]} - ${prices[classnum][1]}`;
+            document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]}  <Br> ${prices[classnum][0]}`;
+            document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]}  <Br> ${prices[classnum][1]}`;
             document.querySelector('h1').innerHTML += ` ${classnum}組`;
             document.getElementById('login').style.display = 'none';
             document.getElementById('main').style.display = 'block';
@@ -687,3 +687,4 @@
     </script>
   </body>
 </html>
+
