@@ -727,7 +727,7 @@
 
             document.getElementsByClassName('description-text1')[0].innerHTML = classData["explain"][0];
             document.getElementsByClassName('description-text2')[0].innerHTML = classData["explain"][1];
-            document.body.style.backgroundImage = classData["bgimage"];
+            document.body.style.backgroundImage = `url('${classData["bgimage"]}')`;
             document.getElementsByClassName('card-img-top-1')[0].innerHTML = `url('${classData["picture"][0]}')`;
             document.getElementsByClassName('card-img-top-2')[0].innerHTML = `url('${classData["picture"][1]}')`;
             document.getElementsByClassName('card-title')[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
