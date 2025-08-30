@@ -535,10 +535,10 @@
             // devサーバーが落ちている場合は何もしない
           });
       }
+      tryDevApiUrlSwitch();
 
       // 初期化時にボタン状態更新
       window.onload = () => {
-        tryDevApiUrlSwitch();
         loadFromStorage();
       };
 
