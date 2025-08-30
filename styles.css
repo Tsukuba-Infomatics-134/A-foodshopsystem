@@ -98,11 +98,17 @@
 }
 
 /* グレーアウト */
-.triangle-left.disabled {
-  border-right-color: #ccc !important;
+.triangle-left.disabled,
+.triangle-right.disabled {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.5;
+}
+.triangle-left.disabled {
+  border-right-color: #ccc !important;
+}
+.triangle-right.disabled {
+  border-left-color: #ccc !important;
 }
 
 .qty-control {
