@@ -9,6 +9,24 @@
       rel="stylesheet"
     />
     <style>
+      .starting_button {
+        background: black;
+        color: rgba(0, 255, 136, 0.699);
+        border-radius: 1em;
+        padding: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
+      }
+
+      .item-starting{
+        padding: 200px;
+        font-size: 100px;
+        font-weight: bold;
+
+      }
       .confirm-button {
         background-color: hwb(0 4% 13%);
         color: white;
@@ -23,7 +41,7 @@
       }
 
       .recomfirm-button {
-        background-color: rgb(231, 12, 12);
+        background-color: #ff5135;
         color: white;
         font-size: 40px;
         padding: 10px 20px;
@@ -35,7 +53,7 @@
         display: inline-block;
       }
       .recansel-button {
-        background-color: blue;
+        background-color: #1b81ff;
         color: white;
         font-size: 40px;
         padding: 10px 60px;
@@ -247,6 +265,13 @@
       <input type="password" id="pass" placeholder="パスワードを入力" />
       <button onclick="login()">ログイン</button>
     </div>
+
+    <div id="Sub" style="display: none">
+      <div class="starting_button">
+        <button class="item-starting" id="start-ordering" onclick="Ordering()">注文開始</button>
+      </div>
+    </div>
+
     <div id="main" style="display: none">
       <h1>桐陰祭 注文システム</h1>
 
@@ -418,6 +443,7 @@
                 type="button"
                 class="recomfirm-button"
                 data-bs-dismiss="modal"
+                onclick="Closing()"
               >
                 閉じる
               </button>
@@ -681,7 +707,7 @@
             document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]}  <Br> <h10>${prices[classnum][1]}</h10>yen`;
             document.querySelector('h1').innerHTML += ` ${classnum}組`;
             document.getElementById('login').style.display = 'none';
-            document.getElementById('main').style.display = 'block';
+            document.getElementById('Sub').style.display = 'block';
             // const checkInterval = () => {
             //     check().then(async ret => {
             //         console.log("checked", ret)
@@ -717,6 +743,18 @@
             //   alert("ログイン中にエラーが発生しました。");
             // });
       });
+
+    }
+
+    function Ordering(){
+      document.getElementById('Sub').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+        
+      }
+    function Closing(){
+      document.getElementById('main').style.display = 'none';
+      document.getElementById('Sub').style.display = 'block';
+
     }
     </script>
   </body>
