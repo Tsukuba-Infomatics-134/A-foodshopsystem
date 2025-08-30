@@ -279,35 +279,15 @@
         <div class="row justify-content-center g-4 align-items-stretch">
           <div class="col-md-4 d-flex">
             <div class="card text-center w-100">
-              <img
-                src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-                class="card-img-top-1"
-                alt="メニュー1"
-              />
+              <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" class="card-img-top-1" alt="メニュー1" />
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title"></h5>
                 <p>
                   個数:
                   <span class="qty-control">
-                    <button
-                      class="triangle-left"
-                      type="button"
-                      onclick="changeQty(0, -1)"
-                      aria-label="減らす"
-                    ></button>
-                    <input
-                      type="text"
-                      id="qty1"
-                      value="0"
-                      class="qty-input"
-                      readonly
-                    />
-                    <button
-                      class="triangle-right"
-                      type="button"
-                      onclick="changeQty(0, 1)"
-                      aria-label="増やす"
-                    ></button>
+                    <button class="triangle-left" type="button" onclick="changeQty(0, -1)" aria-label="減らす"></button>
+                    <input type="text" id="qty1" value="0" class="qty-input" readonly />
+                    <button class="triangle-right" type="button" onclick="changeQty(0, 1)" aria-label="増やす"></button>
                   </span>
                 </p>
                 <p class="description-text1"></p>
@@ -317,35 +297,15 @@
 
           <div class="col-md-4 d-flex">
             <div class="card text-center w-100">
-              <img
-                src="https://mono-log.jp/archives/img/2025/04/250403.jpg"
-                class="card-img-top-2"
-                alt="メニュー2"
-              />
+              <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" class="card-img-top-2" alt="メニュー2" />
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title"></h5>
                 <p>
                   個数:
                   <span class="qty-control">
-                    <button
-                      class="triangle-left"
-                      type="button"
-                      onclick="changeQty(1, -1)"
-                      aria-label="減らす"
-                    ></button>
-                    <input
-                      type="text"
-                      id="qty2"
-                      value="0"
-                      class="qty-input"
-                      readonly
-                    />
-                    <button
-                      class="triangle-right"
-                      type="button"
-                      onclick="changeQty(1, 1)"
-                      aria-label="増やす"
-                    ></button>
+                    <button class="triangle-left" type="button" onclick="changeQty(1, -1)" aria-label="減らす"></button>
+                    <input type="text" id="qty2" value="0" class="qty-input" readonly />
+                    <button class="triangle-right" type="button" onclick="changeQty(1, 1)" aria-label="増やす"></button>
                   </span>
                 </p>
                 <p class="description-text2"></p>
@@ -355,11 +315,7 @@
         </div>
 
         <div class="text-center mt-4">
-          <button
-            id="confirm"
-            class="confirm-button"
-            onclick="showConfirmModal()"
-          >
+          <button id="confirm" class="confirm-button" onclick="showConfirmModal()">
             確認する
           </button>
           <div id="status"></div>
@@ -367,48 +323,29 @@
       </div>
 
       <!-- 確認モーダル -->
-      <div
-        class="modal fade"
-        id="confirmModal"
-        tabindex="-1"
-        aria-labelledby="confirmModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content p-4">
             <div class="modal-header">
               <h5 class="modal-title" id="confirmModalLabel">注文内容確認</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="閉じる"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
             </div>
             <div class="modal-body">
               <h10>
-                <strong>メニュー1:</strong> <span id="confirmQty1"></span>個
+                <strong>メニュー1:</strong> <span id="confirmQty1">0</span>個
               </h10>
               <h10>
-                <strong>メニュー2:</strong> <span id="confirmQty2"></span>個
+                <strong>メニュー2:</strong> <span id="confirmQty2">0</span>個
               </h10>
               <h10>
-                <strong>合計金額:</strong> <span id="confirmTotal"></span>円
+                <strong>合計金額:</strong> <span id="confirmTotal">0</span>円
               </h10>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="recansel-button"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="recansel-button" data-bs-dismiss="modal">
                 戻る
               </button>
-              <button
-                type="button"
-                class="recomfirm-button"
-                onclick="confirmOrder()"
-              >
+              <button type="button" class="recomfirm-button" onclick="confirmOrder()">
                 注文確定
               </button>
             </div>
@@ -417,34 +354,18 @@
       </div>
 
       <!-- 整理券用モーダル -->
-      <div
-        class="modal fade"
-        id="orderModal"
-        tabindex="-1"
-        aria-labelledby="orderModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content p-4">
             <div class="modal-header">
               <h5 class="modal-title" id="orderModalLabel">注文受付完了</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="閉じる"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
             </div>
             <div class="modal-body" id="modalBody" style="font-size: 1.8rem">
               <!-- 整理券番号をここに表示 -->
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="recomfirm-button"
-                data-bs-dismiss="modal"
-                onclick="Closing()"
-              >
+              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="Closing()">
                 閉じる
               </button>
             </div>
@@ -553,11 +474,6 @@
         quantities.forEach((qty, i) => {
           document.getElementById(`qty${i + 1}`).value = qty;
         });
-        updateButtonStates();
-      }
-
-      // 左ボタンの状態を一括更新
-      function updateButtonStates() {
         const leftBtns = document.querySelectorAll(".triangle-left");
         quantities.forEach((qty, i) => {
           if (qty <= 0) {
