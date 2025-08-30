@@ -456,56 +456,69 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       const apiurl = "https://api.yaakiyu.f5.si/";
-      const explanations = [
-        ["管理者用でやんす", "管理者用やで"],
-        ["ただのベビカス", "少し違うベビカス"],
-        ["ただのお好み焼き", "少し黄色いお好み焼き"],
-        ["ぷれ", "抹茶"],
-        ["ぷれ", "異常"],
-        ["うまい", "うまい"],
-        ["通常", "突然変異"],
-      ];
-      const pictures = [
-        ["", ""],
-        ["", ""],
-        ["", ""],
-        ["", ""],
-        ["", ""],
-        ["", ""],
-        ["", ""],
-      ];
-      const titles = [
-        ["",""],
-        ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
-        ["お好み焼き(プレーン)", "お好み焼き(チーズ入り)"],
-        ["団子(プレーン)", "男子(プレーン)"],
-        ["かき氷(プレーン)", "かき氷(マンゴー)"],
-        ["シャカシャカポテト(コンソメ)", "シャカシャカポテト(バター醤油)"],
-        ["たこ焼き(ノーマル)", "たこ焼き(明太子入り くコ:彡)"]
-      ];
-      const prices = [
-        [0, 0],
-        [100, 100],
-        [100, 100],
-        [100, 100],
-        [100, 100],
-        [200, 200],
-        [100, 100],
+      const classDatas = [
+        {}, // 管理者用
+        { // 1組
+          "variety": 2,
+          "title": ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
+          "explain": ["ただのベビカス", "少し違うベビカス"],
+          "picture": ["", ""],
+          "price": [100, 100],
+          "limit": 10,
+          "bgimage": "https://illust.download/wp-content/uploads/2017/11/background134.jpg"
+        },
+        { // 2組
+          "variety": 2,
+          "title": ["お好み焼き(プレーン)", "お好み焼き(チーズ入り)"],
+          "explain": ["ただのお好み焼き", "少し黄色いお好み焼き"],
+          "picture": ["", ""],
+          "price": [100, 100],
+          "limit": 10,
+          "bgimage": "https://illust.download/wp-content/uploads/2017/11/background137.jpg"
+        },
+        { // 3組
+          "variety": 2,
+          "title": ["団子(プレーン)", "男子(プレーン)"],
+          "explain": ["ぷれ", "抹茶"],
+          "picture": ["", ""],
+          "price": [100, 100],
+          "limit": 10,
+          "bgimage": "https://illust.download/wp-content/uploads/2017/11/background135.jpg"
+        },
+        { // 4組
+          "variety": 2,
+          "title": ["かき氷(プレーン)", "かき氷(マンゴー)"],
+          "explain": ["ぷれ", "異常"],
+          "picture": ["", ""],
+          "price": [100, 100],
+          "limit": 10,
+          "bgimage": "https://illust.download/wp-content/uploads/2017/11/background138.jpg"
+        },
+        { // 5組
+          "variety": 2,
+          "title": ["シャカシャカポテト(コンソメ)", "シャカシャカポテト(バター醤油)"],
+          "explain": ["うまい", "うまい"],
+          "picture": ["", ""],
+          "price": [200, 200],
+          "limit": 10,
+          "bgimage": "https://illust.download/wp-content/uploads/2017/11/background136.jpg"
+        },
+        { // 6組
+          "variety": 2,
+          "title": ["たこ焼き(ノーマル)", "たこ焼き(明太子入り くコ:彡)"],
+          "explain": ["通常", "突然変異"],
+          "picture": ["", ""],
+          "price": [100, 100],
+          "limit": 10,
+          "bgimage": "https://illust.download/wp-content/uploads/2017/11/background133.jpg"
+        }
       ]
-      const backgroundImages = [
-        "",
-        "url('https://illust.download/wp-content/uploads/2017/11/background134.jpg')",
-        "url('https://illust.download/wp-content/uploads/2017/11/background137.jpg')",
-        "url('https://illust.download/wp-content/uploads/2017/11/background135.jpg')",
-        "url('https://illust.download/wp-content/uploads/2017/11/background138.jpg')",
-        "url('https://illust.download/wp-content/uploads/2017/11/background136.jpg')",
-        "url('https://illust.download/wp-content/uploads/2017/11/background133.jpg')",
-      ];
 
       const quantities = [0, 0];
       var classnum = 0;
       let auth_key = null;
       let isLogin = false;
+      let classData = {};
 
       // 初期化時にボタン状態更新
       window.onload = () => {
@@ -515,7 +528,7 @@
 
       // 合計金額を計算する関数
       function calcTotal() {
-        return quantities.reduce((sum, qty, i) => sum + qty * prices[classnum][i], 0);
+        return quantities.reduce((sum, qty, i) => sum + qty * classData["price"][i], 0);
       }
 
       // 個数表示・ボタン状態をまとめて更新
@@ -536,29 +549,25 @@
             leftBtns[i].classList.remove("disabled");
           }
         });
+        const rightBtns = document.querySelectorAll(".triangle-right");
+        const qsum = quantities.reduce((a, b) => a + b, 0);
+        quantities.forEach((qty, i) => {
+          if (qsum >= classData["limit"]) {
+            rightBtns[i].classList.add("disabled");
+          } else {
+            rightBtns[i].classList.remove("disabled");
+          }
+        });
       }
 
       function changeQty(index, delta) {
         quantities[index] = Math.max(0, quantities[index] + delta);
         updateQtyUI();
-        saveToStorage();
       }
 
-      function saveToStorage() {
-        localStorage.setItem("orderQuantities", JSON.stringify(quantities));
-      }
-
-      function loadFromStorage() {
-        const saved = JSON.parse(localStorage.getItem("orderQuantities"));
-        if (saved && Array.isArray(saved)) {
-          saved.forEach((qty, i) => {
-            quantities[i] = qty;
-          });
-          updateQtyUI();
-        } else {
-          updateQtyUI();
-        }
-      }
+      // TODO: オフライン対応
+      function saveToStorage() {}
+      function loadFromStorage() {}
 
       function showConfirmModal() {
         const total = calcTotal();
@@ -697,14 +706,15 @@
             isLogin = true;
             auth_key = data["token"];
             classnum = data["user"];
+            classData = classDatas[classnum];
 
-            document.getElementsByClassName('description-text1')[0].innerHTML = explanations[classnum][0];
-            document.getElementsByClassName('description-text2')[0].innerHTML = explanations[classnum][1];
-            document.body.style.backgroundImage = backgroundImages[classnum];
-            document.getElementsByClassName('card-img-top-1')[0].innerHTML = pictures[classnum][0];
-            document.getElementsByClassName('card-img-top-2')[0].innerHTML = pictures[classnum][1];
-            document.getElementsByClassName('card-title')[0].innerHTML = `${titles[classnum][0]}  <Br> <h10>${prices[classnum][0]}</h10>yen`;
-            document.getElementsByClassName('card-title')[1].innerHTML = `${titles[classnum][1]}  <Br> <h10>${prices[classnum][1]}</h10>yen`;
+            document.getElementsByClassName('description-text1')[0].innerHTML = classData["explain"][0];
+            document.getElementsByClassName('description-text2')[0].innerHTML = classData["explain"][1];
+            document.body.style.backgroundImage = classData["bgimage"];
+            document.getElementsByClassName('card-img-top-1')[0].innerHTML = `url('${classData["picture"][0]}')`;
+            document.getElementsByClassName('card-img-top-2')[0].innerHTML = `url('${classData["picture"][1]}')`;
+            document.getElementsByClassName('card-title')[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
+            document.getElementsByClassName('card-title')[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
             document.querySelector('h1').innerHTML += ` ${classnum}組`;
             document.getElementById('login').style.display = 'none';
             document.getElementById('Sub').style.display = 'block';
