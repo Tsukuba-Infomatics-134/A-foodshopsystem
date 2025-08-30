@@ -455,7 +455,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      const apiurl = "https://api.yaakiyu.f5.si/";
+      const apiurl_production = "https://api.yaakiyu.f5.si/";
+      const apiurl_dev = "http://localhost:80/";
       const classDatas = [
         {}, // 管理者用
         { // 1組
@@ -519,9 +520,25 @@
       let auth_key = null;
       let isLogin = false;
       let classData = {};
+      let apiurl = apiurl_production;
+
+      // onload時にdevサーバーが生きていればapiurlをdevに切り替える
+      function tryDevApiUrlSwitch() {
+        fetch(apiurl_dev + "version", { method: "GET", cache: "no-store" })
+          .then(res => {
+            if (res.ok) {
+              apiurl = apiurl_dev;
+              console.warn("apiurlを開発環境に切り替えました");
+            }
+          })
+          .catch(() => {
+            // devサーバーが落ちている場合は何もしない
+          });
+      }
 
       // 初期化時にボタン状態更新
       window.onload = () => {
+        tryDevApiUrlSwitch();
         loadFromStorage();
       };
 
