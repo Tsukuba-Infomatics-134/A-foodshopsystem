@@ -522,7 +522,7 @@
       let classData = {};
       let apiurl = apiurl_production;
 
-      // onload時にdevサーバーが生きていればapiurlをdevに切り替える
+      // devサーバーが生きていればapiurlをdevに切り替える
       function tryDevApiUrlSwitch() {
         fetch(apiurl_dev + "version", { method: "GET", cache: "no-store" })
           .then(res => {
