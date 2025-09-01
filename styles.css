@@ -29,6 +29,19 @@
   background-color: #17320b;
 }
 
+.screen-center {
+  background-color: #ffd21f;
+}
+
+.screen-center2 {
+  background-color: white;
+  height: 96%;
+  position:relative;
+  width: 96%;
+  margin-top: 1%;
+  margin-left: 2%;
+}
+
 .width-container,
 .screen-center {
   height: 80vh;
@@ -37,9 +50,11 @@
   margin-top: 10vh;
 }
 
-.screen-center {
-  background-color: #ffd21f;
+.centerlize {
+  display: flex;
+  justify-content: center; 
 }
+
 
 .screen-center2 {
   background-color: white;
@@ -86,7 +101,7 @@
   color: #ff3232;
 }
 
-/*未整理*/
+/*ボタン類*/
 .starting_button {
   background: black;
   color: rgba(0, 255, 136, 0.699);
@@ -97,6 +112,34 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%)
+}
+
+.recansel-button {
+  background-color: #1b81ff;
+  color: white;
+}
+
+.recansel-button,
+.temperate-button1,
+.temperate-button2 {
+  font-size: 40px;
+  padding: 10px 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.temperate-button1 {
+  background-color: yellowgreen;
+  color: white;
+}
+
+.temperate-button2 {
+  background-color: blueviolet;
+  color: white;
 }
 
 .item-starting{
@@ -130,18 +173,6 @@
   font-weight: bold;
   transition: background-color 0.2s ease;
   display: inline-block;
-}
-.recansel-button {
-  background-color: #1b81ff;
-  color: white;
-  font-size: 40px;
-  padding: 10px 60px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-  display: inline-block
 }
 
 .triangle-left,
