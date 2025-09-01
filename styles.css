@@ -1,3 +1,18 @@
+error-background {
+  height: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: repeating-linear-gradient(135deg, #d50707, #d50707 10px, #ffffff 10px, #ffffff 20px);
+}
+
+.error-center {
+  background-color: #ffd21f;
+  width: 100vw;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 .starting_button {
   background: black;
   color: rgba(0, 255, 136, 0.699);
