@@ -4,8 +4,9 @@
   margin: 0 auto;
 }
 
-/*コンテナ*/
-.offline-screen,
+/*コンテナ,背景*/
+.outofservice-background,
+.offline-background,
 .error-background {
   top: 0;
   left: 0;
@@ -15,12 +16,17 @@
   background-size: cover;
 }
 
+
 .error-background {
   background-image: repeating-linear-gradient(135deg, #d50707, #d50707 10px, #ffffff 10px, #ffffff 20px);
 }
 
-.offline-screen{
+.offline-background{
   background-color: #324557;
+}
+
+.outofservice-background{
+  background-color: #17320b;
 }
 
 .width-container,
@@ -44,6 +50,8 @@
   margin-left: 2%;
 }
 
+
+
 /*テキスト関連*/
 .error-letter2{
   font-size: 3em;
@@ -51,12 +59,13 @@
   padding: 10px;
   text-align: center;
 }
-
+.outofservice-letter1,
 .error-letter,
 .item-starting {
   font-weight: bold;/*太文字化*/
 }
 
+.outofservice-letter1,
 .offline-letter1,
 .error-letter{
   font-size: 80px;
@@ -71,6 +80,10 @@
 
 .offline-letter1{
   color:whitesmoke;/*白文字化*/
+}
+
+.outofservice-letter1 {
+  color: #ff3232;
 }
 
 /*未整理*/
