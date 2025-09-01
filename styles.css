@@ -1,29 +1,38 @@
-.warning-img {
+.img-dispatcher {
   display: block;
   height: 50%;
   margin: 0 auto;
 }
 
-.english-soeji{
-  font-style: italic;
-}
-
+/*コンテナ*/
+.offline-screen,
 .error-background {
   top: 0;
   left: 0;
   position: fixed; /* CHanged */
   width: 100%;
   height: 100vh;
-  background-image: repeating-linear-gradient(135deg, #d50707, #d50707 10px, #ffffff 10px, #ffffff 20px);
   background-size: cover;
 }
 
+.error-background {
+  background-image: repeating-linear-gradient(135deg, #d50707, #d50707 10px, #ffffff 10px, #ffffff 20px);
+}
+
+.offline-screen{
+  background-color: #324557;
+}
+
+.width-container,
 .screen-center {
-  background-color: #ffd21f;
   height: 80vh;
   position: absolute;
   width: 100vw;
   margin-top: 10vh;
+}
+
+.screen-center {
+  background-color: #ffd21f;
 }
 
 .screen-center2 {
@@ -35,6 +44,7 @@
   margin-left: 2%;
 }
 
+/*テキスト関連*/
 .error-letter2{
   font-size: 3em;
   font-weight: bold;
@@ -44,15 +54,26 @@
 
 .error-letter,
 .item-starting {
-  font-weight: bold;
+  font-weight: bold;/*太文字化*/
 }
 
+.offline-letter1,
 .error-letter{
   font-size: 80px;
   text-align: center;
   padding: 0px;
 }
 
+.offline-letter1,
+.oblique{
+  font-style: italic;/*斜体化*/
+}
+
+.offline-letter1{
+  color:whitesmoke;/*白文字化*/
+}
+
+/*未整理*/
 .starting_button {
   background: black;
   color: rgba(0, 255, 136, 0.699);
