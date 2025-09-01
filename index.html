@@ -19,16 +19,20 @@
     </div>
 
     <div id="offline-reconnect" style="display: none;">
-      <h1>現在オフラインです</h1>
-      <p>再接続中...しばらくお待ちください。</p>
+      <div class="offline-screen">
+        <div class="width-container" >
+          <p class="offline-letter1"><ruby>現在オフラインです<rt class="oblique">Offline</rt></ruby></p>
+          <img src="Photos/Reconect.png" class="img-dispatcher">
+          <p class="offline-letter1">再接続中...<br>しばらくお待ちください。</p>
+        </div>
+      </div>
     </div>
 
     <div id="error-screen" style="display: none;" class="error-background">
       <div class="screen-center">
         <div class="screen-center2">
-          <img src="Photos/warning.png" class="warning-img">
-          <!-- <p class="english-soeji">Error</p>-->
-          <p class="error-letter"><ruby>エラー<rt class="english-soeji">Error</rt></ruby></p>
+          <img src="Photos/warning.png" class="img-dispatcher">
+          <p class="error-letter"><ruby>エラー<rt class="oblique">Error</rt></ruby></p>
           <p class="error-letter2">エラーが発生しました。店員に連絡してください。</p> 
         </div>
       </div>
@@ -48,6 +52,9 @@
       <div>
         <button onclick="changeDisplayMode('error-screen')">
           エラー画面
+        </button>
+        <button onclick="changeDisplayMode('offline-reconnect')">
+          オフライン画面
         </button>
       </div>
     </div>
