@@ -1,16 +1,37 @@
-error-background {
-  height: 100vw;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+.error-background {
+  position: absolute; /* CHanged */
+  width: 100%;
+  height: 100vh;
   background-image: repeating-linear-gradient(135deg, #d50707, #d50707 10px, #ffffff 10px, #ffffff 20px);
+  background-size: cover;
 }
 
-.error-center {
+.screen-center {
   background-color: #ffd21f;
+  height: 80vh;
+  position: absolute;
   width: 100vw;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  margin-top: 10vh;
+}
+
+.screen-center2 {
+  background-color: white;
+  height: 96%;
+  position:relative;
+  width: 96%;
+  margin-top: 1%;
+  margin-left: 2%;
+}
+
+.error-letter,
+.item-starting {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.error-letter{
+  padding: 40px;
+  text-align: center;
 }
 
 .starting_button {
@@ -27,10 +48,8 @@ error-background {
 
 .item-starting{
   padding: 200px;
-  font-size: 100px;
-  font-weight: bold;
-
 }
+
 .confirm-button {
   background-color: hwb(0 4% 13%);
   color: white;
