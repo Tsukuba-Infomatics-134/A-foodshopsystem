@@ -18,6 +18,25 @@
       <button onclick="login()">ログイン</button>
     </div>
 
+    <div id="staff" style="display: none;">
+      <div class="width-container">
+        <div class="centerlize">
+          <button class="recomfirm-button" onclick="changeDisplayMode('sub')">
+            復帰
+          </button>
+          <button class="recansel-button" onclick="changeDisplayMode('error')">
+            エラー画面
+          </button>
+          <button class="temperate-button1" onclick="changeDisplayMode('offline')">
+            オフライン画面
+          </button>
+          <button class="temperate-button2" onclick="changeDisplayMode('outof-service')">
+            販売停止画面
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div id="offline" style="display: none;">
       <div class="offline-background">
         <div class="width-container" >
@@ -55,14 +74,8 @@
         </button>
       </div>
       <div>
-        <button onclick="changeDisplayMode('error')">
-          エラー画面
-        </button>
-        <button onclick="changeDisplayMode('offline')">
-          オフライン画面
-        </button>
-        <button onclick="changeDisplayMode('outof-service')">
-          販売停止画面
+        <button onclick="changeDisplayMode('staff')">
+          店員用
         </button>
       </div>
     </div>
@@ -523,6 +536,7 @@
         document.getElementById("login").style.display = "none";
         document.getElementById("main").style.display = "none";
         document.getElementById("sub").style.display = "none";
+        document.getElementById("staff").style.display = "none";
         document.getElementById("offline").style.display = "none";
         document.getElementById("error").style.display = "none";
         document.getElementById("outof-service").style.display = "none";
