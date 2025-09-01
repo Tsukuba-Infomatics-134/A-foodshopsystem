@@ -18,9 +18,24 @@
       <button onclick="login()">ログイン</button>
     </div>
 
-    <div id="Sub" style="display: none">
+    <div id="fullscreen-1" style="display: none;">
+      <h1>現在オフラインです</h1>
+      <p>再接続中...しばらくお待ちください。</p>
+    </div>
+
+    <div id="fullscreen-2" style="display: none;">
+      <h1>エラー</h1>
+      <p>エラーが発生しました。店員に連絡してください。</p>
+    </div>
+
+    <div id="fullscreen-3" style="display: none;">
+      <h1>販売停止</h1>
+      <p>現在、規定数に達したため販売を停止しています。</p>
+    </div>
+
+    <div id="sub" style="display: none">
       <div class="starting_button">
-        <button class="item-starting" id="start-ordering" onclick="Ordering()">
+        <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main')">
           注文開始
         </button>
       </div>
@@ -33,35 +48,15 @@
         <div class="row justify-content-center g-4 align-items-stretch">
           <div class="col-md-4 d-flex">
             <div class="card text-center w-100">
-              <img
-                src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$"
-                class="card-img-top-1"
-                alt="メニュー1"
-              />
+              <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" class="card-img-top-1" alt="メニュー1" />
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title"></h5>
                 <p>
                   個数:
                   <span class="qty-control">
-                    <button
-                      class="triangle-left"
-                      type="button"
-                      onclick="changeQty(0, -1)"
-                      aria-label="減らす"
-                    ></button>
-                    <input
-                      type="text"
-                      id="qty1"
-                      value="0"
-                      class="qty-input"
-                      readonly
-                    />
-                    <button
-                      class="triangle-right"
-                      type="button"
-                      onclick="changeQty(0, 1)"
-                      aria-label="増やす"
-                    ></button>
+                    <button class="triangle-left" type="button" onclick="changeQty(0, -1)" aria-label="減らす"></button>
+                    <input type="text" id="qty1" value="0" class="qty-input" readonly />
+                    <button class="triangle-right" type="button" onclick="changeQty(0, 1)" aria-label="増やす"></button>
                   </span>
                 </p>
                 <p class="description-text1"></p>
@@ -71,35 +66,15 @@
 
           <div class="col-md-4 d-flex">
             <div class="card text-center w-100">
-              <img
-                src="https://mono-log.jp/archives/img/2025/04/250403.jpg"
-                class="card-img-top-2"
-                alt="メニュー2"
-              />
+              <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" class="card-img-top-2" alt="メニュー2" />
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title"></h5>
                 <p>
                   個数:
                   <span class="qty-control">
-                    <button
-                      class="triangle-left"
-                      type="button"
-                      onclick="changeQty(1, -1)"
-                      aria-label="減らす"
-                    ></button>
-                    <input
-                      type="text"
-                      id="qty2"
-                      value="0"
-                      class="qty-input"
-                      readonly
-                    />
-                    <button
-                      class="triangle-right"
-                      type="button"
-                      onclick="changeQty(1, 1)"
-                      aria-label="増やす"
-                    ></button>
+                    <button class="triangle-left" type="button" onclick="changeQty(1, -1)" aria-label="減らす"></button>
+                    <input type="text" id="qty2" value="0" class="qty-input" readonly />
+                    <button class="triangle-right" type="button" onclick="changeQty(1, 1)" aria-label="増やす"></button>
                   </span>
                 </p>
                 <p class="description-text2"></p>
@@ -109,11 +84,7 @@
         </div>
 
         <div class="text-center mt-4">
-          <button
-            id="confirm"
-            class="confirm-button"
-            onclick="showConfirmModal()"
-          >
+          <button id="confirm" class="confirm-button" onclick="showConfirmModal()">
             確認する
           </button>
           <div id="status"></div>
@@ -121,23 +92,12 @@
       </div>
 
       <!-- 確認モーダル -->
-      <div
-        class="modal fade"
-        id="confirmModal"
-        tabindex="-1"
-        aria-labelledby="confirmModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content p-4">
             <div class="modal-header">
               <h5 class="modal-title" id="confirmModalLabel">注文内容確認</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="閉じる"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
             </div>
             <div class="modal-body">
               <h10>
@@ -151,18 +111,10 @@
               </h10>
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="recansel-button"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="recansel-button" data-bs-dismiss="modal">
                 戻る
               </button>
-              <button
-                type="button"
-                class="recomfirm-button"
-                onclick="confirmOrder()"
-              >
+              <button type="button" class="recomfirm-button" onclick="confirmOrder()">
                 注文確定
               </button>
             </div>
@@ -171,34 +123,18 @@
       </div>
 
       <!-- 整理券用モーダル -->
-      <div
-        class="modal fade"
-        id="orderModal"
-        tabindex="-1"
-        aria-labelledby="orderModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content p-4">
             <div class="modal-header">
               <h5 class="modal-title" id="orderModalLabel">注文受付完了</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="閉じる"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
             </div>
             <div class="modal-body" id="modalBody" style="font-size: 1.8rem">
               <!-- 整理券番号をここに表示 -->
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="recomfirm-button"
-                data-bs-dismiss="modal"
-                onclick="Closing()"
-              >
+              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="changeDisplayMode('sub')">
                 閉じる
               </button>
             </div>
@@ -208,6 +144,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="receipt.js"></script>
     <script>
       const apiurl_production = "https://api.yaakiyu.f5.si/";
       const apiurl_dev = "http://localhost:80/";
@@ -292,6 +229,24 @@
       let isLogin = false;
       let classData = {};
       let apiurl = apiurl_production;
+      let isOnline = false;
+
+      // オンライン判定を切り替える関数  0: オンライン, 1: オフライン
+      function setOnlineStatus(state) {
+        if (isOnline && state === 1) {
+          isOnline = false;
+          changeDisplayMode("fullscreen-1");
+        }
+        else if (!isOnline && state === 0) {
+          isOnline = true;
+          if (isLogin) {
+            changeDisplayMode("sub");
+          }
+          else {
+            changeDisplayMode("login");
+          }
+        }
+      }
 
       // devサーバーが生きていればapiurlをdevに切り替える
       function tryDevApiUrlSwitch() {
@@ -308,10 +263,9 @@
       }
       tryDevApiUrlSwitch();
 
-      // 初期化時にボタン状態更新
-      window.onload = () => {
-        loadFromStorage();
-      };
+      setOnlineStatus(navigator.onLine ? 0 : 1);
+      window.addEventListener("online", () => setOnlineStatus(0));
+      window.addEventListener("offline", () => setOnlineStatus(1));
 
       // 合計金額を計算する関数
       function calcTotal() {
@@ -350,10 +304,6 @@
         quantities[index] = Math.max(0, quantities[index] + delta);
         updateQtyUI();
       }
-
-      // TODO: オフライン対応
-      function saveToStorage() {}
-      function loadFromStorage() {}
 
       function showConfirmModal() {
         const total = calcTotal();
@@ -422,23 +372,19 @@
             const orderNum = res_json["order_id"];
             console.log(orderNum, res_json["password"]);
             // モーダルに整理番号セットして表示
-            document.getElementById(
-              "modalBody"
-            ).textContent = `整理番号: #${orderNum}`;
+            document.getElementById("modalBody").textContent = `整理番号: #${orderNum}`;
             // Bootstrapモーダルを表示
-            const orderModal = new bootstrap.Modal(
-              document.getElementById("orderModal")
-            );
+            const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
             orderModal.show();
             // 注文リセット
             quantities.fill(0);
             updateQtyUI();
-            localStorage.removeItem("orderQuantities");
             statusDiv.style.opacity = "0";
           })
           .catch((error) => {
             console.error("Error:", error);
-            alert("注文中にエラーが発生しました。");
+            setOnlineStatus(1);
+            changeDisplayMode("fullscreen-2");
           });
       }
 
@@ -460,7 +406,7 @@
           })
           .catch((error) => {
             console.error("Error:", error);
-            alert("ログイン中にエラーが発生しました。");
+            setOnlineStatus(1);
             return null;
           });
       }
@@ -496,27 +442,17 @@
             classnum = data["user"];
             classData = classDatas[classnum];
 
+            document.getElementById("pass").value = "";
             document.title = `[${classnum}組] A 桐陰祭食販2025`;
-            document.getElementsByClassName("description-text1")[0].innerHTML =
-              classData["explain"][0];
-            document.getElementsByClassName("description-text2")[0].innerHTML =
-              classData["explain"][1];
+            document.getElementsByClassName("description-text1")[0].innerHTML = classData["explain"][0];
+            document.getElementsByClassName("description-text2")[0].innerHTML = classData["explain"][1];
             document.body.style.backgroundImage = `url('${classData["bgimage"]}')`;
-            document.getElementsByClassName(
-              "card-img-top-1"
-            )[0].innerHTML = `url('${classData["picture"][0]}')`;
-            document.getElementsByClassName(
-              "card-img-top-2"
-            )[0].innerHTML = `url('${classData["picture"][1]}')`;
-            document.getElementsByClassName(
-              "card-title"
-            )[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
-            document.getElementsByClassName(
-              "card-title"
-            )[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
+            document.getElementsByClassName("card-img-top-1")[0].innerHTML = `url('${classData["picture"][0]}')`;
+            document.getElementsByClassName("card-img-top-2")[0].innerHTML = `url('${classData["picture"][1]}')`;
+            document.getElementsByClassName("card-title")[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
+            document.getElementsByClassName("card-title")[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
             document.querySelector("h1").innerHTML += ` ${classnum}組`;
-            document.getElementById("login").style.display = "none";
-            document.getElementById("Sub").style.display = "block";
+            changeDisplayMode("sub");
             // const checkInterval = () => {
             //     check().then(async ret => {
             //         console.log("checked", ret)
@@ -551,16 +487,20 @@
             //   console.error("Error:", error);
             //   alert("ログイン中にエラーが発生しました。");
             // });
+          }).catch((error) => {
+            console.error(error);
+            alert("ログイン中にエラーが発生しました。");
           });
       }
 
-      function Ordering() {
-        document.getElementById("Sub").style.display = "none";
-        document.getElementById("main").style.display = "block";
-      }
-      function Closing() {
+      function changeDisplayMode(mode) {
+        document.getElementById("login").style.display = "none";
         document.getElementById("main").style.display = "none";
-        document.getElementById("Sub").style.display = "block";
+        document.getElementById("sub").style.display = "none";
+        document.getElementById("fullscreen-1").style.display = "none";
+        document.getElementById("fullscreen-2").style.display = "none";
+        document.getElementById("fullscreen-3").style.display = "none";
+        document.getElementById(mode).style.display = "block";
       }
     </script>
   </body>
