@@ -18,14 +18,16 @@
       <button onclick="login()">ログイン</button>
     </div>
 
-    <div id="fullscreen-1" style="display: none;">
+    <div id="offline-reconnect" style="display: none;">
       <h1>現在オフラインです</h1>
       <p>再接続中...しばらくお待ちください。</p>
     </div>
 
-    <div id="fullscreen-2" style="display: none;">
-      <h1>エラー</h1>
-      <p>エラーが発生しました。店員に連絡してください。</p>
+    <div id="error-screen" style="display: none;" class="error-background">
+      <div class="error-center">
+        <h1>エラー</h1>
+        <p>エラーが発生しました。店員に連絡してください。</p>
+      </div>
     </div>
 
     <div id="fullscreen-3" style="display: none;">
@@ -37,6 +39,11 @@
       <div class="starting_button">
         <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main')">
           注文開始
+        </button>
+      </div>
+      <div>
+        <button onclick="changeDisplayMode('error-screen')">
+          エラー画面
         </button>
       </div>
     </div>
@@ -497,8 +504,8 @@
         document.getElementById("login").style.display = "none";
         document.getElementById("main").style.display = "none";
         document.getElementById("sub").style.display = "none";
-        document.getElementById("fullscreen-1").style.display = "none";
-        document.getElementById("fullscreen-2").style.display = "none";
+        document.getElementById("offline-reconnect").style.display = "none";
+        document.getElementById("error-screen").style.display = "none";
         document.getElementById("fullscreen-3").style.display = "none";
         document.getElementById(mode).style.display = "block";
       }
