@@ -18,8 +18,8 @@
       <button onclick="login()">ログイン</button>
     </div>
 
-    <div id="offline-reconnect" style="display: none;">
-      <div class="offline-screen">
+    <div id="offline" style="display: none;">
+      <div class="offline-background">
         <div class="width-container" >
           <p class="offline-letter1"><ruby>現在オフラインです<rt class="oblique">Offline</rt></ruby></p>
           <img src="Photos/Reconect.png" class="img-dispatcher">
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div id="error-screen" style="display: none;" class="error-background">
+    <div id="error" style="display: none;" class="error-background">
       <div class="screen-center">
         <div class="screen-center2">
           <img src="Photos/warning.png" class="img-dispatcher">
@@ -38,9 +38,14 @@
       </div>
     </div>
 
-    <div id="fullscreen-3" style="display: none;">
-      <h1>販売停止</h1>
-      <p>現在、規定数に達したため販売を停止しています。</p>
+    <div id="outof-service" style="display: none;">
+      <div class="outofservice-background">
+        <div class="width-container">
+          <p class="outofservice-letter1"><ruby>販売停止<tr class="oblique">Out of order</tr></ruby><p>
+          <img src="Photos/ban.png" class="img-dispatcher">
+          <p class="outofservice-letter1">現在、規定数に達したため販売を停止しています。</p>
+        </div>
+      </div>
     </div>
 
     <div id="sub" style="display: none">
@@ -55,6 +60,9 @@
         </button>
         <button onclick="changeDisplayMode('offline-reconnect')">
           オフライン画面
+        </button>
+        <button onclick="changeDisplayMode('outof-service')">
+          販売停止画面
         </button>
       </div>
     </div>
@@ -515,9 +523,9 @@
         document.getElementById("login").style.display = "none";
         document.getElementById("main").style.display = "none";
         document.getElementById("sub").style.display = "none";
-        document.getElementById("offline-reconnect").style.display = "none";
-        document.getElementById("error-screen").style.display = "none";
-        document.getElementById("fullscreen-3").style.display = "none";
+        document.getElementById("offline").style.display = "none";
+        document.getElementById("error").style.display = "none";
+        document.getElementById("outof-service").style.display = "none";
         document.getElementById(mode).style.display = "block";
       }
     </script>
