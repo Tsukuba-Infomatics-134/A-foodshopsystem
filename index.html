@@ -183,7 +183,14 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 印刷関連jsの読み込み -->
+    <script src="js/StarBarcodeEncoder.js"></script>
+    <script src="js/StarWebPrintBuilder.js"></script>
+    <script src="js/StarWebPrintDisplayBuilder.js"></script>
+    <script src="js/StarWebPrintExtManager.js"></script>
+    <script src="js/StarWebPrintTrader.js"></script>
     <script src="receipt.js"></script>
+
     <script>
       const apiurl_production = "https://api.yaakiyu.f5.si/";
       const apiurl_dev = "http://localhost:80/";
@@ -274,7 +281,7 @@
       function setOnlineStatus(state) {
         if (isOnline && state === 1) {
           isOnline = false;
-          changeDisplayMode("fullscreen-1");
+          changeDisplayMode("offline");
         }
         else if (!isOnline && state === 0) {
           isOnline = true;
@@ -423,7 +430,7 @@
           .catch((error) => {
             console.error("Error:", error);
             setOnlineStatus(1);
-            changeDisplayMode("fullscreen-2");
+            changeDisplayMode("error");
           });
       }
 
