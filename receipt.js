@@ -1,5 +1,6 @@
 // レシートプリンター用スクリプト
 const isCorrectBrowserUsed = window.navigator.userAgent.indexOf("StarWebPRNTBrowser") != -1;
+document.getElementById("bbb").innerHTML = isCorrectBrowserUsed;
 const printURL = "http://localhost:8001/StarWebPRNT/SendMessage";
 let isPrinterDetected = false;
 
