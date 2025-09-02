@@ -1,6 +1,5 @@
 // レシートプリンター用スクリプト
 const isCorrectBrowserUsed = window.navigator.userAgent.indexOf("StarWebPRNTBrowser") != -1;
-document.getElementById("bbb").innerHTML = isCorrectBrowserUsed;
 const printURL = "http://localhost:8001/StarWebPRNT/SendMessage";
 let isPrinterDetected = false;
 
@@ -26,7 +25,12 @@ function receipt_print(data) {
         return;
     }
     console.log("印刷します。");
-    _onSendMessageApi(data);
+    try {
+        _onSendMessageApi(data);
+        document.getElementById("aaa").innerHTML = "完了";
+    } catch (error) {
+        document.getElementById("aaa").innerHTML = error;
+    }
 }
 
 function receipt_checkPrinterCondition() {
