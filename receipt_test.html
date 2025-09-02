@@ -19,7 +19,7 @@
     <div id="bbb">表示はこちら</div>
     <script>
         document.getElementById("aaa").innerHTML = window.navigator.userAgent;
-        document.getElementById("bbb").innerHTML = window.navigator.userAgent.startsWith("StarWebPRNTBrowser");
+        document.getElementById("bbb").innerHTML = window.navigator.userAgent.indexOf("StarWebPRNTBrowser") != -1;
     </script>
   </body>
 </html>
