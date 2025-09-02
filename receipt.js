@@ -8,7 +8,7 @@ if (!isCorrectBrowserUsed) {
     // TODO: 自動的に店員操作モードにする
 }
 
-function receipt_print(order_id, password) {
+function receipt_print(order_id, password, data) {
     // TODO: 印刷
     if (!isCorrectBrowserUsed) {
         alert("印刷に対応していないブラウザです。");
@@ -19,7 +19,7 @@ function receipt_print(order_id, password) {
         return;
     }
     console.log("印刷します。");
-    _onSendMessageApi(order_id, password);
+    _onSendMessageApi(order_id, password, data);
 }
 
 function receipt_checkPrinterCondition() {
@@ -28,10 +28,13 @@ function receipt_checkPrinterCondition() {
 }
 
 
+function _makeReceiptProductOneLine(item_index, number) {}
+
+
 /***********************************************************/
 /* print a sample receipt using API in StarWebPrintBuilder */
 /***********************************************************/
-function _onSendMessageApi(order_id, password) {
+function _onSendMessageApi(order_id, password, data) {
     // normalもemphasisも '123456789012345678901234567\n' 27文字
     const builder = new StarWebPrintBuilder();
 
@@ -43,29 +46,20 @@ function _onSendMessageApi(order_id, password) {
 
     request += builder.createAlignmentElement({position:'right'});
     request += builder.createLogoElement({number:1});
-    request += builder.createTextElement({data:'TEL 9999-99-9999\n'});
+    request += builder.createTextElement({data:'TOIN FESTIVAL 2025\n'});
     request += builder.createAlignmentElement({position:'left'});
 
     request += builder.createTextElement({data:'\n'});
 
     request += builder.createAlignmentElement({position:'center'});
-    request += builder.createTextElement({data:'Thank you for your coming. \n'});
-    request += builder.createTextElement({data:"We hope you'll visit again.\n"});
+    request += builder.createTextElement({data:"またのご利用をお待ちしております。\n"});
     request += builder.createAlignmentElement({position:'left'});
 
     request += builder.createTextElement({data:'\n'});
 
-    request += builder.createTextElement({data:'Apple                $20.00\n'});
-    request += builder.createTextElement({data:'Banana               $30.00\n'});
-    request += builder.createTextElement({data:'Grape                $40.00\n'});
-    request += builder.createTextElement({data:'Lemon                $50.00\n'});
-    request += builder.createTextElement({data:'Orange               $60.00\n'});
-    request += builder.createTextElement({emphasis:true, data:'Subtotal            $200.00\n'});
-    request += builder.createTextElement({data:'\n'});
-
+    request += builder.createTextElement({data:`Apple                $20.00\n`});
     request += builder.createTextElement({underline:true, data:'Tax                  $10.00\n'});
     request += builder.createTextElement({underline:false});
-
     request += builder.createTextElement({emphasis:true});
     request += builder.createTextElement({width:2, data:'Total'});
     request += builder.createTextElement({width:1, data:'   '});
@@ -85,7 +79,7 @@ function _onSendMessageApi(order_id, password) {
 
     request += builder.createTextElement({characterspace:0});
 
-    request += builder.createCutPaperElement({feed:true});
+    request += builder.createFeedElement({line:1});
 
     _sendMessageApi(request);
 }
