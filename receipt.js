@@ -27,10 +27,9 @@ function receipt_print(data) {
     console.log("印刷します。");
     try {
         _onSendMessageApi(data);
-        document.getElementById("aaa").innerHTML = "完了";
     } catch (error) {
         console.error(error);
-        document.getElementById("aaa").innerHTML = error;
+        alert(error);
     }
 }
 
@@ -56,12 +55,14 @@ function _makeReceiptProductsLine(builder, class_number, item_id, count) {
         "たこ焼き(ソース)           \n",
         "たこ焼き(明太もち)         \n",
     ];
-    let ret = builder.createTextElement({data:titleData[(class_number - 1) * 2 + item_index]});
+    let ret = builder.createAlignmentElement({position:'left'});
+    ret += builder.createTextElement({data:titleData[(class_number - 1) * 2 + item_index]});
     const price = priceData[class_number-1][item_index];
     let space = "";
     if (price * count < 1000) {
         space = " ";  // 1000円未満のときは空白の量を調整する
     }
+    ret += builder.createAlignmentElement({position:'right'});
     ret += builder.createTextElement({data:`${count}個       ${space}\\${price*count}\n`});
     return [ret, price*count]
 }
@@ -90,7 +91,6 @@ function _onSendMessageApi(data) {
 
     request += builder.createAlignmentElement({position:'center'});
     request += builder.createTextElement({data:"またのご利用をお待ちしております。\n"});
-    request += builder.createAlignmentElement({position:'left'});
 
     request += builder.createTextElement({data:'\n'});
 
@@ -101,27 +101,23 @@ function _onSendMessageApi(data) {
     const item_2_data = _makeReceiptProductsLine(builder, data["class_number"], "item_2", data["item_2"]);
     request += item_2_data[0];
     total_money += item_2_data[1];
-    request += builder.createTextElement({underline:true, data:'Tax                  $10.00\n'});
+    request += builder.createTextElement({underline:true, data:'\n'});
     request += builder.createTextElement({underline:false});
     request += builder.createTextElement({emphasis:true});
-    request += builder.createTextElement({width:2, data:'Total'});
-    request += builder.createTextElement({width:1, data:'   '});
-    request += builder.createTextElement({width:2, data:'$210.00\n'});
+    request += builder.createTextElement({width:2, data:'合計'});
+    let space = "";
+    if (total_money < 1000) {
+        space = " ";
+    }
+    request += builder.createTextElement({width:1, data:'  ' + space});
+    request += builder.createTextElement({width:2, data:`\\${total_money}\n`});
     request += builder.createTextElement({width:1});
     request += builder.createTextElement({emphasis:false});
 
     request += builder.createTextElement({data:'\n'});
-
-    request += builder.createTextElement({data:'Received            $300.00\n'});
-
-    request += builder.createTextElement({width:2, data:'Change'});
-    request += builder.createTextElement({width:1, data:'   '});
-    request += builder.createTextElement({width:2, data:'$90.00\n'});
-    request += builder.createTextElement({width:1});
     request += builder.createTextElement({data:'\n'});
 
     request += builder.createTextElement({characterspace:0});
-
     request += builder.createFeedElement({line:1});
 
     _sendMessageApi(request);

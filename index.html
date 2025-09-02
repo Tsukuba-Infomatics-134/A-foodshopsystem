@@ -415,7 +415,7 @@
             const orderNum = res_json["order_id"];
             console.log(orderNum, res_json["password"]);
             // モーダルに整理番号セットして表示
-            document.getElementById("modalBody").textContent = `整理番号: #${orderNum}`;
+            document.getElementById("modalBody").textContent = `整理番号: #${orderNum}\n印刷中...`;
             // Bootstrapモーダルを表示
             const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
             orderModal.show();
@@ -423,6 +423,7 @@
             quantities.fill(0);
             updateQtyUI();
             statusDiv.style.opacity = "0";
+            receipt_print({class_number: classnum, item_1: order1, item_2: order2});
           })
           .catch((error) => {
             console.error("Error:", error);
