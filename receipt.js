@@ -29,6 +29,7 @@ function receipt_print(data) {
         _onSendMessageApi(data);
         document.getElementById("aaa").innerHTML = "完了";
     } catch (error) {
+        console.error(error);
         document.getElementById("aaa").innerHTML = error;
     }
 }
@@ -39,7 +40,7 @@ function receipt_checkPrinterCondition() {
 }
 
 
-function _makeReceiptProductsLine(class_number, item_id, count) {
+function _makeReceiptProductsLine(builder, class_number, item_id, count) {
     const item_index = item_id == "item_1" ? 0 : 1;
     const titleData = [
         "ベビーカステラ(プレーン)   \n",
@@ -78,7 +79,7 @@ function _onSendMessageApi(data) {
 
     request += builder.createInitializationElement();
 
-    request += builder.createTextElement({characterspace:2});
+    request += builder.createTextElement({characterspace:0, international:'japan'});
 
     request += builder.createAlignmentElement({position:'right'});
     request += builder.createLogoElement({number:1});
@@ -94,10 +95,10 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({data:'\n'});
 
     // request += builder.createTextElement({data:`Apple                $20.00\n`});
-    const item_1_data = _makeReceiptProductsLine(data["class_number"], "item_1", data["item_1"]);
+    const item_1_data = _makeReceiptProductsLine(builder, data["class_number"], "item_1", data["item_1"]);
     request += item_1_data[0];
     total_money += item_1_data[1];
-    const item_2_data = _makeReceiptProductsLine(data["class_number"], "item_2", data["item_2"]);
+    const item_2_data = _makeReceiptProductsLine(builder, data["class_number"], "item_2", data["item_2"]);
     request += item_2_data[0];
     total_money += item_2_data[1];
     request += builder.createTextElement({underline:true, data:'Tax                  $10.00\n'});
