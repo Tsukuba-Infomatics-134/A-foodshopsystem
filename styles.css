@@ -1,375 +1,554 @@
-.img-dispatcher {
-  display: block;
-  height: 50%;
-  margin: 0 auto;
-}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-/*コンテナ,背景*/
-.outofservice-background,
-.offline-background,
-.error-background {
-  top: 0;
-  left: 0;
-  position: fixed; /* CHanged */
-  width: 100%;
-  height: 100vh;
-  background-size: cover;
-}
+    <title>A 桐陰祭食販2025</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="login">
+      <p style="color: black">パスワードを入力してください。</p>
+      <input type="password" id="pass" placeholder="パスワードを入力" />
+      <button onclick="login()">ログイン</button>
+    </div>
 
+    <div id="staff" style="display: none;">
+      <div class="width-container">
+        <div class="centerlize">
+          <button class="temperate-button3" onclick="changeDisplayMode('sub')">
+            復帰
+          </button>
+          <button class="recansel-button" onclick="changeDisplayMode('error')">
+            エラー画面
+          </button>
+          <button class="temperate-button1" onclick="changeDisplayMode('offline')">
+            オフライン画面
+          </button>
+          <button class="temperate-button2" onclick="changeDisplayMode('outof-service')">
+            販売停止画面
+          </button>
+        </div>
+      </div>
+    </div>
 
-.error-background {
-  background-image: repeating-linear-gradient(135deg, #d50707, #d50707 10px, #ffffff 10px, #ffffff 20px);
-}
+    <div id="offline" style="display: none;">
+      <div class="offline-background">
+        <div class="width-container" >
+          <p class="offline-letter1"><ruby>現在オフラインです<rt class="oblique">Offline</rt></ruby></p>
+          <img src="Photos/Reconect.png" class="img-dispatcher">
+          <p class="offline-letter1">再接続中...<br>しばらくお待ちください。</p>
+        </div>
+      </div>
+    </div>
 
-.offline-background{
-  background-color: #324557;
-}
+    <div id="error" style="display: none;" class="error-background">
+      <div class="screen-center">
+        <div class="screen-center2">
+          <img src="Photos/warning.png" class="img-dispatcher">
+          <p class="error-letter"><ruby>エラー<rt class="oblique">Error</rt></ruby></p>
+          <p class="error-letter2">エラーが発生しました。店員に連絡してください。</p> 
+        </div>
+      </div>
+    </div>
 
-.outofservice-background{
-  background-color: #17320b;
-}
+    <div id="outof-service" style="display: none;">
+      <div class="outofservice-background">
+        <div class="width-container">
+          <p class="outofservice-letter1"><ruby>販売停止<tr class="oblique">Out of order</tr></ruby><p>
+          <img src="Photos/ban.png" class="img-dispatcher">
+          <p class="outofservice-letter1">現在、規定数に達したため販売を停止しています。</p>
+        </div>
+      </div>
+    </div>
 
-.screen-center {
-  background-color: #ffd21f;
-}
+    <div id="sub" style="display: none">
+      <div class="starting_button">
+        <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main')">
+          注文開始
+        </button>
+      </div>
+      <div>
+        <button onclick="changeDisplayMode('staff')">
+          店員用
+        </button>
+      </div>
+    </div>
 
-.screen-center2 {
-  background-color: white;
-  height: 96%;
-  position:relative;
-  width: 96%;
-  margin-top: 1%;
-  margin-left: 2%;
-}
+    <div id="main" style="display: none">
+      <h1>桐陰祭 注文システム</h1>
 
-.width-container,
-.screen-center {
-  height: 80vh;
-  position: absolute;
-  width: 100vw;
-  margin-top: 10vh;
-}
+      <div class="container-fluid">
+        <div class="row justify-content-center g-4 align-items-stretch">
+          <div class="col-md-4 d-flex">
+            <div class="card text-center w-100">
+              <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" class="card-img-top-1" alt="メニュー1" />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"></h5>
+                <p>
+                  個数:
+                  <span class="qty-control">
+                    <button class="triangle-left" type="button" onclick="changeQty(0, -1)" aria-label="減らす"></button>
+                    <input type="text" id="qty1" value="0" class="qty-input" readonly />
+                    <button class="triangle-right" type="button" onclick="changeQty(0, 1)" aria-label="増やす"></button>
+                  </span>
+                </p>
+                <p class="description-text1"></p>
+              </div>
+            </div>
+          </div>
 
-.centerlize {
-  display: flex;
-  justify-content: center; 
-}
+          <div class="col-md-4 d-flex">
+            <div class="card text-center w-100">
+              <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" class="card-img-top-2" alt="メニュー2" />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"></h5>
+                <p>
+                  個数:
+                  <span class="qty-control">
+                    <button class="triangle-left" type="button" onclick="changeQty(1, -1)" aria-label="減らす"></button>
+                    <input type="text" id="qty2" value="0" class="qty-input" readonly />
+                    <button class="triangle-right" type="button" onclick="changeQty(1, 1)" aria-label="増やす"></button>
+                  </span>
+                </p>
+                <p class="description-text2"></p>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <div class="text-center mt-4">
+          <button id="confirm" class="confirm-button" onclick="showConfirmModal()">
+            確認する
+          </button>
+          <div id="status"></div>
+        </div>
+      </div>
 
-.screen-center2 {
-  background-color: white;
-  height: 96%;
-  position:relative;
-  width: 96%;
-  margin-top: 1%;
-  margin-left: 2%;
-}
+      <!-- 確認モーダル -->
+      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-4">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">注文内容確認</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+            </div>
+            <div class="modal-body">
+              <h10>
+                <strong>メニュー1:</strong> <span id="confirmQty1">0</span>個
+              </h10>
+              <h10>
+                <strong>メニュー2:</strong> <span id="confirmQty2">0</span>個
+              </h10>
+              <h10>
+                <strong>合計金額:</strong> <span id="confirmTotal">0</span>円
+              </h10>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="recansel-button" data-bs-dismiss="modal">
+                戻る
+              </button>
+              <button type="button" class="recomfirm-button" onclick="confirmOrder()">
+                注文確定
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- 整理券用モーダル -->
+      <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content p-4">
+            <div class="modal-header">
+              <h5 class="modal-title" id="orderModalLabel">注文受付完了</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+            </div>
+            <div class="modal-body" id="modalBody" style="font-size: 1.8rem">
+              <!-- 整理券番号をここに表示 -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="changeDisplayMode('sub')">
+                閉じる
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 印刷関連jsの読み込み -->
+    <script src="js/StarBarcodeEncoder.js"></script>
+    <script src="js/StarWebPrintBuilder.js"></script>
+    <script src="js/StarWebPrintDisplayBuilder.js"></script>
+    <script src="js/StarWebPrintExtManager.js"></script>
+    <script src="js/StarWebPrintTrader.js"></script>
+    <script src="receipt.js"></script>
 
-/*テキスト関連*/
-.error-letter2{
-  font-size: 3em;
-  font-weight: bold;
-  padding: 10px;
-  text-align: center;
-}
-.outofservice-letter1,
-.error-letter,
-.item-starting {
-  font-weight: bold;/*太文字化*/
-}
+    <script>
+      const apiurl_production = "https://api.yaakiyu.f5.si/";
+      const apiurl_dev = "http://localhost:80/";
+      const classDatas = [
+        {}, // 管理者用
+        {
+          // 1組
+          variety: 2,
+          title: ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
+          explain: ["ただのベビカス", "少し違うベビカス"],
+          picture: ["", ""],
+          price: [100, 100],
+          limit: 10,
+          bgimage:
+            "https://illust.download/wp-content/uploads/2017/11/background134.jpg",
+        },
+        {
+          // 2組
+          variety: 2,
+          title: ["お好み焼き(プレーン)", "お好み焼き(チーズ入り)"],
+          explain: ["ただのお好み焼き", "少し黄色いお好み焼き"],
+          picture: ["", ""],
+          price: [100, 100],
+          limit: 10,
+          bgimage:
+            "https://illust.download/wp-content/uploads/2017/11/background137.jpg",
+        },
 
-.outofservice-letter1,
-.offline-letter1,
-.error-letter{
-  font-size: 80px;
-  text-align: center;
-  padding: 0px;
-}
+        {
+          // 3組
+          variety: 2,
+          title: ["みたらしきなこ団子", "カラフルあんこ団子"],
+          explain: ["みたらし (きなこトッピング可能)", "あんこ"],
+          picture: ["", ""],
+          price: [100, 100],
+          limit: 10,
+          bgimage:
+            "https://illust.download/wp-content/uploads/2017/11/background135.jpg",
+        },
+        {
+          // 4組
+          variety: 2,
+          title: ["かき氷(抹茶白玉小豆)", "かき氷(マンゴー)"],
+          explain: ["抹茶味で白玉と小豆があるやつ", "マンゴー味"],
+          picture: ["", ""],
+          price: [100, 100],
+          limit: 10,
+          bgimage:
+            "https://illust.download/wp-content/uploads/2017/11/background138.jpg",
+        },
+        {
+          // 5組
+          variety: 2,
+          title: [
+            "シャカシャカポテト(コンソメ)",
+            "シャカシャカポテト(バター醤油)",
+          ],
+          explain: ["うまい", "うまい"],
+          picture: ["", ""],
+          price: [200, 200],
+          limit: 10,
+          bgimage:
+            "https://illust.download/wp-content/uploads/2017/11/background136.jpg",
+        },
 
-.offline-letter1,
-.oblique{
-  font-style: italic;/*斜体化*/
-}
+        {
+          // 6組
+          variety: 2,
+          title: ["たこ焼き", "たこ焼き(明太もちチーズ)"],
+          explain: ["通常", "突然変異"],
+          picture: ["", ""],
+          price: [100, 100],
+          limit: 10,
+          bgimage:
+            "https://illust.download/wp-content/uploads/2017/11/background133.jpg",
+        },
+      ];
 
-.offline-letter1{
-  color:whitesmoke;/*白文字化*/
-}
+      const quantities = [0, 0];
+      var classnum = 0;
+      let auth_key = null;
+      let isLogin = false;
+      let classData = {};
+      let apiurl = apiurl_production;
+      let isOnline = false;
 
-.outofservice-letter1 {
-  color: #ff3232;
-}
+      // オンライン判定を切り替える関数  0: オンライン, 1: オフライン
+      function setOnlineStatus(state) {
+        if (isOnline && state === 1) {
+          isOnline = false;
+          changeDisplayMode("offline");
+        }
+        else if (!isOnline && state === 0) {
+          isOnline = true;
+          if (isLogin) {
+            changeDisplayMode("sub");
+          }
+          else {
+            changeDisplayMode("login");
+          }
+        }
+      }
 
-/*ボタン類*/
-.starting_button {
-  background: black;
-  color: rgba(0, 255, 136, 0.699);
-  border-radius: 1em;
-  padding: 1em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%)
-}
+      // devサーバーが生きていればapiurlをdevに切り替える
+      function tryDevApiUrlSwitch() {
+        fetch(apiurl_dev + "version", { method: "GET", cache: "no-store" })
+          .then((res) => {
+            if (res.ok) {
+              apiurl = apiurl_dev;
+              console.warn("apiurlを開発環境に切り替えました");
+            }
+          })
+          .catch(() => {
+            // devサーバーが落ちている場合は何もしない
+          });
+      }
+      tryDevApiUrlSwitch();
 
-.recansel-button {
-  background-color: #1b81ff;
-  color: white;
-}
+      setOnlineStatus(navigator.onLine ? 0 : 1);
+      window.addEventListener("online", () => setOnlineStatus(0));
+      window.addEventListener("offline", () => setOnlineStatus(1));
 
-.recansel-button,
-.temperate-button1,
-.temperate-button2 {
-  font-size: 40px;
-  padding: 10px 60px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-  display: inline-block;
-}
+      // 合計金額を計算する関数
+      function calcTotal() {
+        return quantities.reduce(
+          (sum, qty, i) => sum + qty * classData["price"][i],
+          0
+        );
+      }
 
-.temperate-button1 {
-  background-color: yellowgreen;
-  color: white;
-}
+      // 個数表示・ボタン状態をまとめて更新
+      function updateQtyUI() {
+        quantities.forEach((qty, i) => {
+          document.getElementById(`qty${i + 1}`).value = qty;
+        });
+        const leftBtns = document.querySelectorAll(".triangle-left");
+        quantities.forEach((qty, i) => {
+          if (qty <= 0) {
+            leftBtns[i].classList.add("disabled");
+          } else {
+            leftBtns[i].classList.remove("disabled");
+          }
+        });
+        const rightBtns = document.querySelectorAll(".triangle-right");
+        const qsum = quantities.reduce((a, b) => a + b, 0);
+        quantities.forEach((qty, i) => {
+          if (qsum >= classData["limit"]) {
+            rightBtns[i].classList.add("disabled");
+          } else {
+            rightBtns[i].classList.remove("disabled");
+          }
+        });
+      }
+      updateQtyUI();
 
-.temperate-button2 {
-  background-color: blueviolet;
-  color: white;
-}
+      function changeQty(index, delta) {
+        quantities[index] = Math.max(0, quantities[index] + delta);
+        updateQtyUI();
+      }
 
-.item-starting{
-  padding: 200px;
-  background-color: black;
-  color: white;
-  font-size: 100px;
-}
+      function showConfirmModal() {
+        const total = calcTotal();
+        if (total === 0) {
+          alert("1つ以上選択してください。");
+          return;
+        }
+        // 確認モーダルに注文内容をセット
+        document.getElementById("confirmQty1").textContent = quantities[0];
+        document.getElementById("confirmQty2").textContent = quantities[1];
+        document.getElementById("confirmTotal").textContent = total;
+        // モーダルを表示
+        const confirmModal = new bootstrap.Modal(
+          document.getElementById("confirmModal")
+        );
+        confirmModal.show();
+      }
 
-.confirm-button {
-  background-color: hwb(0 4% 13%);
-  color: white;
-  font-size: 80px;
-  padding: 50px 400px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-  display: inline-block;
-}
+      function confirmOrder() {
+        // 確定後、注文を送信
+        submitOrder();
+        // 確認モーダルを閉じる
+        const confirmModal = bootstrap.Modal.getInstance(
+          document.getElementById("confirmModal")
+        );
+        confirmModal.hide();
+      }
 
-.recomfirm-button {
-  background-color: #ff5135;
-  color: white;
-  font-size: 40px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-  display: inline-block;
-}
+      function submitOrder() {
+        const statusDiv = document.getElementById("status");
+        statusDiv.style.opacity = "1";
+        statusDiv.textContent = "注文送信中...";
+        document.body.style.backgroundColor = "rgba(255,255,255,0.6)";
+        setTimeout(() => {
+          document.body.style.backgroundColor = "";
+        }, 200);
 
-.triangle-left,
-.triangle-right {
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  border-radius: 0;
-  outline: none;
-  box-shadow: none;
-  filter: none;
-  transition: border-color 0.2s ease;
-  flex-shrink: 0;
-}
+        const order1 = quantities[0];
+        const order2 = quantities[1];
+        if (order1 + order2 === 0) {
+          alert("注文する数を入力してください");
+          return;
+        }
+        fetch(apiurl + "order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: auth_key,
+          },
+          body: JSON.stringify({
+            order_items: { item_1: order1, item_2: order2 },
+            user: classnum,
+          }),
+        })
+          .then(async (response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              console.error("Error:", response.text());
+              alert("注文中にエラーが発生しました。");
+              return null;
+            }
+          })
+          .then((res_json) => {
+            if (!res_json) return;
+            const orderNum = res_json["order_id"];
+            console.log(orderNum, res_json["password"]);
+            // モーダルに整理番号セットして表示
+            document.getElementById("modalBody").textContent = `整理番号: #${orderNum}`;
+            // Bootstrapモーダルを表示
+            const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
+            orderModal.show();
+            // 注文リセット
+            quantities.fill(0);
+            updateQtyUI();
+            statusDiv.style.opacity = "0";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            setOnlineStatus(1);
+            changeDisplayMode("error");
+          });
+      }
 
-.triangle-left {
-  border-right: 70px solid #007bff;
-  border-left: none;
-}
+      function check() {
+        return fetch(apiurl + "check", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: auth_key,
+          },
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              console.error("Error:", response.text());
+              return null;
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            setOnlineStatus(1);
+            return null;
+          });
+      }
 
-.triangle-right {
-  border-left: 70px solid #007bff;
-  border-right: none;
-}
+      function login() {
+        const password = document.getElementById("pass").value;
+        fetch(apiurl + "login", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            password: password,
+          },
+        })
+          .then((response) => {
+            const data = response.json();
+            if (response.status === 200) {
+              return data;
+            } else if (response.status === 401) {
+              alert("パスワードが違います");
+              return null;
+            } else {
+              alert("ログイン中にエラーが発生しました。");
+              return null;
+            }
+          })
+          .then((data) => {
+            if (data == null) {
+              return;
+            }
+            console.log(data);
+            isLogin = true;
+            auth_key = data["token"];
+            classnum = data["user"];
+            classData = classDatas[classnum];
 
-.triangle-left:hover {
-  border-right-color: #0056b3;
-}
+            document.getElementById("pass").value = "";
+            document.title = `[${classnum}組] A 桐陰祭食販2025`;
+            document.getElementsByClassName("description-text1")[0].innerHTML = classData["explain"][0];
+            document.getElementsByClassName("description-text2")[0].innerHTML = classData["explain"][1];
+            document.body.style.backgroundImage = `url('${classData["bgimage"]}')`;
+            document.getElementsByClassName("card-img-top-1")[0].innerHTML = `url('${classData["picture"][0]}')`;
+            document.getElementsByClassName("card-img-top-2")[0].innerHTML = `url('${classData["picture"][1]}')`;
+            document.getElementsByClassName("card-title")[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
+            document.getElementsByClassName("card-title")[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
+            document.querySelector("h1").innerHTML += ` ${classnum}組`;
+            changeDisplayMode("sub");
+            // const checkInterval = () => {
+            //     check().then(async ret => {
+            //         console.log("checked", ret)
+            //         if (ret != null && ret.length > 0) {
+            //             //ここに更新時の挙動を書く
+            //         }
+            //         if (isLogin) {
+            //         }
+            //     })
+            // }
+            // checkInterval();
+            // console.log("checkInterval start");
 
-.triangle-right:hover {
-  border-left-color: #0056b3;
-}
+            // fetch(apiurl + "log_all", {
+            //   method: "GET",
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //     authorization: auth_key,
+            //   },
+            // }).then((response) => {
+            //     if (response.status === 200) {
+            //       return response.json();
+            //     } else {
+            //       console.error("Error:", response.text());
+            //     }
+            // }).then((ret) => {
+            //   // console.log("logall", ret);
+            //   if (ret == null) {
+            //     return;
+            //   }
+            // }).catch((error) => {
+            //   console.error("Error:", error);
+            //   alert("ログイン中にエラーが発生しました。");
+            // });
+          }).catch((error) => {
+            console.error(error);
+            alert("ログイン中にエラーが発生しました。");
+          });
+      }
 
-.triangle-left:focus,
-.triangle-right:focus,
-.triangle-left:active,
-.triangle-right:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* グレーアウト */
-.triangle-left.disabled,
-.triangle-right.disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.5;
-}
-.triangle-left.disabled {
-  border-right-color: #ccc !important;
-}
-.triangle-right.disabled {
-  border-left-color: #ccc !important;
-}
-
-.qty-control {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-input.qty-input {
-  width: 100px;
-  height: 80px;
-  text-align: center;
-  font-size: 2.5rem;
-  pointer-events: none;
-  user-select: none;
-  border: 2px solid #ced4da;
-  border-radius: 10px;
-  background-color: #fff;
-}
-
-/* メニュー文字や説明の大きさ調整 */
-.card-title {
-  font-size: 2.4rem;
-  font-weight: bold;
-}
-.qty-control,
-.qty-control + p,
-.card-body > p {
-  font-size: 1.8rem;
-}
-.description-text {
-  font-size: 1.6rem;
-  margin-top: 12px;
-  color: #333;
-  min-height: 60px;
-}
-
-body {
-  background-color: white;
-  background-size: cover;
-  background-attachment: fixed;
-  font-family: "Segoe UI", "ヒラギノ角ゴ ProN", sans-serif;
-  margin: 0;
-  padding-bottom: 120px; /* 下に余裕を作る */
-}
-
-h1 {
-  animation: fadeInDown 1s forwards;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 20px;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 3.2rem;
-}
-
-h10 {
-  color: black;
-  font-size: 3.2rem;
-  padding: 20Px;
-  text-align: center;
-  margin-bottom: 20Px;
-  font-style:oblique;
-}
-
-.card {
-  animation: fadeInUp 1s forwards;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: none !important;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 1rem;
-}
-
-.card-img-top {
-  max-height: 220px;
-  object-fit: contain;
-}
-
-.pop {
-  animation: pop 0.3s ease;
-}
-
-#status {
-  opacity: 0;
-  transition: opacity 0.5s;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 2rem;
-  z-index: 1100;
-  max-width: 90vw;
-  text-align: center;
-  pointer-events: none; /* クリックなど受け付けない */
-}
-
-/* モーダル縦中央固定＋内部スクロール */
-.modal-dialog {
-  display: flex;
-  align-items: center;
-  min-height: calc(100vh - 1rem);
-  max-height: 90vh;
-  margin: 0 auto;
-}
-
-.modal-content {
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-@keyframes fadeInDown {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.3);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+      function changeDisplayMode(mode) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("main").style.display = "none";
+        document.getElementById("sub").style.display = "none";
+        document.getElementById("staff").style.display = "none";
+        document.getElementById("offline").style.display = "none";
+        document.getElementById("error").style.display = "none";
+        document.getElementById("outof-service").style.display = "none";
+        document.getElementById(mode).style.display = "block";
+      }
+    </script>
+  </body>
+</html>
