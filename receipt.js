@@ -3,12 +3,18 @@ const isCorrectBrowserUsed = window.navigator.userAgent.startsWith("StarWebPRNTB
 const printURL = "http://localhost:8001/StarWebPRNT/SendMessage";
 let isPrinterDetected = false;
 
+const priceData = [
+    [200, 200], [300, 300], [200, 200],
+    [200, 200], [200, 200], [200, 200]
+];
+
+
 if (!isCorrectBrowserUsed) {
     console.warn("Star Web PRNT Browserを利用していません。");
     // TODO: 自動的に店員操作モードにする
 }
 
-function receipt_print(order_id, password, data) {
+function receipt_print(data) {
     // TODO: 印刷
     if (!isCorrectBrowserUsed) {
         alert("印刷に対応していないブラウザです。");
@@ -19,26 +25,51 @@ function receipt_print(order_id, password, data) {
         return;
     }
     console.log("印刷します。");
-    _onSendMessageApi(order_id, password, data);
+    _onSendMessageApi(data);
 }
 
 function receipt_checkPrinterCondition() {
     if (!isCorrectBrowserUsed) return false;
-    return false;
+    return true;
 }
 
 
-function _makeReceiptProductOneLine(item_index, number) {}
+function _makeReceiptProductsLine(class_number, item_id, count) {
+    const item_index = item_id == "item_1" ? 0 : 1;
+    const titleData = [
+        "ベビーカステラ(プレーン)   \n",
+        "ベビーカステラ(抹茶)       \n",
+        "お好み焼き(豚玉)           \n",
+        "お好み焼き(豚玉チーズ)     \n",
+        "みたらしきなこ団子         \n",
+        "カラフルあんこ団子         \n",
+        "かき氷(抹茶白玉小豆)       \n",
+        "かき氷(マンゴー)           \n",
+        "ポテト(コンソメ)           \n",
+        "ポテト(バター醤油)         \n",
+        "たこ焼き(ソース)           \n",
+        "たこ焼き(明太もち)         \n",
+    ];
+    let ret = builder.createTextElement({data:titleData[(class_number - 1) * 2 + item_index]});
+    const price = priceData[class_number-1][item_index];
+    let space = "";
+    if (price * count < 1000) {
+        space = " ";  // 1000円未満のときは空白の量を調整する
+    }
+    ret += builder.createTextElement({data:`${count}個       ${space}\\${price*count}\n`});
+    return [ret, price*count]
+}
 
 
 /***********************************************************/
 /* print a sample receipt using API in StarWebPrintBuilder */
 /***********************************************************/
-function _onSendMessageApi(order_id, password, data) {
+function _onSendMessageApi(data) {
     // normalもemphasisも '123456789012345678901234567\n' 27文字
     const builder = new StarWebPrintBuilder();
 
     let request = '';
+    let total_money = 0;
 
     request += builder.createInitializationElement();
 
@@ -57,7 +88,13 @@ function _onSendMessageApi(order_id, password, data) {
 
     request += builder.createTextElement({data:'\n'});
 
-    request += builder.createTextElement({data:`Apple                $20.00\n`});
+    // request += builder.createTextElement({data:`Apple                $20.00\n`});
+    const item_1_data = _makeReceiptProductsLine(data["class_number"], "item_1", data["item_1"]);
+    request += item_1_data[0];
+    total_money += item_1_data[1];
+    const item_2_data = _makeReceiptProductsLine(data["class_number"], "item_2", data["item_2"]);
+    request += item_2_data[0];
+    total_money += item_2_data[1];
     request += builder.createTextElement({underline:true, data:'Tax                  $10.00\n'});
     request += builder.createTextElement({underline:false});
     request += builder.createTextElement({emphasis:true});
