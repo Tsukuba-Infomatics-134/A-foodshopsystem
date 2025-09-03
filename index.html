@@ -68,6 +68,33 @@
     </div>
 
     <div id="sub" style="display: none">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passcheck">
+        パスワード確認
+      </button>
+      <div class="modal fade" id="passcheck" tabindex="-1" aria-labelledby="passcheckLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+      
+               <!-- モーダルヘッダー -->
+               <div class="modal-header">
+                  <h5 class="modal-title" id="passcheckLabel">パスワードの確認</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+      
+               <!-- モーダルボディ -->
+               <div class="modal-body">
+                  <label for="passwordInput">パスワードを入力してください</label>
+                  <input type="password" id="passwordInput" class="form-control" placeholder="パスワード">
+               </div>
+      
+               <!-- モーダルフッター -->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                  <button type="button" class="btn btn-primary" id="submitPassword">確認</button>
+               </div>
+            </div>
+         </div>
+      </div>
       <div class="starting_button">
         <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main')">
           注文開始
@@ -546,6 +573,17 @@
         document.getElementById("outof-service").style.display = "none";
         document.getElementById(mode).style.display = "block";
       }
+
+      document.getElementById('submitPassword').addEventListener('click', function() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === 'shine') {
+               changeDisplayMode(staff);
+            } else {
+               alert('パスワードが確認されました');
+               // ここでパスワード確認後の処理を追加できます
+               // 例えば、サーバーに送信するなど
+            }
+         });
     </script>
   </body>
 </html>
