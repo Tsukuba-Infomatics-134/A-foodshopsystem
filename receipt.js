@@ -133,7 +133,7 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({width:1});
 
     request += builder.createAlignmentElement({position:'center'});
-    request += builder.createTextElement({data:"整理番号"});
+    request += builder.createTextElement({data:"整理番号\n"});
     request += builder.createTextElement({width:2, emphasis:true, data: `${data["order_id"]}\n`})
     request += builder.createTextElement({width:1, emphasis:false});
 
@@ -141,17 +141,18 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({underline:true, data:'                                \n'});
     request += builder.createTextElement({underline:false});
 
-    request += builder.createTextElement({data:"桐陰祭HPの「食販について」ページから行けるサイトに整理番号と下のパスワードを入力するか、右のQRコードを読み取ることで、この注文の呼び出し状況を確認できます。"});
-
-    request += builder.createAlignmentElement({position:'right'});
-    request += builder.createQrCodeElement({data:_getMobileURL(data["order_id"], data["password"])});
+    request += builder.createAlignmentElement({position:'center'});
+    request += builder.createQrCodeElement({cell: 6, data:_getMobileURL(data["order_id"], data["password"])});
     request += builder.createTextElement({data:"\n"});
 
     request += builder.createAlignmentElement({position:'left'});
-    request += builder.createTextElement({data:`  パスワード: ${data["password"]}`});
-    request += builder.createTextElement({data:""});
+    request += builder.createTextElement({data:"桐陰祭HPの「食販について」ページから行けるサイトに整理番号と下のパスワードを入力するか、上のQRコードを読み取ることで、この注文の呼び出し状況を確認できます。\n"});
 
-    request += builder.createTextElement({data:'発行：2025/09/03 10:05\n\n\n'});
+    request += builder.createTextElement({data:`  パスワード: ${data["password"]}\n`});
+    request += builder.createTextElement({data:"また、1階本部、2階廊下端、3階廊下端にも呼び出し番号を確認できるモニターがあります。\n\n"});
+
+    request += builder.createAlignmentElement({position:'center'});
+    request += builder.createTextElement({data:'発行：2025/09/03 10:05\n\n'});
 
     request += builder.createTextElement({characterspace:0});
     request += builder.createFeedElement({line:1});
