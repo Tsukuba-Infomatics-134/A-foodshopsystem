@@ -463,78 +463,77 @@
             "Content-Type": "application/json",
             password: password,
           },
-        })
-          .then((response) => {
-            const data = response.json();
-            if (response.status === 200) {
-              return data;
-            } else if (response.status === 401) {
-              alert("パスワードが違います");
-              return null;
-            } else {
-              alert("ログイン中にエラーが発生しました。");
-              return null;
-            }
-          })
-          .then((data) => {
-            if (data == null) {
-              return;
-            }
-            console.log(data);
-            isLogin = true;
-            auth_key = data["token"];
-            classnum = data["user"];
-            classData = classDatas[classnum];
-
-            document.getElementById("pass").value = "";
-            document.title = `[${classnum}組] A 桐陰祭食販2025`;
-            document.getElementsByClassName("description-text1")[0].innerHTML = classData["explain"][0];
-            document.getElementsByClassName("description-text2")[0].innerHTML = classData["explain"][1];
-            document.body.style.backgroundImage = `url('${classData["bgimage"]}')`;
-            document.getElementsByClassName("card-img-top-1")[0].innerHTML = `url('${classData["picture"][0]}')`;
-            document.getElementsByClassName("card-img-top-2")[0].innerHTML = `url('${classData["picture"][1]}')`;
-            document.getElementsByClassName("card-title")[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
-            document.getElementsByClassName("card-title")[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
-            document.querySelector("h1").innerHTML += ` ${classnum}組`;
-            changeDisplayMode("sub");
-            // const checkInterval = () => {
-            //     check().then(async ret => {
-            //         console.log("checked", ret)
-            //         if (ret != null && ret.length > 0) {
-            //             //ここに更新時の挙動を書く
-            //         }
-            //         if (isLogin) {
-            //         }
-            //     })
-            // }
-            // checkInterval();
-            // console.log("checkInterval start");
-
-            // fetch(apiurl + "log_all", {
-            //   method: "GET",
-            //   headers: {
-            //     "Content-Type": "application/json",
-            //     authorization: auth_key,
-            //   },
-            // }).then((response) => {
-            //     if (response.status === 200) {
-            //       return response.json();
-            //     } else {
-            //       console.error("Error:", response.text());
-            //     }
-            // }).then((ret) => {
-            //   // console.log("logall", ret);
-            //   if (ret == null) {
-            //     return;
-            //   }
-            // }).catch((error) => {
-            //   console.error("Error:", error);
-            //   alert("ログイン中にエラーが発生しました。");
-            // });
-          }).catch((error) => {
-            console.error(error);
+        }).then((response) => {
+          const data = response.json();
+          if (response.status === 200) {
+            return data;
+          } else if (response.status === 401) {
+            alert("パスワードが違います");
+            return null;
+          } else {
             alert("ログイン中にエラーが発生しました。");
-          });
+            return null;
+          }
+        }).then((data) => {
+          if (data == null) {
+            return;
+          }
+          console.log(data);
+          isLogin = true;
+          auth_key = data["token"];
+          classnum = data["user"];
+          classData = classDatas[classnum];
+
+          document.getElementById("pass").value = "";
+          document.title = `[${classnum}組] A 桐陰祭食販2025`;
+          document.getElementsByClassName("description-text1")[0].innerHTML = classData["explain"][0];
+          document.getElementsByClassName("description-text2")[0].innerHTML = classData["explain"][1];
+          document.body.style.backgroundImage = `url('${classData["bgimage"]}')`;
+          document.getElementsByClassName("card-img-top-1")[0].innerHTML = `url('${classData["picture"][0]}')`;
+          document.getElementsByClassName("card-img-top-2")[0].innerHTML = `url('${classData["picture"][1]}')`;
+          document.getElementsByClassName("card-title")[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
+          document.getElementsByClassName("card-title")[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
+          document.querySelector("h1").innerHTML += ` ${classnum}組`;
+          changeDisplayMode("sub");
+
+          // const checkInterval = () => {
+          //     check().then(async ret => {
+          //         console.log("checked", ret)
+          //         if (ret != null && ret.length > 0) {
+          //             //ここに更新時の挙動を書く
+          //         }
+          //         if (isLogin) {
+          //         }
+          //     })
+          // }
+          // checkInterval();
+          // console.log("checkInterval start");
+
+          // fetch(apiurl + "log_all", {
+          //   method: "GET",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     authorization: auth_key,
+          //   },
+          // }).then((response) => {
+          //     if (response.status === 200) {
+          //       return response.json();
+          //     } else {
+          //       console.error("Error:", response.text());
+          //     }
+          // }).then((ret) => {
+          //   // console.log("logall", ret);
+          //   if (ret == null) {
+          //     return;
+          //   }
+          // }).catch((error) => {
+          //   console.error("Error:", error);
+          //   alert("ログイン中にエラーが発生しました。");
+          // });
+        }).catch((error) => {
+          console.error(error);
+          alert("ログイン中にエラーが発生しました。");
+        });
       }
 
       function changeDisplayMode(mode) {
