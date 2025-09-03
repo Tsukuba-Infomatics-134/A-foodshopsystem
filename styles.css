@@ -4,6 +4,24 @@
   margin: 0 auto;
 }
 
+/*店員用画面モーダル*/
+.modal-content {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+  
+  /* ヘッダー部分の色 */
+.modal-header {
+  background-color: #007bff;
+  color: white;
+}
+  
+/* フッター部分のボタン色 */
+.modal-footer .btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
 /*コンテナ,背景*/
 .outofservice-background,
 .offline-background,
