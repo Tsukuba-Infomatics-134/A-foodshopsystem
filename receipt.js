@@ -41,7 +41,7 @@ function _getYenText(price, withSpace=true) {
         const mod = ('000' + (price % 1000)).slice(-3);
         price_str = `\\${Math.floor(price/1000)},${mod}`;  // 1000円以上のときはカンマを付ける
     }
-    return price_str
+    return price_str;
 }
 
 
@@ -50,9 +50,9 @@ function _getReceiptStringLength(text) {
     for(let i in text) {
         // 全角半角判定の正規表現
         if (text[i].match(/[ -~]/)) {
-            ret += 1
+            ret += 1;
         } else {
-            ret += 2
+            ret += 2;
         }
     }
     return ret;
@@ -90,14 +90,14 @@ function _makeReceiptProductsLine(builder, class_number, item_id, count) {
     const itemname = titleData[(class_number - 1) * 2 + item_index];
     ret += builder.createTextElement({data:itemname});
     const price = priceData[class_number-1][item_index];
-    let price_str = `${count}個  ${_getYenText(price*count)}`
+    let price_str = `${count}個  ${_getYenText(price*count)}`;
     if (_getReceiptStringLength(itemname + price_str) > 32) {
         // 2行に分ける
-        ret += builder.createTextElement({data:"\n"})
+        ret += builder.createTextElement({data:"\n"});
     }
     ret += builder.createAlignmentElement({position:'right'});
     ret += builder.createTextElement({data:price_str + '\n'});
-    return [ret, price*count]
+    return [ret, price*count];
 }
 
 
@@ -144,7 +144,7 @@ function _onSendMessageApi(data, callback, error_callback) {
 
     request += builder.createAlignmentElement({position:'center'});
     request += builder.createTextElement({data:"整理番号\n"});
-    request += builder.createTextElement({width:3, height: 3, emphasis:true, data: `${data["order_id"]}\n`})
+    request += builder.createTextElement({width:3, height: 3, emphasis:true, data: `${data["order_id"]}\n`});
     request += builder.createTextElement({width:1, height: 1, emphasis:false});
 
     request += builder.createAlignmentElement({position:'left'});
