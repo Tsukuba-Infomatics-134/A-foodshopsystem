@@ -16,7 +16,7 @@
     <div id="login">
       <p style="color: black">パスワードを入力してください。</p>
       <input type="password" id="pass" placeholder="パスワードを入力" />
-      <button onclick="login()">ログイン</button>
+      <button onclick="login()" type="submit">ログイン</button>
     </div>
 
     <div id="staff" style="display: none;">
@@ -94,7 +94,7 @@
                <!-- モーダルフッター -->
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-                  <button type="button" class="btn btn-primary" id="submitPassword">確認</button>
+                  <button type="submit" class="btn btn-primary" id="submitPassword">確認</button>
                </div>
             </div>
          </div>
@@ -104,6 +104,7 @@
           注文開始
         </button>
       </div>
+
     </div>
 
     <div id="main" style="display: none" position="fixed">
