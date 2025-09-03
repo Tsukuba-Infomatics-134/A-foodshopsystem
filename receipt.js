@@ -25,12 +25,7 @@ function receipt_print(data) {
         return;
     }
     console.log("印刷します。");
-    try {
-        _onSendMessageApi(data);
-    } catch (error) {
-        console.error(error);
-        alert(error);
-    }
+    _onSendMessageApi(data);
 }
 
 function receipt_checkPrinterCondition() {
