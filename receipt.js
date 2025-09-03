@@ -134,14 +134,15 @@ function _onSendMessageApi(data) {
 
     request += builder.createAlignmentElement({position:'center'});
     request += builder.createTextElement({data:"整理番号\n"});
-    request += builder.createTextElement({width:2, emphasis:true, data: `${data["order_id"]}\n`})
-    request += builder.createTextElement({width:1, emphasis:false});
+    request += builder.createTextElement({width:3, height: 3, emphasis:true, data: `${data["order_id"]}\n`})
+    request += builder.createTextElement({width:1, height: 1, emphasis:false});
 
     request += builder.createAlignmentElement({position:'left'});
     request += builder.createTextElement({underline:true, data:'                                \n'});
     request += builder.createTextElement({underline:false});
 
-    request += builder.createAlignmentElement({position:'center'});
+    request += builder.createAlignmentElement({position:'left'});
+    request += builder.createTextElement({data:"          "});
     request += builder.createQrCodeElement({cell: 6, data:_getMobileURL(data["order_id"], data["password"])});
     request += builder.createTextElement({data:"\n"});
 
