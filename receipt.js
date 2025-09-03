@@ -142,7 +142,7 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({underline:false});
 
     request += builder.createAlignmentElement({position:'left'});
-    request += builder.createTextElement({data:"         "});
+    request += builder.createTextElement({data:"        "});
     request += builder.createQrCodeElement({cell: 6, data:_getMobileURL(data["order_id"], data["password"])});
     request += builder.createTextElement({data:"\n"});
 

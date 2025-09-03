@@ -423,7 +423,7 @@
             quantities.fill(0);
             updateQtyUI();
             statusDiv.style.opacity = "0";
-            receipt_print({class_number: classnum, item_1: order1, item_2: order2});
+            receipt_print({class_number: classnum, item_1: order1, item_2: order2, order_id: orderNum, password: res_json["password"]});
           })
           .catch((error) => {
             console.error("Error:", error);
