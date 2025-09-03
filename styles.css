@@ -170,8 +170,8 @@
 .confirm-button {
   background-color: hwb(0 4% 13%);
   color: white;
-  font-size: 80px;
-  padding: 50px 400px;
+  font-size: 60px;
+  padding: 10px 80vh;
   border: none;
   border-radius: 8px;
   cursor: pointer;
