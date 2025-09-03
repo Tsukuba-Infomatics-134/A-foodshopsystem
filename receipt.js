@@ -123,12 +123,16 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({data:"ご利用ありがとうございます。\n"});
     request += builder.createTextElement({data:'\n'});
 
-    const item_1_data = _makeReceiptProductsLine(builder, data["class_number"], "item_1", data["item_1"]);
-    request += item_1_data[0];
-    total_price += item_1_data[1];
-    const item_2_data = _makeReceiptProductsLine(builder, data["class_number"], "item_2", data["item_2"]);
-    request += item_2_data[0];
-    total_price += item_2_data[1];
+    if (data["item_1"]) {
+        const item_1_data = _makeReceiptProductsLine(builder, data["class_number"], "item_1", data["item_1"]);
+        request += item_1_data[0];
+        total_price += item_1_data[1];
+    }
+    if (data["item_2"]) {
+        const item_2_data = _makeReceiptProductsLine(builder, data["class_number"], "item_2", data["item_2"]);
+        request += item_2_data[0];
+        total_price += item_2_data[1];
+    }
     request += builder.createAlignmentElement({position:'left'});
     request += builder.createTextElement({underline:true, data:'                                \n'});
     request += builder.createTextElement({underline:false});
