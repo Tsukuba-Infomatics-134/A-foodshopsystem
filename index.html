@@ -23,7 +23,7 @@
       <div class="width-container">
         <div class="centerlize">
           <button class="temperate-button3" onclick="changeDisplayMode('sub')">
-            復帰
+            復旧
           </button>
           <button class="recansel-button" onclick="changeDisplayMode('error')">
             エラー画面
@@ -40,6 +40,7 @@
 
     <div id="offline" style="display: none;">
       <div class="offline-background">
+        <button onclick="changeDisplayMode('staff')"></button>
         <div class="width-container" >
           <p class="offline-letter1"><ruby>現在オフラインです<rt class="oblique">Offline</rt></ruby></p>
           <img src="Photos/Reconect.png" class="img-dispatcher">
@@ -49,6 +50,7 @@
     </div>
 
     <div id="error" style="display: none;" class="error-background">
+      <button onclick="changeDisplayMode('staff')"></button>
       <div class="screen-center">
         <div class="screen-center2">
           <img src="Photos/warning.png" class="img-dispatcher">
@@ -60,6 +62,7 @@
 
     <div id="outof-service" style="display: none;">
       <div class="outofservice-background">
+        <button onclick="changeDisplayMode('staff')"></button>
         <div class="width-container">
           <p class="outofservice-letter1"><ruby>販売停止<tr class="oblique">Out of order</tr></ruby><p>
           <img src="Photos/ban.png" class="img-dispatcher">
@@ -589,7 +592,9 @@
       document.getElementById('submitPassword').addEventListener('click', function() {
             const password = document.getElementById('passwordInput').value;
             if (password === 'shine') {
-               changeDisplayMode(staff);
+              const modal = bootstrap.Modal.getInstance(document.getElementById('passcheck'));
+              modal.hide();
+              changeDisplayMode('staff');
             } else {
                alert('パスワードが確認されました');
                // ここでパスワード確認後の処理を追加できます
