@@ -167,10 +167,10 @@
             </div>
             <div class="modal-body">
               <h10>
-                <strong>メニュー1:</strong> <span id="confirmQty1">0</span>個
+                <strong><span id="confirmMenu1">メニュー1</span>:</strong> <span id="confirmQty1">0</span>個
               </h10>
               <h10>
-                <strong>メニュー2:</strong> <span id="confirmQty2">0</span>個
+                <strong><span id="confirmMenu2">メニュー2</span>:</strong> <span id="confirmQty2">0</span>個
               </h10>
               <h10>
                 <strong>合計金額:</strong> <span id="confirmTotal">0</span>円
@@ -532,6 +532,8 @@
           document.getElementsByClassName("card-title")[0].innerHTML = `${classData["title"][0]}  <Br> <h10>${classData["price"][0]}</h10>円`;
           document.getElementsByClassName("card-title")[1].innerHTML = `${classData["title"][1]}  <Br> <h10>${classData["price"][1]}</h10>円`;
           document.querySelector("h1").innerHTML += ` ${classnum}組`;
+          document.getElementById("confirmMenu1").innerHTML = classData["title"][0];
+          document.getElementById("confirmMenu2").innerHTML = classData["title"][1];
           changeDisplayMode("sub");
 
           // const checkInterval = () => {
@@ -586,17 +588,17 @@
       }
 
       document.getElementById('submitPassword').addEventListener('click', function() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === 'shine') {
-              const modal = bootstrap.Modal.getInstance(document.getElementById('passcheck'));
-              modal.hide();
-              changeDisplayMode('staff');
-            } else {
-               alert('パスワードが確認されました');
-               // ここでパスワード確認後の処理を追加できます
-               // 例えば、サーバーに送信するなど
-            }
-         });
+        const password = document.getElementById('passwordInput').value;
+        const modal = bootstrap.Modal.getInstance(document.getElementById('passcheck'));
+        if (password === 'shine') {
+          modal.hide();
+          changeDisplayMode('staff');
+        } else {
+            alert('パスワードが違います。');
+            modal.hide();
+            changeDisplayMode('sub');
+        }
+      });
     </script>
   </body>
 </html>
