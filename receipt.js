@@ -43,7 +43,8 @@ function _getYenText(price, withSpace=true) {
     // 3桁・4桁円しか想定されないため、それに合わせた金額表示を行う。3桁円の場合は空白2個が先頭に含まれる
     let price_str = withSpace ? `  \\${price}` : `\\${price}`;
     if (price >= 1000) {
-        price_str = `\\${Math.floor(price/1000)},${price%1000}`;  // 1000円以上のときはカンマを付ける
+        const mod = ('000' + (price % 1000)).slice(-3);
+        price_str = `\\${Math.floor(price/1000)},${mod}`;  // 1000円以上のときはカンマを付ける
     }
     return price_str
 }
@@ -142,9 +143,10 @@ function _onSendMessageApi(data) {
 
     request += builder.createAlignmentElement({position:'center'});
     request += builder.createTextElement({data:"整理番号\n"});
-    request += builder.createTextElement({width:2, emphasis:true, data: data["order_id"]})
+    request += builder.createTextElement({width:2, emphasis:true, data: `${data["order_id"]}\n`})
+    request += builder.createTextElement({width:1, emphasis:false});
 
-    request += builder.createTextElement({data:'発行：2025/09/03 10:05\n'});
+    request += builder.createTextElement({data:'発行：2025/09/03 10:05\n\n\n'});
 
     request += builder.createTextElement({characterspace:0});
     request += builder.createFeedElement({line:1});
