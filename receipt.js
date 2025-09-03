@@ -64,6 +64,12 @@ function _getMobileURL(order_id, password) {
 }
 
 
+function _getNowTimeStamp() {
+    const now = new Date(Date.now());
+    return `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+}
+
+
 function _makeReceiptProductsLine(builder, class_number, item_id, count) {
     const item_index = item_id == "item_1" ? 0 : 1;
     const titleData = [
@@ -153,7 +159,7 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({data:"また、1階本部、2階廊下端、3階廊下端にも呼び出し番号を確認できるモニターがあります。\n\n"});
 
     request += builder.createAlignmentElement({position:'center'});
-    request += builder.createTextElement({data:'発行：2025/09/03 10:05\n\n'});
+    request += builder.createTextElement({data:`発行：${_getNowTimeStamp()}\n\n`});
 
     request += builder.createTextElement({characterspace:0});
     request += builder.createFeedElement({line:1});
