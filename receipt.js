@@ -49,7 +49,7 @@ function _getReceiptStringLength(text) {
     let ret = 0;
     for(let i in text) {
         // 全角半角判定の正規表現
-        if (i.match(/[ -~]/)) {
+        if (text[i].match(/[ -~]/)) {
             ret += 1
         } else {
             ret += 2
@@ -132,20 +132,20 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({width:2, data:`${_getYenText(total_price)}\n`});
     request += builder.createTextElement({width:1});
 
+    request += builder.createAlignmentElement({position:'center'});
+    request += builder.createTextElement({data:"整理番号"});
+    request += builder.createTextElement({width:2, emphasis:true, data: `${data["order_id"]}\n`})
+    request += builder.createTextElement({width:1, emphasis:false});
+
     request += builder.createAlignmentElement({position:'left'});
     request += builder.createTextElement({underline:true, data:'                                \n'});
     request += builder.createTextElement({underline:false});
 
-    request += builder.createAlignmentElement({position:'center'});
-    request += builder.createTextElement({data:"整理番号"});
+    request += builder.createTextElement({data:"いろいろな説明をここに入れる。こことそことあそこにモニターが云々、パスワードが云々"});
 
     request += builder.createAlignmentElement({position:'right'});
     request += builder.createQrCodeElement({data:_getMobileURL(data["order_id"], data["password"])});
     request += builder.createTextElement({data:"\n"});
-    
-    request += builder.createAlignmentElement({position:'center'});
-    request += builder.createTextElement({width:2, emphasis:true, data: `${data["order_id"]}\n`})
-    request += builder.createTextElement({width:1, emphasis:false});
 
     request += builder.createTextElement({data:'発行：2025/09/03 10:05\n\n\n'});
 
