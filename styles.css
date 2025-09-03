@@ -83,6 +83,14 @@
   margin-left: 2%;
 }
 
+.container-order {
+  width: 100%;
+  position: fixed;
+
+  height: 90vh;
+  max-height: 90vh; 
+}
+
 
 
 /*テキスト関連*/
@@ -171,7 +179,10 @@
   background-color: hwb(0 4% 13%);
   color: white;
   font-size: 60px;
-  padding: 10px 80vh;
+  height: 90px;
+  max-height: 90px;
+  width: 80vh;
+  min-width: 80vh;
   border: none;
   border-radius: 8px;
   cursor: pointer;
