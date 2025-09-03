@@ -141,11 +141,15 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({underline:true, data:'                                \n'});
     request += builder.createTextElement({underline:false});
 
-    request += builder.createTextElement({data:"いろいろな説明をここに入れる。こことそことあそこにモニターが云々、パスワードが云々"});
+    request += builder.createTextElement({data:"桐陰祭HPの「食販について」ページから行けるサイトに整理番号と下のパスワードを入力するか、右のQRコードを読み取ることで、この注文の呼び出し状況を確認できます。"});
 
     request += builder.createAlignmentElement({position:'right'});
     request += builder.createQrCodeElement({data:_getMobileURL(data["order_id"], data["password"])});
     request += builder.createTextElement({data:"\n"});
+
+    request += builder.createAlignmentElement({position:'left'});
+    request += builder.createTextElement({data:`  パスワード: ${data["password"]}`});
+    request += builder.createTextElement({data:""});
 
     request += builder.createTextElement({data:'発行：2025/09/03 10:05\n\n\n'});
 
