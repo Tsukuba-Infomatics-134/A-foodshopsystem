@@ -13,8 +13,33 @@
     <script src="js/StarWebPrintDisplayBuilder.js"></script>
     <script src="js/StarWebPrintExtManager.js"></script>
     <script src="js/StarWebPrintTrader.js"></script>
-    <button type="button" label="テスト" onclick="receipt_print({class_number:3,item_1:3,item_2:5,order_id:100,password:12345678});">テスト</button>
-    <div id="aaa">表示はこちら</div>
+    <button type="button" label="テスト" onclick="testReceiptPrint();">テスト</button>
+    <div id="aaa">aaa</div>
+    <input type="text" id="classnumber" value="3" />
+    <input type="text" id="item1" value="3" />
+    <input type="text" id="item2" value="5" />
+    <input type="text" id="orderid" value="100" />
+    <input type="text" id="password" value="12345678" />
     <script src="receipt.js"></script>
+    <script>
+      function testReceiptPrint() {
+        const class_number = document.getElementById("classnumber").value;
+        const item_1 = document.getElementById("item1").value;
+        const item_2 = document.getElementById("item2").value;
+        const order_id = document.getElementById("orderid").value;
+        const password = document.getElementById("password").value;
+        try {
+          receipt_print({
+            class_number: class_number,
+            item_1: item_1,
+            item_2: item_2,
+            order_id: order_id,
+            password: password
+          });
+        } catch (e) {
+          document.getElementById("aaa").innerText = e;
+        }
+      }
+    </script>
   </body>
 </html>
