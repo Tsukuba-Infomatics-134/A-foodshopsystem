@@ -54,10 +54,10 @@ function _getReceiptStringLength(text) {
     let ret = 0;
     for(let i in text) {
         // 全角半角判定の正規表現
-        if (i.match(/^[^\x01-\x7E\xA1-\xDF]+$/)) {
-            ret += 2
-        } else {
+        if (i.match(/[ -~]/)) {
             ret += 1
+        } else {
+            ret += 2
         }
     }
     return ret;
