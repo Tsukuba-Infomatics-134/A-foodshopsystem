@@ -25,7 +25,8 @@
 /*コンテナ,背景*/
 .outofservice-background,
 .offline-background,
-.error-background {
+.error-background,
+.main {
   top: 0;
   left: 0;
   position: fixed; /* CHanged */
