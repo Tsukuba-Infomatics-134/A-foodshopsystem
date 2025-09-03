@@ -200,7 +200,7 @@
               <!-- 整理券番号をここに表示 -->
             </div>
             <div class="modal-footer">
-              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="changeDisplayMode('sub')">
+              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="changeDisplayMode('sub')" disabled id="confirm-modal-close">
                 閉じる
               </button>
             </div>
@@ -404,10 +404,15 @@
 
       function onPrintSuccess(response) {
         // 整理券発行成功
+        const firstline = document.getElementById("modalBody").innerHTML.split(/\n/)[0];
+        document.getElementById("modalBody").innerHTML = firstline + `印刷完了。店員から整理券を受け取ってください。`;
+        document.getElementById("confirm-modal-close").disabled = false;
       }
 
       function onPrintError(response) {
         // 整理券発行失敗
+        console.error(response);
+        changeDisplayMode("error");
       }
 
       function submitOrder() {
@@ -435,39 +440,33 @@
             order_items: { item_1: order1, item_2: order2 },
             user: classnum,
           }),
-        })
-          .then(async (response) => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              console.error("Error:", response.text());
-              alert("注文中にエラーが発生しました。");
-              return null;
-            }
-          })
-          .then((res_json) => {
-            if (!res_json) return;
-            const orderNum = res_json["order_id"];
-            console.log(orderNum, res_json["password"]);
-            // モーダルに整理番号セットして表示
-            document.getElementById("modalBody").textContent = `整理番号: #${orderNum}\n印刷中...`;
-            // Bootstrapモーダルを表示
-            const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
-            orderModal.show();
-            // 注文リセット
-            quantities.fill(0);
-            updateQtyUI();
-            statusDiv.style.opacity = "0";
-            receipt_print(
-              {class_number: classnum, item_1: order1, item_2: order2, order_id: orderNum, password: res_json["password"]},
-              onPrintSuccess, onPrintError
-            );
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            setOnlineStatus(1);
+        }).then(async (response) => {
+          const data = await response.json();
+          if (!response.ok) {
+            console.error("Error:", data);
             changeDisplayMode("error");
-          });
+            return;
+          }
+          const orderNum = data["order_id"];
+          console.log(orderNum, data["password"]);
+          // モーダルに整理番号セットして表示
+          document.getElementById("confirm-modal-close").disabled = true;
+          document.getElementById("modalBody").innerHTML = `整理番号: #${orderNum}<br>\n印刷中...`;
+          // Bootstrapモーダルを表示
+          const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
+          orderModal.show();
+          // 注文リセット
+          quantities.fill(0);
+          updateQtyUI();
+          statusDiv.style.opacity = "0";
+          receipt_print(
+            {class_number: classnum, item_1: order1, item_2: order2, order_id: orderNum, password: data["password"]},
+            onPrintSuccess, onPrintError
+          );
+        }).catch((error) => {
+          console.error("Error:", error);
+          changeDisplayMode("error");
+        });
       }
 
       function check() {

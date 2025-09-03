@@ -15,14 +15,14 @@ if (!isCorrectBrowserUsed) {
 }
 
 function receipt_print(data, callback, error_callback) {
-    // TODO: 印刷
+    // 印刷を行う。印刷ができない場合でも成功扱いになる。
     if (!isCorrectBrowserUsed) {
         alert("印刷に対応していないブラウザです。");
-        return;
+        return callback();
     }
     if (!receipt_checkPrinterCondition()) {
         alert("レシートプリンターと接続されていません。");
-        return;
+        return callback();
     }
     console.log("印刷します。");
     _onSendMessageApi(data, callback, error_callback);
