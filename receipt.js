@@ -14,7 +14,7 @@ if (!isCorrectBrowserUsed) {
     // TODO: 自動的に店員操作モードにする
 }
 
-function receipt_print(data) {
+function receipt_print(data, callback, error_callback) {
     // TODO: 印刷
     if (!isCorrectBrowserUsed) {
         alert("印刷に対応していないブラウザです。");
@@ -25,7 +25,7 @@ function receipt_print(data) {
         return;
     }
     console.log("印刷します。");
-    _onSendMessageApi(data);
+    _onSendMessageApi(data, callback, error_callback);
 }
 
 function receipt_checkPrinterCondition() {
@@ -104,7 +104,7 @@ function _makeReceiptProductsLine(builder, class_number, item_id, count) {
 /***********************************************************/
 /* print a sample receipt using API in StarWebPrintBuilder */
 /***********************************************************/
-function _onSendMessageApi(data) {
+function _onSendMessageApi(data, callback, error_callback) {
     // normalもemphasisも '123456789012345678901234567\n' 27文字
     const builder = new StarWebPrintBuilder();
 
@@ -168,48 +168,51 @@ function _onSendMessageApi(data) {
     request += builder.createTextElement({characterspace:0});
     request += builder.createFeedElement({line:1});
 
-    _sendMessageApi(request);
+    _sendMessageApi(request, callback, error_callback);
 }
 
 
-function _sendMessageApi(request) {
+function _sendMessageApi(request, callback, error_callback) {
     const url = printURL;
 
     const trader = new StarWebPrintTrader({url:url});
 
-    trader.onReceive = (response) => {
-        let msg = '- onReceive -\n\n';
-        msg += 'TraderSuccess : [ ' + response.traderSuccess + ' ]\n';
-//      msg += 'TraderCode : [ ' + response.traderCode + ' ]\n';
-        msg += 'TraderStatus : [ ' + response.traderStatus + ',\n';
+    trader.onReceive = callback;
+    trader.onError = error_callback;
 
-        if (trader.isCoverOpen            ({traderStatus:response.traderStatus})) {msg += '\tCoverOpen,\n';}
-        if (trader.isOffLine              ({traderStatus:response.traderStatus})) {msg += '\tOffLine,\n';}
-        if (trader.isCompulsionSwitchClose({traderStatus:response.traderStatus})) {msg += '\tCompulsionSwitchClose,\n';}
-        if (trader.isEtbCommandExecute    ({traderStatus:response.traderStatus})) {msg += '\tEtbCommandExecute,\n';}
-        if (trader.isHighTemperatureStop  ({traderStatus:response.traderStatus})) {msg += '\tHighTemperatureStop,\n';}
-        if (trader.isNonRecoverableError  ({traderStatus:response.traderStatus})) {msg += '\tNonRecoverableError,\n';}
-        if (trader.isAutoCutterError      ({traderStatus:response.traderStatus})) {msg += '\tAutoCutterError,\n';}
-        if (trader.isBlackMarkError       ({traderStatus:response.traderStatus})) {msg += '\tBlackMarkError,\n';}
-        if (trader.isPaperEnd             ({traderStatus:response.traderStatus})) {msg += '\tPaperEnd,\n';}
-        if (trader.isPaperNearEnd         ({traderStatus:response.traderStatus})) {msg += '\tPaperNearEnd,\n';}
-        if (trader.isPaperPresent         ({traderStatus:response.traderStatus})) {msg += '\tPaperPresent,\n';}
-        if (trader.isRollPositionError    ({traderStatus:response.traderStatus})) {msg += '\tRollPositionError,\n';}
+//     trader.onReceive = (response) => {
+//         let msg = '- onReceive -\n\n';
+//         msg += 'TraderSuccess : [ ' + response.traderSuccess + ' ]\n';
+// //      msg += 'TraderCode : [ ' + response.traderCode + ' ]\n';
+//         msg += 'TraderStatus : [ ' + response.traderStatus + ',\n';
 
-        msg += '\tEtbCounter = ' + trader.extractionEtbCounter({traderStatus:response.traderStatus}).toString() + ' ]\n';
-//      msg += 'Status : [ ' + response.status + ' ]\n';
-//      msg += 'ResponseText : [ ' + response.responseText + ' ]\n';
+//         if (trader.isCoverOpen            ({traderStatus:response.traderStatus})) {msg += '\tCoverOpen,\n';}
+//         if (trader.isOffLine              ({traderStatus:response.traderStatus})) {msg += '\tOffLine,\n';}
+//         if (trader.isCompulsionSwitchClose({traderStatus:response.traderStatus})) {msg += '\tCompulsionSwitchClose,\n';}
+//         if (trader.isEtbCommandExecute    ({traderStatus:response.traderStatus})) {msg += '\tEtbCommandExecute,\n';}
+//         if (trader.isHighTemperatureStop  ({traderStatus:response.traderStatus})) {msg += '\tHighTemperatureStop,\n';}
+//         if (trader.isNonRecoverableError  ({traderStatus:response.traderStatus})) {msg += '\tNonRecoverableError,\n';}
+//         if (trader.isAutoCutterError      ({traderStatus:response.traderStatus})) {msg += '\tAutoCutterError,\n';}
+//         if (trader.isBlackMarkError       ({traderStatus:response.traderStatus})) {msg += '\tBlackMarkError,\n';}
+//         if (trader.isPaperEnd             ({traderStatus:response.traderStatus})) {msg += '\tPaperEnd,\n';}
+//         if (trader.isPaperNearEnd         ({traderStatus:response.traderStatus})) {msg += '\tPaperNearEnd,\n';}
+//         if (trader.isPaperPresent         ({traderStatus:response.traderStatus})) {msg += '\tPaperPresent,\n';}
+//         if (trader.isRollPositionError    ({traderStatus:response.traderStatus})) {msg += '\tRollPositionError,\n';}
 
-        alert(msg);
-    }
+//         msg += '\tEtbCounter = ' + trader.extractionEtbCounter({traderStatus:response.traderStatus}).toString() + ' ]\n';
+// //      msg += 'Status : [ ' + response.status + ' ]\n';
+// //      msg += 'ResponseText : [ ' + response.responseText + ' ]\n';
 
-    trader.onError = (response) => {
-        let msg = '- onError -\n\n';
-        msg += '\tStatus:' + response.status + '\n';
-        msg += '\tResponseText:' + response.responseText;
+//         alert(msg);
+//     }
 
-        alert(msg);
-    }
+//     trader.onError = (response) => {
+//         let msg = '- onError -\n\n';
+//         msg += '\tStatus:' + response.status + '\n';
+//         msg += '\tResponseText:' + response.responseText;
+
+//         alert(msg);
+//     }
 
     trader.sendMessage({request:request});
 }

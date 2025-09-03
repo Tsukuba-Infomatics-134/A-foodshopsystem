@@ -402,6 +402,14 @@
         confirmModal.hide();
       }
 
+      function onPrintSuccess(response) {
+        // 整理券発行成功
+      }
+
+      function onPrintError(response) {
+        // 整理券発行失敗
+      }
+
       function submitOrder() {
         const statusDiv = document.getElementById("status");
         statusDiv.style.opacity = "1";
@@ -450,7 +458,10 @@
             quantities.fill(0);
             updateQtyUI();
             statusDiv.style.opacity = "0";
-            receipt_print({class_number: classnum, item_1: order1, item_2: order2, order_id: orderNum, password: res_json["password"]});
+            receipt_print(
+              {class_number: classnum, item_1: order1, item_2: order2, order_id: orderNum, password: res_json["password"]},
+              onPrintSuccess, onPrintError
+            );
           })
           .catch((error) => {
             console.error("Error:", error);
