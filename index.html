@@ -62,6 +62,14 @@
         </button>
       </div>
       <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
+        <button class="recansel-button" onclick="changeShopClerkMode(true);changeDisplayMode('sub');">
+          店員用モードに変更
+        </button>
+        <button class="temperate-button1" onclick="changeShopClerkMode(false);changeDisplayMode('sub');">
+          店員用モード終了
+        </button>
+      </div>
+      <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
         <button class="recansel-button" onclick="logout()">
           ログアウト
         </button>
@@ -306,6 +314,12 @@
       let apiurl = apiurl_production;
       let isOnline = false;
       let specialClassStatusData = {};
+      let isShopClerkMode = false;
+
+      if (!isCorrectBrowserUsed) {
+        // 自動的に店員モードに切り替える。
+        changeShopClerkMode(true);
+      }
 
       // オンライン判定を切り替える関数  0: オンライン, 1: オフライン
       function setOnlineStatus(state) {
@@ -465,12 +479,18 @@
           quantities.fill(0);
           updateQtyUI();
           statusDiv.style.opacity = "0";
+          if (isShopClerkMode) {
+            alert(`整理番号：${orderNum}\nパスワード：${data["password"]}`);
+            document.getElementById("confirm-modal-close").disabled = false;
+            return;
+          }
           receipt_print(
             {class_number: classnum, item_1: order1, item_2: order2, order_id: orderNum, password: data["password"]},
             onPrintSuccess, onPrintError
           );
         }).catch((error) => {
           console.error("Error:", error);
+          bootstrap.Modal.getInstance(document.getElementById("confirmModal")).hide();
           changeDisplayMode("error");
         });
       }
@@ -620,6 +640,16 @@
         document.querySelector("h1").innerHTML = "桐陰祭 注文システム";
         document.title = "A 桐陰祭食販2025";
         changeDisplayMode("login");
+      }
+
+      function changeShopClerkMode(mode) {
+        isShopClerkMode = mode;
+        if (mode) {
+          document.querySelector("h1").innerHTML += " 店員用モード";
+        }
+        else {
+          document.querySelector("h1").innerHTML = "桐陰祭 注文システム";
+        }
       }
 
       function changeDisplayMode(mode) {

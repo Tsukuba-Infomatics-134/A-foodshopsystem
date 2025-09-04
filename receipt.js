@@ -11,7 +11,6 @@ const priceData = [
 
 if (!isCorrectBrowserUsed) {
     console.warn("Star Web PRNT Browserを利用していません。");
-    // TODO: 自動的に店員操作モードにする
 }
 
 function receipt_print(data, callback, error_callback) {
