@@ -247,7 +247,7 @@
           variety: 2,
           title: ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
           explain: ["ただのベビカス", "少し違うベビカス"],
-          picture: ["", ""],
+          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/plain_baby.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/mattyababy-.png?raw=true"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background134.jpg",
@@ -258,7 +258,7 @@
           variety: 2,
           title: ["お好み焼き(豚玉)", "お好み焼き(豚玉チーズ)"],
           explain: ["ただのお好み焼き", "少し黄色いお好み焼き"],
-          picture: ["", ""],
+          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/pork_okonomiyaki.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/pork_cheese%20_okonomiyaki.png?raw=true"],
           price: [300, 300],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background137.jpg",
@@ -270,7 +270,7 @@
           variety: 2,
           title: ["焼きみたらし&バニラアイス", "カラフルあんこ"],
           explain: ["みたらし", "あんこ"],
-          picture: ["", ""],
+          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/iceazuki.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/normalazuki.png?raw=true"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background135.jpg",
@@ -281,7 +281,7 @@
           variety: 2,
           title: ["かき氷(抹茶白玉小豆)", "かき氷(マンゴー)"],
           explain: ["抹茶味で白玉と小豆味", "マンゴー味"],
-          picture: ["", ""],
+          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/shaved_ice_green_tea.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/shaved_ice_mango.png?raw=true"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background138.jpg",
@@ -292,7 +292,7 @@
           variety: 2,
           title: ["ポテト(コンソメ)", "ポテト(バター醤油)"],
           explain: ["コンソメ味", "バター醤油味"],
-          picture: ["", ""],
+          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/konsomepatato.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/butterpatato.png?raw=true"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background136.jpg",
@@ -304,7 +304,7 @@
           variety: 2,
           title: ["たこ焼き(ソース)", "たこ焼き(明太もち)"],
           explain: ["通常", "タコの代わりに餅が入ってます"],
-          picture: ["", ""],
+          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/takoyaki.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/takoyaki.png?raw=true"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background133.jpg",
@@ -570,6 +570,8 @@
           document.title = `[${classnum}組] A 桐陰祭食販2025`;
           document.getElementsByClassName("description-text1")[0].innerHTML = classData["explain"][0];
           document.getElementsByClassName("description-text2")[0].innerHTML = classData["explain"][1];
+          document.getElementsByClassName("card-img-top-1")[0].src = classData["picture"][0];
+          document.getElementsByClassName("card-img-top-2")[0].src = classData["picture"][1];
           document.body.style.backgroundImage = `url('${classData["bgimage"]}')`;
           document.getElementsByClassName("card-img-top-1")[0].innerHTML = `url('${classData["picture"][0]}')`;
           document.getElementsByClassName("card-img-top-2")[0].innerHTML = `url('${classData["picture"][1]}')`;
