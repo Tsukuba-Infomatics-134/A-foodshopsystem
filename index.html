@@ -172,7 +172,7 @@
 
       <!-- 確認モーダル -->
       <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
           <div class="modal-content p-4">
             <div class="modal-header">
               <h5 class="modal-title" id="confirmModalLabel">注文内容確認</h5>
@@ -181,13 +181,13 @@
             <div class="modal-body">
               <h10>
                 <strong><span id="confirmMenu1">メニュー1</span>:</strong> <span id="confirmQty1">0</span>個
-              </h10>
+              </h10><br>
               <h10>
                 <strong><span id="confirmMenu2">メニュー2</span>:</strong> <span id="confirmQty2">0</span>個
-              </h10>
+              </h10><br>
               <h10>
                 <strong>合計金額:</strong> <span id="confirmTotal">0</span>円
-              </h10>
+              </h10><br>
             </div>
             <div class="modal-footer">
               <button type="button" class="recansel-button" data-bs-dismiss="modal">
@@ -425,7 +425,7 @@
       function onPrintSuccess(response) {
         // 整理券発行成功
         const firstline = document.getElementById("modalBody").innerHTML.split(/\n/)[0];
-        document.getElementById("modalBody").innerHTML = firstline + `印刷完了。店員から整理券を受け取ってください。`;
+        document.getElementById("modalBody").textContent = firstline + `印刷完了。店員から整理券を受け取ってください。`;
         document.getElementById("confirm-modal-close").disabled = false;
       }
 
@@ -471,7 +471,9 @@
           console.log(orderNum, data["password"]);
           // モーダルに整理番号セットして表示
           document.getElementById("confirm-modal-close").disabled = true;
-          document.getElementById("modalBody").innerHTML = `整理番号: #${orderNum}<br>\n印刷中...`;
+          document.getElementById("modalBody").textContent = `整理番号: #${orderNum}\n`;
+          document.getElementById("modalBody").appendChild(document.createElement("br"));
+          document.getElementById("modalBody").textContent += "印刷中...";
           // Bootstrapモーダルを表示
           const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
           orderModal.show();
