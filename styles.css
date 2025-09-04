@@ -92,6 +92,14 @@
   max-height: 90vh; 
 }
 
+.locked {
+  position: fixed;
+}
+
+.backing-button {
+  position: absolute;
+  top: 50;
+}
 
 
 /*テキスト関連*/
@@ -148,6 +156,7 @@
 }
 
 .recansel-button,
+.backing-button,
 .temperate-button1,
 .temperate-button2 {
   font-size: 40px;
