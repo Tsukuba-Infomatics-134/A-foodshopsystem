@@ -118,7 +118,7 @@
         店員用
       </button>
       <div class="starting_button">
-        <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main')">
+        <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main'),preventScroll()">
           注文を開始する
         </button>
       </div>
@@ -721,6 +721,11 @@
         updateQtyUI();
         changeDisplayMode('sub');
       }
+      
+      function preventScroll(event) {
+        event.preventDefault();
+      }
+      document.addEventListener('touchmove', preventScroll, { passive: false });
     </script>
   </body>
 </html>
