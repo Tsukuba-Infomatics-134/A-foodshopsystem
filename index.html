@@ -300,6 +300,7 @@
       let classData = {};
       let apiurl = apiurl_production;
       let isOnline = false;
+      let specialClassStatusData = {};
 
       // オンライン判定を切り替える関数  0: オンライン, 1: オフライン
       function setOnlineStatus(state) {
@@ -476,20 +477,19 @@
             "Content-Type": "application/json",
             authorization: auth_key,
           },
-        })
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              console.error("Error:", response.text());
-              return null;
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
+        }).then(async (response) => {
+          if (response.status === 200) {
+            return await response.json();
+          } else {
+            console.error("Error:", await response.text());
             setOnlineStatus(1);
             return null;
-          });
+          }
+        }).catch((error) => {
+          console.error("Error:", error);
+          setOnlineStatus(1);
+          return null;
+        });
       }
 
       function login() {
@@ -535,40 +535,63 @@
           document.getElementById("confirmMenu2").innerHTML = classData["title"][1];
           changeDisplayMode("sub");
 
-          // const checkInterval = () => {
-          //     check().then(async ret => {
-          //         console.log("checked", ret)
-          //         if (ret != null && ret.length > 0) {
-          //             //ここに更新時の挙動を書く
-          //         }
-          //         if (isLogin) {
-          //         }
-          //     })
-          // }
-          // checkInterval();
-          // console.log("checkInterval start");
+          const checkInterval = () => {
+            if (!isLogin) {
+              return;
+            }
+            check().then(async ret => {
+              if (ret != null && ret.length > 0) {
+                  if (ret[0]["order_id"] != classnum) {
+                    console.error(`unknown id ${ret[0]['order_id']}...`);
+                    changeDisplayMode("error");
+                    setTimeout(checkInterval, 2000);
+                    return;
+                  }
+                  try {
+                    specialClassStatusData = JSON.parse(ret[0]["status"]);
+                  } catch {
+                    specialClassStatusData = {};
+                  }
+                  if (specialClassStatusData["A_status"] === "販売停止") {
+                    console.log("強制販売停止");
+                    changeDisplayMode("outof-service");
+                  }
+              }
+              setTimeout(checkInterval, 2000);
+            })
+          }
 
-          // fetch(apiurl + "log_all", {
-          //   method: "GET",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     authorization: auth_key,
-          //   },
-          // }).then((response) => {
-          //     if (response.status === 200) {
-          //       return response.json();
-          //     } else {
-          //       console.error("Error:", response.text());
-          //     }
-          // }).then((ret) => {
-          //   // console.log("logall", ret);
-          //   if (ret == null) {
-          //     return;
-          //   }
-          // }).catch((error) => {
-          //   console.error("Error:", error);
-          //   alert("ログイン中にエラーが発生しました。");
-          // });
+          fetch(apiurl + "log_all", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: auth_key,
+            },
+          }).then(async (response) => {
+            if (!response.ok) {
+              console.error("Error:", response.text());
+              changeDisplayMode("offline");
+              return;
+            }
+            const data = await response.json();
+            if (!data[classnum]) {
+              console.error("not found specialClassData. Automatically going out of service.");
+              changeDisplayMode("outof-service");
+            }
+            else {
+              try {
+                specialClassStatusData = JSON.parse(data[classnum]["status"]);
+              } catch {
+                specialClassStatusData = {};
+              }
+              if (specialClassStatusData["A_status"] === "販売停止") {
+                console.log("強制販売停止");
+                changeDisplayMode("outof-service");
+              }
+            }
+          });
+          checkInterval();
+          console.log("checkInterval start");
         }).catch((error) => {
           console.error(error);
           alert("ログイン中にエラーが発生しました。");
