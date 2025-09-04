@@ -61,7 +61,13 @@
   margin-left: 2%;
 }
 
-.width-container,
+.width-container {
+  height: 80vh;
+  position: absolute;
+  width: 100vw;
+  margin: 0px;
+}
+
 .screen-center {
   height: 80vh;
   position: absolute;
