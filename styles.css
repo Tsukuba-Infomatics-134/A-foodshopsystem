@@ -4,6 +4,10 @@
   margin: 0 auto;
 }
 
+body.no_scroll{
+   overflow: hidden;
+}
+
 /*店員用画面モーダル*/
 .modal-content {
   background-color: #f8f9fa;
