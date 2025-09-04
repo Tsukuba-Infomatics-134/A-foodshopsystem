@@ -30,7 +30,7 @@ body.no_scroll{
 .outofservice-background,
 .offline-background,
 .error-background,
-.main {
+.main-background {
   top: 0;
   left: 0;
   position: fixed; /* CHanged */
