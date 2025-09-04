@@ -159,7 +159,7 @@ function _onSendMessageApi(data, callback, error_callback) {
     request += builder.createTextElement({data:"桐陰祭HPの「食販について」ページから行けるサイトに整理番号と下のパスワードを入力するか、上のQRコードを読み取ることで、この注文の呼び出し状況を確認できます。\n"});
 
     request += builder.createTextElement({data:`  パスワード: ${data["password"]}\n`});
-    request += builder.createTextElement({data:"呼び出されたらクラスの販売場所までお越しください。この整理券、または状態確認サイトの画面が必要です。なお、呼び出し後、15分経過で自動的にキャンセル扱いになります。\n\n"});
+    request += builder.createTextElement({data:"呼び出されたらクラスの販売場所まで来て、支払いをしてください。この整理券、または状態確認サイトの画面が必要です。なお、呼び出し後15分で自動的にキャンセル扱いになります。\n\n"});
 
     request += builder.createAlignmentElement({position:'center'});
     request += builder.createTextElement({data:`発行：${_getNowTimeStamp()}\n\n`});
