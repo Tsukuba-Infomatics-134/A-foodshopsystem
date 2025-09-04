@@ -19,28 +19,58 @@
       <button onclick="login()" type="submit">ログイン</button>
     </div>
 
-    <div id="staff" style="display: none;">
-      <div class="width-container">
-        <div class="centerlize">
-          <button class="temperate-button3" onclick="changeDisplayMode('sub')">
-            復旧
-          </button>
-          <button class="recansel-button" onclick="changeDisplayMode('error')">
-            エラー画面
-          </button>
-          <button class="temperate-button1" onclick="changeDisplayMode('offline')">
-            オフライン画面
-          </button>
-          <button class="temperate-button2" onclick="changeDisplayMode('outof-service')">
-            販売停止画面
-          </button>
+    <div class="modal fade" id="passcheck" tabindex="-1" aria-labelledby="passcheckLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+    
+              <!-- モーダルヘッダー -->
+              <div class="modal-header">
+                <h5 class="modal-title" id="passcheckLabel">パスワードの確認</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+    
+              <!-- モーダルボディ -->
+              <div class="modal-body">
+                <label for="passwordInput">パスワードを入力してください</label>
+                <input type="password" id="passwordInput" class="form-control" placeholder="パスワード">
+              </div>
+    
+              <!-- モーダルフッター -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <button type="submit" class="btn btn-primary" id="submitPassword">確認</button>
+              </div>
+          </div>
         </div>
+    </div>
+
+    <div id="staff" style="display: none;">
+      <div class="centerlize" style="margin-top: 10vh; margin-left: 5vw; margin-right: 5vw;">
+        <button class="recansel-button" onclick="changeDisplayMode('sub')">
+          戻る
+        </button>
+      </div>
+      <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
+        <button class="recansel-button" onclick="changeDisplayMode('error')">
+          エラー画面
+        </button>
+        <button class="temperate-button1" onclick="changeDisplayMode('offline')">
+          オフライン画面
+        </button>
+        <button class="temperate-button2" onclick="changeDisplayMode('outof-service')">
+          販売停止画面
+        </button>
+      </div>
+      <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
+        <button class="recansel-button" onclick="logout()">
+          ログアウト
+        </button>
       </div>
     </div>
 
     <div id="offline" style="display: none;">
       <div class="offline-background">
-        <button onclick="changeDisplayMode('staff')"></button>
+        <button data-bs-toggle="modal" data-bs-target="#passcheck">戻る</button>
         <div class="width-container" >
           <p class="offline-letter1"><ruby>現在オフラインです<rt class="oblique">Offline</rt></ruby></p>
           <img src="Photos/Reconect.png" class="img-dispatcher">
@@ -50,7 +80,7 @@
     </div>
 
     <div id="error" style="display: none;" class="error-background">
-      <button onclick="changeDisplayMode('staff')"></button>
+      <button data-bs-toggle="modal" data-bs-target="#passcheck">戻る</button>
       <div class="screen-center">
         <div class="screen-center2">
           <img src="Photos/warning.png" class="img-dispatcher">
@@ -62,7 +92,7 @@
 
     <div id="outof-service" style="display: none;">
       <div class="outofservice-background">
-        <button onclick="changeDisplayMode('staff')"></button>
+        <button data-bs-toggle="modal" data-bs-target="#passcheck">戻る</button>
         <div class="width-container">
           <p class="outofservice-letter1"><ruby>販売停止<tr class="oblique">Out of order</tr></ruby><p>
           <img src="Photos/ban.png" class="img-dispatcher">
@@ -75,36 +105,11 @@
       <button data-bs-toggle="modal" data-bs-target="#passcheck">
         店員用
       </button>
-      <div class="modal fade" id="passcheck" tabindex="-1" aria-labelledby="passcheckLabel" aria-hidden="true">
-         <div class="modal-dialog">
-            <div class="modal-content">
-      
-               <!-- モーダルヘッダー -->
-               <div class="modal-header">
-                  <h5 class="modal-title" id="passcheckLabel">パスワードの確認</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-      
-               <!-- モーダルボディ -->
-               <div class="modal-body">
-                  <label for="passwordInput">パスワードを入力してください</label>
-                  <input type="password" id="passwordInput" class="form-control" placeholder="パスワード">
-               </div>
-      
-               <!-- モーダルフッター -->
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-                  <button type="submit" class="btn btn-primary" id="submitPassword">確認</button>
-               </div>
-            </div>
-         </div>
-      </div>
       <div class="starting_button">
         <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main')">
           注文開始
         </button>
       </div>
-
     </div>
 
     <div id="main" style="display: none" position="fixed">
@@ -598,6 +603,25 @@
         });
       }
 
+      function logout() {
+        isLogin = false;
+        auth_key = null;
+        classnum = 0;
+        classData = {};
+        quantities.fill(0);
+        updateQtyUI();
+        document.body.style.backgroundImage = "";
+        document.getElementsByClassName("description-text1")[0].innerHTML = "";
+        document.getElementsByClassName("description-text2")[0].innerHTML = "";
+        document.getElementsByClassName("card-img-top-1")[0].innerHTML = "";
+        document.getElementsByClassName("card-img-top-2")[0].innerHTML = "";
+        document.getElementsByClassName("card-title")[0].innerHTML = "";
+        document.getElementsByClassName("card-title")[1].innerHTML = "";
+        document.querySelector("h1").innerHTML = "桐陰祭 注文システム";
+        document.title = "A 桐陰祭食販2025";
+        changeDisplayMode("login");
+      }
+
       function changeDisplayMode(mode) {
         document.getElementById("login").style.display = "none";
         document.getElementById("main").style.display = "none";
@@ -611,6 +635,7 @@
 
       document.getElementById('submitPassword').addEventListener('click', function() {
         const password = document.getElementById('passwordInput').value;
+        document.getElementById('passwordInput').value = "";
         const modal = bootstrap.Modal.getInstance(document.getElementById('passcheck'));
         if (password === 'shine') {
           modal.hide();

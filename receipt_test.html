@@ -35,7 +35,7 @@
             item_2: item_2,
             order_id: order_id,
             password: password
-          });
+          }, (res) => {alert(res);}, (res) => {alert(res);});
         } catch (e) {
           document.getElementById("aaa").innerText = e;
         }
