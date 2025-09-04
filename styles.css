@@ -148,6 +148,20 @@ body.no_scroll{
 }
 
 /*ボタン類*/
+
+.backing-button{
+  font-size: 40px;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left:0;
+}
 .starting_button {
   background: black;
   color: rgba(0, 255, 136, 0.699);
@@ -166,7 +180,6 @@ body.no_scroll{
 }
 
 .recansel-button,
-.backing-button,
 .temperate-button1,
 .temperate-button2 {
   font-size: 40px;
