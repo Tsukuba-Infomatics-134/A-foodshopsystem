@@ -114,7 +114,7 @@ body.no_scroll{
 
 /*テキスト関連*/
 .error-letter2{
-  font-size: 3em;
+  font-size: 40px;
   font-weight: bold;
   padding: 10px;
   text-align: center;
@@ -150,8 +150,8 @@ body.no_scroll{
 /*ボタン類*/
 
 .backing-button{
-  font-size: 40px;
-  padding: 20px 20px;
+  font-size: 30px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -162,9 +162,9 @@ body.no_scroll{
   top: 0;
   left:0;
 }
+
 .starting_button {
-  background: black;
-  color: rgba(0, 255, 136, 0.699);
+  background: rgba(0, 0, 0, 0);
   border-radius: 1em;
   padding: 1em;
   position: absolute;
@@ -203,10 +203,11 @@ body.no_scroll{
 }
 
 .item-starting{
-  padding: 200px;
-  background-color: black;
-  color: white;
+  padding: 100px;
+  background-color: rgb(0, 109, 233);
+  color: rgba(255, 255, 255, 0.973);
   font-size: 100px;
+  border-radius: 30px;
 }
 
 .confirm-button {
