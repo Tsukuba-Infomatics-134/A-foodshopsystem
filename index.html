@@ -132,6 +132,9 @@
       <button data-bs-toggle="modal" data-bs-target="#passcheck">
         店員用
       </button>
+      <div class="centerlize" style="margin-top: 5vh; margin-bottom: 5vh;">
+        <img id="logo-image" src="Photos/toinfes-logo.png" class="logo-image" alt="ロゴ" />
+      </div>
       <div class="starting_button">
         <button class="item-starting" id="start-ordering" onclick="changeDisplayMode('main'),preventScroll()">
           注文を開始する
@@ -147,7 +150,7 @@
         <div class="row justify-content-center g-4 align-items-stretch">
           <div class="col-md-4 d-flex">
             <div class="card text-center w-100" style="width: 45vh; min-width: 45vh; height: 70vh; max-height: 70vh; overflow:hidden">
-              <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$facebook$" class="card-img-top-1" alt="メニュー1" />
+              <img src="Photos/toinfes-logo.png" class="card-img-top-1" alt="メニュー1" />
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title" style="font-size: 25px; font-weight: bold;" ></h5>
                 <p>
@@ -165,7 +168,7 @@
 
           <div class="col-md-4 d-flex">
             <div class="card text-center w-100" style="width: 45vh; min-width: 45vh; height: 70vh; max-height: 70vh; overflow:hidden">
-              <img src="https://mono-log.jp/archives/img/2025/04/250403.jpg" class="card-img-top-2" alt="メニュー2" />
+              <img src="Photos/toinfes-logo.png" class="card-img-top-2" alt="メニュー2" />
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title" style="font-size: 25px; font-weight: bold;"></h5>
                 <p>
@@ -262,10 +265,11 @@
           variety: 2,
           title: ["ベビーカステラ(プレーン)", "ベビーカステラ(抹茶)"],
           explain: ["ただのベビカス", "少し違うベビカス"],
-          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/plain_baby.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/mattyababy-.png?raw=true"],
+          picture: ["Photos/Asystem's_picture/plain_baby.png", "Photos/Asystem's_picture/mattyababy-.png"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background134.jpg",
+          logo: "Photos/class_logo/1.png"
         },
         {
           // 2組
@@ -273,22 +277,23 @@
           variety: 2,
           title: ["お好み焼き(豚玉)", "お好み焼き(豚玉チーズ)"],
           explain: ["ただのお好み焼き", "少し黄色いお好み焼き"],
-          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/pork_okonomiyaki.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/pork_cheese%20_okonomiyaki.png?raw=true"],
+          picture: ["Photos/Asystem's_picture/pork_okonomiyaki.png", "Photos/Asystem's_picture/pork_cheese%20_okonomiyaki.png"],
           price: [300, 300],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background137.jpg",
+          logo: "Photos/class_logo/2.png"
         },
-
         {
           // 3組
           name: "だんご3-3兄弟",
           variety: 2,
           title: ["焼きみたらし&バニラアイス", "カラフルあんこ"],
           explain: ["みたらし", "あんこ"],
-          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/iceazuki.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/normalazuki.png?raw=true"],
+          picture: ["Photos/Asystem's_picture/iceazuki.png", "Photos/Asystem's_picture/normalazuki.png"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background135.jpg",
+          logo: "Photos/class_logo/3.png"
         },
         {
           // 4組
@@ -296,10 +301,11 @@
           variety: 2,
           title: ["かき氷(抹茶白玉小豆)", "かき氷(マンゴー)"],
           explain: ["抹茶味で白玉と小豆味", "マンゴー味"],
-          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/shaved_ice_green_tea.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/shaved_ice_mango.png?raw=true"],
+          picture: ["Photos/Asystem's_picture/shaved_ice_green_tea.png", "Photos/Asystem's_picture/shaved_ice_mango.png"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background138.jpg",
+          logo: "Photos/class_logo/4.png"
         },
         {
           // 5組
@@ -307,22 +313,23 @@
           variety: 2,
           title: ["ポテト(コンソメ)", "ポテト(バター醤油)"],
           explain: ["コンソメ味", "バター醤油味"],
-          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/konsomepatato.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/butterpatato.png?raw=true"],
+          picture: ["Photos/Asystem's_picture/konsomepatato.png", "Photos/Asystem's_picture/butterpatato.png"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background136.jpg",
+          logo: "Photos/class_logo/5.png"
         },
-
         {
           // 6組
           name: "ひっぱりだこ",
           variety: 2,
           title: ["たこ焼き(ソース)", "たこ焼き(明太もち)"],
           explain: ["通常", "タコの代わりに餅が入ってます"],
-          picture: ["https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/takoyaki.png?raw=true", "https://github.com/Tsukuba-Infomatics-134/A-foodshopsystem/blob/main/Photos/Asystem's_picture/takoyaki.png?raw=true"],
+          picture: ["Photos/Asystem's_picture/takoyaki.png", "Photos/Asystem's_picture/takoyaki.png"],
           price: [200, 200],
           limit: 10,
           bgimage: "https://illust.download/wp-content/uploads/2017/11/background133.jpg",
+          logo: "Photos/class_logo/6.png"
         },
       ];
 
@@ -601,6 +608,7 @@
           document.querySelector("h1").innerHTML += ` ${classnum}組`;
           document.getElementById("confirmMenu1").innerHTML = classData["title"][0];
           document.getElementById("confirmMenu2").innerHTML = classData["title"][1];
+          document.getElementById("logo-image").src = classData["logo"];
           changeDisplayMode("sub");
 
           const checkInterval = () => {
