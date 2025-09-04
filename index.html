@@ -62,10 +62,10 @@
         </button>
       </div>
       <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
-        <button class="recansel-button" onclick="changeShopClerkMode(true);changeDisplayMode('sub');">
+        <button class="recansel-button" id="go-clerk-mode" onclick="changeShopClerkMode(true);changeDisplayMode('sub');">
           店員用モードに変更
         </button>
-        <button class="temperate-button1" onclick="changeShopClerkMode(false);changeDisplayMode('sub');">
+        <button class="temperate-button1" id="end-clerk-mode" onclick="changeShopClerkMode(false);changeDisplayMode('sub');">
           店員用モード終了
         </button>
       </div>
@@ -74,7 +74,12 @@
         (現在の販売数: <span id="nowSoldCountDisplay">0/300</span>個)
       </div>
       <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
-        <button class="recansel-button" onclick="logout()">
+        <button class="temperate-button2" onclick="showOrderLogs();">
+          注文履歴表示
+        </button>
+      </div>
+      <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
+        <button class="recansel-button" onclick="logout();">
           ログアウト
         </button>
       </div>
@@ -110,6 +115,16 @@
           <img src="Photos/ban.png" class="img-dispatcher">
           <p style ="font-size: 45px; color: #ff3232 ; text-align: center; font-weight: bold;">現在、規定数に達したため販売を停止しています。</p>
         </div>
+      </div>
+    </div>
+
+    <div id="order-logs" style="display: none;">
+        <button onclick="changeDisplayMode('staff')">戻る</button>
+        <div class="width-container" style="margin-top: 5vh; margin-bottom: 5vh;">
+          <h2 style="text-align: center; font-weight: bold; margin-bottom: 20px;">注文履歴</h2>
+          <div id="order-logs-content" style="max-height: 60vh; overflow-y: auto; border: 2px solid black; padding: 10px;">
+            <!-- 注文履歴をここに表示 -->
+          </div>
       </div>
     </div>
 
@@ -312,6 +327,7 @@
       ];
 
       const quantities = [0, 0];
+      const orderLogs = [];
       var classnum = 0;
       let auth_key = null;
       let isLogin = false;
@@ -429,10 +445,15 @@
         confirmModal.hide();
       }
 
-      function onPrintSuccess(response) {
+      function onPrintSuccess(response, password = null) {
         // 整理券発行成功
         const firstline = document.getElementById("modalBody").innerText.split(/\n/)[0];
-        document.getElementById("modalBody").innerText = firstline + `\n印刷完了。店員から整理券を受け取ってください。`;
+        if (isShopClerkMode) {
+          document.getElementById("modalBody").innerText = firstline + `\nパスワード: ${password}`;
+        }
+        else {
+          document.getElementById("modalBody").innerText = firstline + `\n印刷完了。店員から整理券を受け取ってください。`;
+        }
         document.getElementById("confirm-modal-close").disabled = false;
       }
 
@@ -486,11 +507,12 @@
           }
           const orderNum = data["order_id"];
           console.log(orderNum, data["password"]);
+          orderLogs.push({order_id: orderNum, item_1: order1, item_2: order2, password: data["password"]});
           // モーダルに整理番号セットして表示
           document.getElementById("confirm-modal-close").disabled = true;
-          document.getElementById("modalBody").textContent = `整理番号: #${orderNum}\n`;
+          document.getElementById("modalBody").textContent = `整理番号: ${orderNum}\n`;
           document.getElementById("modalBody").appendChild(document.createElement("br"));
-          document.getElementById("modalBody").textContent += "印刷中...";
+          document.getElementById("modalBody").textContent += `印刷中...`;
           // Bootstrapモーダルを表示
           const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
           orderModal.show();
@@ -500,8 +522,7 @@
           updateQtyUI();
           statusDiv.style.opacity = "0";
           if (isShopClerkMode) {
-            alert(`整理番号：${orderNum}\nパスワード：${data["password"]}`);
-            document.getElementById("confirm-modal-close").disabled = false;
+            onPrintSuccess(null, data["password"]);
             return;
           }
           receipt_print(
@@ -510,7 +531,6 @@
           );
         }).catch((error) => {
           console.error("Error:", error);
-          bootstrap.Modal.getInstance(document.getElementById("confirmModal")).hide();
           changeDisplayMode("error");
         });
       }
@@ -524,6 +544,7 @@
           },
         }).then(async (response) => {
           if (response.status === 200) {
+            setOnlineStatus(0);
             return await response.json();
           } else {
             console.error("Error:", await response.text());
@@ -588,21 +609,21 @@
             }
             check().then(async ret => {
               if (ret != null && ret.length > 0) {
-                  if (ret[0]["order_id"] != classnum) {
-                    console.error(`unknown id ${ret[0]['order_id']}...`);
-                    changeDisplayMode("error");
-                    setTimeout(checkInterval, 2000);
-                    return;
-                  }
-                  try {
-                    specialClassStatusData = JSON.parse(ret[0]["status"]);
-                  } catch {
-                    specialClassStatusData = {};
-                  }
-                  if (specialClassStatusData["A_status"] === "販売停止") {
-                    console.log("強制販売停止");
-                    changeDisplayMode("outof-service");
-                  }
+                if (ret[0]["order_id"] != classnum) {
+                  console.error(`unknown id ${ret[0]['order_id']}...`);
+                  changeDisplayMode("error");
+                  setTimeout(checkInterval, 2000);
+                  return;
+                }
+                try {
+                  specialClassStatusData = JSON.parse(ret[0]["status"]);
+                } catch {
+                  specialClassStatusData = {};
+                }
+                if (specialClassStatusData["A_status"] === "販売停止") {
+                  console.log("強制販売停止");
+                  changeDisplayMode("outof-service");
+                }
               }
               setTimeout(checkInterval, 2000);
             })
@@ -686,6 +707,13 @@
         document.getElementById("offline").style.display = "none";
         document.getElementById("error").style.display = "none";
         document.getElementById("outof-service").style.display = "none";
+        document.getElementById("order-logs").style.display = "none";
+        const cfmodal = bootstrap.Modal.getInstance(document.getElementById("confirmModal"));
+        if (cfmodal) cfmodal.hide();
+        const odmodal = bootstrap.Modal.getInstance(document.getElementById("orderModal"));
+        if (odmodal) odmodal.hide();
+        const passmodal = bootstrap.Modal.getInstance(document.getElementById("passcheck"));
+        if (passmodal) passmodal.hide();
         document.getElementById(mode).style.display = "block";
       }
 
@@ -696,12 +724,26 @@
         if (password === 'shine') {
           modal.hide();
           document.getElementById('nowSoldCountDisplay').textContent = `${nowSoldCount}/${soldCountLimit}`;
+          document.getElementById("soldcountlimit").value = soldCountLimit;
+          if (isShopClerkMode) {
+            document.getElementById('go-clerk-mode').style.display = 'none';
+            document.getElementById('end-clerk-mode').style.display = 'inline-block';
+          } else {
+            document.getElementById('go-clerk-mode').style.display = 'inline-block';
+            document.getElementById('end-clerk-mode').style.display = 'none';
+          }
           changeDisplayMode('staff');
         } else {
             alert('パスワードが違います。');
             modal.hide();
             changeDisplayMode('sub');
         }
+      });
+
+      document.getElementById('passcheck').addEventListener("show.bs.modal", function (event) {
+        setTimeout(() => {
+          document.getElementById('passwordInput').focus();
+        }, 500);
       });
 
       function onChangeSoldCountInput() {
@@ -726,6 +768,26 @@
         event.preventDefault();
       }
       document.addEventListener('touchmove', preventScroll, { passive: false });
+
+      function showOrderLogs() {
+        if (orderLogs.length === 0) {
+          alert("注文履歴はありません。");
+          return;
+        }
+        const container = document.getElementById("order-logs-content");
+        container.innerHTML = ""; // 既存の内容をクリア
+        orderLogs.slice().reverse().forEach(log => {
+          const logEntry = document.createElement("div");
+          logEntry.style.borderBottom = "1px solid #ccc";
+          logEntry.style.padding = "10px 0";
+          logEntry.innerHTML = `
+            <strong>${log.order_id}</strong>: ${log.item_1}個/${log.item_2}個/${log.password}
+            <button onclick="receipt_print({class_number: ${classnum}, item_1: ${log.item_1}, item_2: ${log.item_2}, order_id: ${log.order_id}, password: '${log.password}'}, onPrintSuccess, onPrintError)">レシート再印刷</button>
+          `;
+          container.appendChild(logEntry);
+        });
+        changeDisplayMode("order-logs");
+      }
     </script>
   </body>
 </html>
