@@ -364,8 +364,8 @@ h10 {
 /* カード内の画像サイズ調整 */
 .card-img-top-1,
 .card-img-top-2 {
-  max-height: 220px; /* 横幅はカードに合わせる */
-  object-fit: contain; /* 画像の比率を保ったまま、要素全体を覆うように調整 */
+  max-height: 220px;
+  object-fit: contain;
 }
 .pop {
   animation: pop 0.3s ease;
