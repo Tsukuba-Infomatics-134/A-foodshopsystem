@@ -303,6 +303,12 @@ body {
 .triangle-right.disabled {
   border-left-color: #ccc !important;
 }
+.confirm-button.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #ccc;
+  color: black;
+}
 
 .qty-control {
   display: flex;

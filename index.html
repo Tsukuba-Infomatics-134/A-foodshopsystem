@@ -417,6 +417,11 @@
             rightBtns[i].classList.remove("disabled");
           }
         });
+        if (qsum == 0) {
+          document.getElementById("confirm").classList.add("disabled");
+        } else {
+          document.getElementById("confirm").classList.remove("disabled");
+        }
       }
       updateQtyUI();
 
