@@ -276,7 +276,6 @@ input.qty-input {
   text-align: center;
   font-size: 2.5rem;
   pointer-events: none;
-  user-select: none;
   border: 2px solid #ced4da;
   border-radius: 10px;
   background-color: #fff;
@@ -306,6 +305,7 @@ body {
   font-family: "Segoe UI", "ヒラギノ角ゴ ProN", sans-serif;
   margin: 0;
   padding-bottom: 120px; /* 下に余裕を作る */
+  user-select: none; /* 文字選択は禁止 */
 }
 
 h1 {
@@ -320,7 +320,7 @@ h1 {
 
 h10 {
   color: black;
-  font-size: 3.2rem;
+  font-size: 3rem;
   padding: 20Px;
   text-align: center;
   margin-bottom: 20Px;

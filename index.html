@@ -70,6 +70,10 @@
         </button>
       </div>
       <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
+        販売可能数<input type="number" id="soldcountlimit" value="300" min="1" max="10000" style="width: 8vw;" onchange="onChangeSoldCountInput();">個
+        (現在の販売数: <span id="nowSoldCountDisplay">0/300</span>個)
+      </div>
+      <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
         <button class="recansel-button" onclick="logout()">
           ログアウト
         </button>
@@ -185,7 +189,7 @@
               <h10>
                 <strong><span id="confirmMenu2">メニュー2</span>:</strong> <span id="confirmQty2">0</span>個
               </h10><br>
-              <h10>
+              <h10 style="font-size: 3.5rem; font-weight: bold;">
                 <strong>合計金額:</strong> <span id="confirmTotal">0</span>円
               </h10><br>
             </div>
@@ -207,13 +211,13 @@
           <div class="modal-content p-4">
             <div class="modal-header">
               <h5 class="modal-title" id="orderModalLabel">注文受付完了</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+              <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button> -->
             </div>
             <div class="modal-body" id="modalBody" style="font-size: 1.8rem">
               <!-- 整理券番号をここに表示 -->
             </div>
             <div class="modal-footer">
-              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="changeDisplayMode('sub')" disabled id="confirm-modal-close">
+              <button type="button" class="recomfirm-button" data-bs-dismiss="modal" onclick="onConfirmCloseButtonClicked();" disabled id="confirm-modal-close">
                 閉じる
               </button>
             </div>
@@ -315,6 +319,8 @@
       let isOnline = false;
       let specialClassStatusData = {};
       let isShopClerkMode = false;
+      let nowSoldCount = 0;
+      let soldCountLimit = 300;
 
       if (!isCorrectBrowserUsed) {
         // 自動的に店員モードに切り替える。
@@ -424,8 +430,8 @@
 
       function onPrintSuccess(response) {
         // 整理券発行成功
-        const firstline = document.getElementById("modalBody").innerHTML.split(/\n/)[0];
-        document.getElementById("modalBody").textContent = firstline + `印刷完了。店員から整理券を受け取ってください。`;
+        const firstline = document.getElementById("modalBody").innerText.split(/\n/)[0];
+        document.getElementById("modalBody").innerText = firstline + `\n印刷完了。店員から整理券を受け取ってください。`;
         document.getElementById("confirm-modal-close").disabled = false;
       }
 
@@ -433,6 +439,16 @@
         // 整理券発行失敗
         console.error(response);
         changeDisplayMode("error");
+      }
+
+      function onConfirmCloseButtonClicked() {
+        // 販売個数が規定に達していたら販売停止
+        if (nowSoldCount >= soldCountLimit) {
+          changeDisplayMode("outof-service");
+        }
+        else {
+          changeDisplayMode('sub');
+        }
       }
 
       function submitOrder() {
@@ -479,6 +495,7 @@
           orderModal.show();
           // 注文リセット
           quantities.fill(0);
+          nowSoldCount += order1 + order2;  // 販売数制限用カウンター
           updateQtyUI();
           statusDiv.style.opacity = "0";
           if (isShopClerkMode) {
@@ -630,6 +647,10 @@
         auth_key = null;
         classnum = 0;
         classData = {};
+        nowSoldCount = 0;
+        soldCountLimit = 300;
+        document.getElementById("soldcountlimit").value = "300";
+        specialClassStatusData = {};
         quantities.fill(0);
         updateQtyUI();
         document.body.style.backgroundImage = "";
@@ -671,6 +692,7 @@
         const modal = bootstrap.Modal.getInstance(document.getElementById('passcheck'));
         if (password === 'shine') {
           modal.hide();
+          document.getElementById('nowSoldCountDisplay').textContent = `${nowSoldCount}/${soldCountLimit}`;
           changeDisplayMode('staff');
         } else {
             alert('パスワードが違います。');
@@ -678,6 +700,18 @@
             changeDisplayMode('sub');
         }
       });
+
+      function onChangeSoldCountInput() {
+        let val = parseInt(document.getElementById('soldcountlimit').value);
+        if (isNaN(val) || val < 1) {
+          val = 1;
+        } else if (val > 10000) {
+          val = 10000;
+        }
+        document.getElementById('soldcountlimit').value = val;
+        soldCountLimit = val;
+        document.getElementById('nowSoldCountDisplay').textContent = `${nowSoldCount}/${soldCountLimit}`;
+      }
     </script>
   </body>
 </html>
