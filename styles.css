@@ -4,8 +4,12 @@
   margin: 0 auto;
 }
 
-body.no_scroll{
-   overflow: hidden;
+body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 /*店員用画面モーダル*/
@@ -37,6 +41,10 @@ body.no_scroll{
   width: 100%;
   height: 100vh;
   background-size: cover;
+}
+
+.main-background {
+  overflow: hidden;
 }
 
 
