@@ -582,10 +582,9 @@
             "Content-Type": "application/json",
             password: password,
           },
-        }).then((response) => {
-          const data = response.json();
+        }).then(async (response) => {
+          const data = await response.json();
           if (response.status === 200) {
-            return data;
           } else if (response.status === 401) {
             alert("パスワードが違います");
             return null;
