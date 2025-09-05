@@ -473,6 +473,9 @@
         else {
           document.getElementById("modalBody").innerText = firstline + `\n印刷完了。店員から整理券を受け取ってください。`;
         }
+        if (classnum === 6) {
+          document.getElementById("modalBody").innerText = "注文完了";
+        }
         document.getElementById("confirm-modal-close").disabled = false;
       }
 
@@ -532,6 +535,9 @@
           document.getElementById("modalBody").textContent = `整理番号: ${orderNum}\n`;
           document.getElementById("modalBody").appendChild(document.createElement("br"));
           document.getElementById("modalBody").textContent += `印刷中...`;
+          if (classnum === 6) {
+            document.getElementById("modalBody").innerText = "注文完了";
+          }
           // Bootstrapモーダルを表示
           const orderModal = new bootstrap.Modal(document.getElementById("orderModal"));
           orderModal.show();
