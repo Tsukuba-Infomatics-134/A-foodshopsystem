@@ -578,21 +578,21 @@
             "Content-Type": "application/json",
             password: password,
           },
-        }).then((response) => {
-          const data = response.json();
-          if (response.status === 200) {
-            return data;
-          } else if (response.status === 401) {
+        }).then(async (response) => {
+          const data = await response.json();
+          if (response.status === 401) {
             alert("パスワードが違います");
-            return null;
-          } else {
-            alert("ログイン中にエラーが発生しました。");
-            return null;
-          }
-        }).then((data) => {
-          if (data == null) {
             return;
           }
+          if (!response.ok){
+            alert("ログイン中にエラーが発生しました。");
+            return;
+          }
+          if (data["type"] !== "a") {
+            alert("このサイトはA専用です。" + data["type"] + "ではログインできません。");
+            return;
+          }
+          document.body.requestFullscreen();  // 自動全画面
           console.log(data);
           isLogin = true;
           auth_key = data["token"];
