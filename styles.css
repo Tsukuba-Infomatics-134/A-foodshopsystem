@@ -303,7 +303,7 @@ body {
 .triangle-right.disabled {
   border-left-color: #ccc !important;
 }
-.confirm-button.disabled {
+.confirm-button.disabled, .confirm-modal-close.disabled {
   cursor: not-allowed;
   pointer-events: none;
   background-color: #ccc;
