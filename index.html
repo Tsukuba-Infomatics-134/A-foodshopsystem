@@ -16,7 +16,7 @@
     <div id="login">
       <p style="color: black">パスワードを入力してください。</p>
       <input type="password" id="pass" placeholder="パスワードを入力" />
-      <button onclick="login()" type="submit">ログイン</button>
+      <button onclick="login()">ログイン</button>
     </div>
 
     <div class="modal fade" id="passcheck" tabindex="-1" aria-labelledby="passcheckLabel" aria-hidden="true">
@@ -74,7 +74,7 @@
         (現在の販売数: <span id="nowSoldCountDisplay">0/300</span>個)
       </div>
       <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
-        <button class="temperate-button2" onclick="showOrderLogs();">
+        <button class="temperate-button2" onclick="showOrderLogs(1);">
           注文履歴表示
         </button>
       </div>
@@ -120,6 +120,10 @@
 
     <div id="order-logs" style="display: none;">
         <button onclick="changeDisplayMode('staff')">戻る</button>
+        <p id="counter">0</p>
+        <button id="increment">増加</button>
+        <button id="decrement" disabled>減少</button>
+        <button id="reset">リセット</button>
         <div class="width-container" style="margin-top: 5vh; margin-bottom: 5vh;">
           <h2 style="text-align: center; font-weight: bold; margin-bottom: 20px;">注文履歴</h2>
           <div id="order-logs-content" style="max-height: 60vh; overflow-y: auto; border: 2px solid black; padding: 10px;">
@@ -578,21 +582,21 @@
             "Content-Type": "application/json",
             password: password,
           },
-        }).then(async (response) => {
-          const data = await response.json();
-          if (response.status === 401) {
+        }).then((response) => {
+          const data = response.json();
+          if (response.status === 200) {
+            return data;
+          } else if (response.status === 401) {
             alert("パスワードが違います");
-            return;
-          }
-          if (!response.ok){
+            return null;
+          } else {
             alert("ログイン中にエラーが発生しました。");
+            return null;
+          }
+        }).then((data) => {
+          if (data == null) {
             return;
           }
-          if (data["type"] !== "a") {
-            alert("このサイトはA専用です。" + data["type"] + "ではログインできません。");
-            return;
-          }
-          document.body.requestFullscreen();  // 自動全画面
           console.log(data);
           isLogin = true;
           auth_key = data["token"];
@@ -782,14 +786,19 @@
       }
       document.addEventListener('touchmove', preventScroll, { passive: false });
 
-      function showOrderLogs() {
+
+
+      function showOrderLogs(alpha) { //alphaをページ数として取得
+          const beta = parseInt(alpha);
+          let ganma = beta * 10
+
         if (orderLogs.length === 0) {
           alert("注文履歴はありません。");
           return;
         }
         const container = document.getElementById("order-logs-content");
         container.innerHTML = ""; // 既存の内容をクリア
-        orderLogs.slice().reverse().forEach(log => {
+        orderLogs.slice().reverse().slice(ganma-10,ganma).forEach(log => {
           const logEntry = document.createElement("div");
           logEntry.style.borderBottom = "1px solid #ccc";
           logEntry.style.padding = "10px 0";
@@ -801,6 +810,71 @@
         });
         changeDisplayMode("order-logs");
       }
+
+       // カウントを表示する要素を取得
+      const counterDisplay = document.getElementById("counter");
+
+      // 減少ボタンの要素を取得
+      const decrementButton = document.getElementById("decrement");
+
+      const increasementButton = document.getElementById("increment")
+
+      // 初期カウント
+      let counterValue = 1; // 初期値は1
+
+      // B に格納する変数
+      let B = null; // B は初期状態で null
+
+      // カウントに応じた処理を行う関数
+      function checkCounterValue(value) {
+          // 減少ボタンを有効/無効にする
+          if (value <= 1) {
+              decrementButton.disabled = true;  // 1以下なら無効
+          } else {
+              decrementButton.disabled = false;  // 2以上なら有効
+          }
+
+          if ( value >= (orderLogs.length)%10 +1 ) {
+            increasementButton.disabled = true;
+          } else {
+            increasementButton.disabled = false;
+          }      
+      }
+
+      // カウント値が変更されるたびにBに格納する関数
+      function updateCounterAndStore() {
+          B = counterValue; // カウント値をBに格納
+          showOrderLogs(B)
+      }
+
+      // 増加ボタンのクリックイベント
+      document.getElementById("increment").addEventListener("click", function() {
+          counterValue++;  // カウントアップ
+          counterDisplay.textContent = counterValue;  // 表示更新
+          checkCounterValue(counterValue);  // カウントの値に応じた処理
+          updateCounterAndStore();  // カウント値が変更されるたびにBに格納
+      });
+
+      // 減少ボタンのクリックイベント
+      document.getElementById("decrement").addEventListener("click", function() {
+          if (counterValue > 0) {
+              counterValue--;  // カウントダウン（0未満にはしない）
+          }
+          counterDisplay.textContent = counterValue;  // 表示更新
+          checkCounterValue(counterValue);  // カウントの値に応じた処理
+          updateCounterAndStore();  // カウント値が変更されるたびにBに格納
+      });
+
+      // リセットボタンのクリックイベント
+      document.getElementById("reset").addEventListener("click", function() {
+          counterValue = 1;  // カウントをリセット（0に戻す）
+          counterDisplay.textContent = counterValue;  // 表示更新
+          checkCounterValue(counterValue);  // 減少ボタンの状態を更新
+          updateCounterAndStore();  // カウント値が変更されるたびにBに格納
+      });
+
+
+
     </script>
   </body>
 </html>
