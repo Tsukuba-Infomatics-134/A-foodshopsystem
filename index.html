@@ -74,7 +74,7 @@
         (現在の販売数: <span id="nowSoldCountDisplay">0/300</span>個)
       </div>
       <div class="centerlize" style="margin-top: 2vh; margin-left: 5vw; margin-right: 5vw;">
-        <button class="temperate-button2" onclick="showOrderLogs(1);">
+        <button class="temperate-button2"  id="go-orderlog"onclick="showOrderLogs(1)">
           注文履歴表示
         </button>
       </div>
@@ -121,10 +121,10 @@
     <div id="order-logs" style="display: none;">
         <button onclick="changeDisplayMode('staff')">戻る</button>
         <p id="counter">0</p>
-        <button id="increment">増加</button>
-        <button id="decrement" disabled>減少</button>
-        <button id="reset">リセット</button>
-        <div class="width-container" style="margin-top: 5vh; margin-bottom: 5vh;">
+        <button id="increment">次のページ</button>
+        <button id="decrement" disabled>前のページ</button>
+        <button id="reset">ソルバー</button>
+        <div class="width-container" style="margin-top: 1vh; margin-bottom: 5vh;">
           <h2 style="text-align: center; font-weight: bold; margin-bottom: 20px;">注文履歴</h2>
           <div id="order-logs-content" style="max-height: 60vh; overflow-y: auto; border: 2px solid black; padding: 10px;">
             <!-- 注文履歴をここに表示 -->
@@ -833,7 +833,7 @@
               decrementButton.disabled = false;  // 2以上なら有効
           }
 
-          if ( value >= (orderLogs.length)%10 +1 ) {
+          if ( value >= (orderLogs.length)/10 +1 ) {
             increasementButton.disabled = true;
           } else {
             increasementButton.disabled = false;
@@ -871,6 +871,13 @@
           checkCounterValue(counterValue);  // 減少ボタンの状態を更新
           updateCounterAndStore();  // カウント値が変更されるたびにBに格納
       });
+      document.getElementById("go-orderlog").addEventListener("click", function() {
+          counterValue = 1;  // カウントをリセット（0に戻す）
+          counterDisplay.textContent = counterValue;  // 表示更新
+          checkCounterValue(counterValue);  // 減少ボタンの状態を更新
+          updateCounterAndStore();  // カウント値が変更されるたびにBに格納
+      });
+
 
 
 
