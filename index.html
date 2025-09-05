@@ -463,7 +463,7 @@
 
       function onPrintSuccess(response, password = null) {
         // 整理券発行成功
-        const firstline = document.getElementById("modalBody").innerText.split(/\n/)[0];
+        const firstline = document.getElementById("modalBody").innerText.split(/印刷中/)[0];
         if (isShopClerkMode) {
           document.getElementById("modalBody").innerText = firstline + `\nパスワード: ${password}`;
         }
@@ -655,6 +655,11 @@
               authorization: auth_key,
             },
           }).then(async (response) => {
+            if (response.status === 429) {
+              const after = response.headers.get("Retry-After");
+              console.log("Too many requests, retry after", after, "seconds");
+              setTimeout(login, Math.floor(after * 1000));
+            }
             if (!response.ok) {
               console.error("Error:", response.text());
               changeDisplayMode("offline");
