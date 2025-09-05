@@ -592,7 +592,6 @@
             alert("このサイトはA専用です。" + data["type"] + "ではログインできません。");
             return;
           }
-          document.body.requestFullscreen();  // 自動全画面
           console.log(data);
           isLogin = true;
           auth_key = data["token"];
