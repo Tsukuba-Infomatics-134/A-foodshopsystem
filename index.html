@@ -216,6 +216,7 @@
               <h10 style="font-size: 3.5rem; font-weight: bold;">
                 <strong>合計金額:</strong> <span id="confirmTotal">0</span>円
               </h10><br>
+              <div id="kakunin_for_class_one" style="display: none; font-size: 2rem; font-weight: bold;">アレルゲン：小麦、チーズ</div>
             </div>
             <div class="modal-footer">
               <button type="button" class="recansel-button" data-bs-dismiss="modal">
@@ -630,6 +631,7 @@
           document.getElementById("confirmMenu1").innerHTML = classData["title"][0];
           document.getElementById("confirmMenu2").innerHTML = classData["title"][1];
           document.getElementById("logo-image").src = classData["logo"];
+          if (classnum === 2)document.getElementById("kakunin_for_class_one").style.display = "block";
           changeDisplayMode("sub");
 
           const checkInterval = () => {
@@ -720,6 +722,7 @@
         document.getElementsByClassName("card-img-top-2")[0].innerHTML = "";
         document.getElementsByClassName("card-title")[0].innerHTML = "";
         document.getElementsByClassName("card-title")[1].innerHTML = "";
+        document.getElementById("kakunin_for_class_one").style.display = "none";
         document.querySelector("h1").innerHTML = "桐陰祭 注文システム";
         document.title = "A 桐陰祭食販2025";
         changeDisplayMode("login");
